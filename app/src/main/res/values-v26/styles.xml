@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="titleTextColor">@color/colorWhite</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="android:fontFamily">Roboto</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
