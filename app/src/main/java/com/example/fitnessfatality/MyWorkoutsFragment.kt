@@ -33,14 +33,6 @@ class MyWorkoutsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_workouts, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        button.setOnClickListener {
-            it.findNavController().navigate(R.id.mainActivityOld)
-        }
-    }
-
     companion object {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
