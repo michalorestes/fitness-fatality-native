@@ -7,7 +7,7 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="floatingActionButtonStyle">@style/AppTheme.FloatingActionButton</item>
         <item name="materialButtonStyle">@style/AppTheme.Button</item>
     </style>

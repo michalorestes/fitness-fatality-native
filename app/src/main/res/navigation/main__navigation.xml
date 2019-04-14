@@ -4,6 +4,12 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main__navigation"
             app:startDestination="@id/myWorkoutsFragment">
 
-    <fragment android:id="@+id/myWorkoutsFragment" android:name="com.example.fitnessfatality.MyWorkoutsFragment"
-              android:label="My Workouts" tools:layout="@layout/fragment_my_workouts"/>
+    <fragment android:id="@+id/myWorkoutsFragment" android:name="com.example.fitnessfatality.ui.myWorkouts.MyWorkoutsFragment"
+              android:label="My Workouts" tools:layout="@layout/fragment_my_workouts">
+        <action android:id="@+id/action_myWorkoutsFragment_to_workoutLoggingFragment"
+                app:destination="@id/workoutLoggingFragment"/>
+    </fragment>
+    <fragment android:id="@+id/workoutLoggingFragment"
+              android:name="com.example.fitnessfatality.ui.workoutLogging.WorkoutLoggingFragment"
+              android:label="Workout Logging"/>
 </navigation>

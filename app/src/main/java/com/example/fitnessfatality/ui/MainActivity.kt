@@ -1,9 +1,11 @@
-package com.example.fitnessfatality
+package com.example.fitnessfatality.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.fitnessfatality.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,9 +22,17 @@ class MainActivity : AppCompatActivity() {
 //                this.lifecycleOwner = this@MainActivity
 //                this.test = atest
 //        }
-        val navController = Navigation.findNavController(this, R.id.workout_nav_host_fragment)
+        val navController = Navigation.findNavController(this,
+            R.id.workout_nav_host_fragment
+        )
 
-        toolbar.setupWithNavController(navController)
         setSupportActionBar(toolbar)
+        toolbar.setupWithNavController(navController)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }

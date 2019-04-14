@@ -1,4 +1,4 @@
-package com.example.fitnessfatality
+package com.example.fitnessfatality.ui.myWorkouts
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.example.fitnessfatality.R
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
 
@@ -31,6 +32,15 @@ class MyWorkoutsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_workouts, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        button.setOnClickListener {
+            it.findNavController().navigate(R.id.workoutLoggingFragment)
+        }
+
     }
 
     companion object {
