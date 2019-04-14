@@ -3,7 +3,6 @@ package com.example.fitnessfatality.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.fitnessfatality.R
 import kotlinx.android.synthetic.main.activity_main.*
