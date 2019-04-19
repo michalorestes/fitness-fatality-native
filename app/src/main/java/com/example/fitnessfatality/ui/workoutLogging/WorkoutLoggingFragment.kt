@@ -9,19 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.ui.workoutLogging.viewModels.ExerciseViewModel
+import com.example.fitnessfatality.ui.workoutLogging.viewModels.WorkoutExerciseViewModel
 
 class WorkoutLoggingFragment : Fragment() {
-    private lateinit var viewModel: ExerciseViewModel
+    private lateinit var workoutExerciseViewModel: WorkoutExerciseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(activity!!).get(ExerciseViewModel::class.java)
-        viewModel.allExercises.observe(this, Observer {data ->
-            data.forEach { exercise ->
-                Log.w("-->>", exercise.id.toString())
+        workoutExerciseViewModel = ViewModelProviders.of(activity!!).get(WorkoutExerciseViewModel::class.java)
+        workoutExerciseViewModel.allWorkoutExercises.observe(this, Observer { data ->
+            data.forEach { element ->
+                Log.w("<<-->>", element.toString())
             }
+
+            Log.w("-->>", "---------------------")
         })
     }
 

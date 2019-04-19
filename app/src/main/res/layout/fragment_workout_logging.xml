@@ -1,15 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent" android:id="@+id/linearLayout">
 
-    <TextView
-            android:text="Workout Logging Comming Soon"
-            android:layout_width="wrap_content"
+<LinearLayout
+        android:id="@+id/main_linear_container"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical" android:layout_height="match_parent" android:layout_width="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:id="@+id/constraintLayout">
+        <TextView
+                android:text="SET: 1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/label_current_set_number" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/label_exercise_name"/>
+        <TextView
+                android:text="EXERCISE NAME"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/label_exercise_name" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="32dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
+        <TextView
+                android:text="Lifeted Weight:"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/label_lifted_weight" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="32dp" android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_current_set_number"/>
+        <TextView
+                android:text="Reps No."
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/label_reps_number" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="32dp" android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/text_lifted_weight"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/text_lifted_weight" android:hint="0.0"
+                app:layout_constraintStart_toEndOf="@+id/label_lifted_weight" android:layout_marginStart="32dp"
+                app:layout_constraintTop_toTopOf="@+id/label_lifted_weight"
+                app:layout_constraintBottom_toBottomOf="@+id/label_lifted_weight"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/text_reps_number" android:hint="0" android:inputType="numberSigned"
+                app:layout_constraintStart_toEndOf="@+id/label_reps_number" android:layout_marginStart="32dp"
+                app:layout_constraintTop_toTopOf="@+id/label_reps_number"
+                app:layout_constraintBottom_toBottomOf="@+id/label_reps_number"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:text="0.0s rest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/label_rest_timer"
+                android:layout_gravity="center|center_vertical" android:textSize="30sp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:padding="8dp">
+            <Button
+                    android:text="Skip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/btn_skip_rest" android:layout_weight="1"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Button
+                    android:text="Next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/btn_next" android:layout_weight="1"/>
+        </LinearLayout>
+        <Button
+                android:text="View all exercises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btn_show_modal" android:layout_marginTop="32dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+    </LinearLayout>
+
+</LinearLayout>

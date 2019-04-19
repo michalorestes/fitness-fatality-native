@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.fitnessfatality.data.models.Exercise
+import com.example.fitnessfatality.data.models.exercise.Exercise
 
 @Dao
 interface ExerciseDao {

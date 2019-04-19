@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.fitnessfatality.data.database.AppDatabase
-import com.example.fitnessfatality.data.models.Exercise
+import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.repository.ExerciseRepository
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -12,8 +12,8 @@ import kotlin.coroutines.CoroutineContext
 class ExerciseViewModel(application: Application) : AndroidViewModel(application) {
     val allExercises: LiveData<List<Exercise>>
 
-    private var parentJob = Job()
     private val repository: ExerciseRepository
+    private var parentJob = Job()
     private val coroutineContext: CoroutineContext get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
 
