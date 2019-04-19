@@ -19,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Exercise::class, WorkoutExercise::class], version = 12, exportSchema = false)
+@Database(entities = [Exercise::class, WorkoutExercise::class], version = 13, exportSchema = false)
 @TypeConverters(ExerciseTypeConverter::class, LoggingTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
@@ -75,9 +75,7 @@ abstract class AppDatabase: RoomDatabase() {
                 ExerciseType.WEIGHTS,
                 MuscleGroup.CHEST,
                 listOf(MuscleGroup.TRICEPS),
-                false,
-                listOf(LoggingType.WEIGHTS),
-                LoggingType.WEIGHTS
+                false
             )
 
             exerciseDao.insert(exercise)
@@ -88,9 +86,7 @@ abstract class AppDatabase: RoomDatabase() {
                 ExerciseType.WEIGHTS,
                 MuscleGroup.HAMSTRINGS,
                 listOf(MuscleGroup.ABS),
-                false,
-                listOf(LoggingType.WEIGHTS),
-                LoggingType.WEIGHTS
+                false
             )
 
             exerciseDao.insert(exercise2)
@@ -101,9 +97,7 @@ abstract class AppDatabase: RoomDatabase() {
                 ExerciseType.WEIGHTS,
                 MuscleGroup.BICEPS,
                 listOf(MuscleGroup.FOREARMS),
-                false,
-                listOf(LoggingType.WEIGHTS),
-                LoggingType.WEIGHTS
+                false
             )
 
             exerciseDao.insert(exercise3)

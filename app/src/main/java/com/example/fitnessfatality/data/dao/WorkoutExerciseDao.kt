@@ -12,15 +12,13 @@ interface WorkoutExerciseDao {
     @Insert
     fun insert(workoutExercise: WorkoutExercise)
 
-    @Query("SELECT we.*," +
+    @Query("SELECT we.*, " +
             "e.id as _id," +
             "e.name as _name, " +
             "e.exerciseType as _exerciseType ," +
             "e.primaryMuscleGroup as _primaryMuscleGroup, " +
             "e.secondaryMuscleGroups as _secondaryMuscleGroups, " +
-            "e.isCustom as _isCustom, " +
-            "e.availableLoggingTypes as _availableLoggingTypes, " +
-            "e.defaultLoggingType as _defaultLoggingType " +
+            "e.isCustom as _isCustom " +
             "FROM workout_exercise we " +
             "INNER JOIN exercise e ON we.exercise_id = e.id")
     fun fetchAll(): LiveData<List<WorkoutExercisePojo>>
