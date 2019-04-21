@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.workoutLogging.viewModels
+package com.example.fitnessfatality.ui.workoutTracking.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

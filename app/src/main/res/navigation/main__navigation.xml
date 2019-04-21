@@ -10,6 +10,6 @@
                 app:destination="@id/workoutLoggingFragment"/>
     </fragment>
     <fragment android:id="@+id/workoutLoggingFragment"
-              android:name="com.example.fitnessfatality.ui.workoutLogging.WorkoutLoggingFragment"
+              android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment"
               android:label="Workout Logging"/>
 </navigation>
