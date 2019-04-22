@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.databinding.FragmentWorkoutLoggingBinding
@@ -19,6 +20,11 @@ class TrackingFragment : Fragment() {
     ) {
         super.onCreate(savedInstanceState)
         trackingViewModel = ViewModelProviders.of(this).get(TrackingViewModel::class.java)
+        trackingViewModel.workoutExercises.observe(this, Observer {
+            if (!it.isNullOrEmpty()) {
+                trackingViewModel.initialise()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -38,11 +44,10 @@ class TrackingFragment : Fragment() {
         binding.viewModel = trackingViewModel
         binding.handler = this
 
-
         return binding.root
     }
 
     fun onNext(view: View) {
-        trackingViewModel.incrementIndex()
+        trackingViewModel.onNextHandler()
     }
 }
