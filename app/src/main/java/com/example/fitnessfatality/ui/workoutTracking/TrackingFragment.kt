@@ -1,11 +1,13 @@
 package com.example.fitnessfatality.ui.workoutTracking
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
@@ -14,7 +16,7 @@ import com.example.fitnessfatality.ui.workoutTracking.viewModels.TrackingViewMod
 
 class TrackingFragment : Fragment() {
     private lateinit var trackingViewModel: TrackingViewModel
-
+    private var logs: MutableLiveData<String> = MutableLiveData()
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
@@ -23,6 +25,15 @@ class TrackingFragment : Fragment() {
         trackingViewModel.workoutExercises.observe(this, Observer {
             if (!it.isNullOrEmpty()) {
                 trackingViewModel.initialise()
+            }
+        })
+
+        trackingViewModel.getLogs().observe(this, Observer {
+            if (it != null) {
+                logs.value = ""
+                it.forEach { log ->
+                    logs.value = logs.value + log.toString() + "\n \n"
+                }
             }
         })
     }
@@ -43,6 +54,7 @@ class TrackingFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = trackingViewModel
         binding.handler = this
+        binding.logs = logs
 
         return binding.root
     }

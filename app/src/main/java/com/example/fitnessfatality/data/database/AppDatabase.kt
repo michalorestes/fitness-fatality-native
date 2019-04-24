@@ -7,23 +7,41 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fitnessfatality.data.dao.ExerciseDao
+import com.example.fitnessfatality.data.dao.ExerciseLogDao
 import com.example.fitnessfatality.data.dao.WorkoutExerciseDao
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
+import com.example.fitnessfatality.data.models.logging.ExerciseLog
 import com.example.fitnessfatality.data.models.logging.LoggingType
 import com.example.fitnessfatality.data.models.workout.MuscleGroup
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
+import com.example.fitnessfatality.data.typeConverter.LocalDateTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LoggingTypeConverter
+import com.example.fitnessfatality.data.typeConverter.MapTypeConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Exercise::class, WorkoutExercise::class], version = 13, exportSchema = false)
-@TypeConverters(ExerciseTypeConverter::class, LoggingTypeConverter::class)
+@Database(
+    entities = [
+        Exercise::class,
+        WorkoutExercise::class,
+        ExerciseLog::class
+    ],
+    version = 15,
+    exportSchema = false
+)
+@TypeConverters(
+    ExerciseTypeConverter::class,
+    LoggingTypeConverter::class,
+    LocalDateTypeConverter::class,
+    MapTypeConverter::class
+)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun workoutExerciseDao(): WorkoutExerciseDao
+    abstract fun exerciseLogDao(): ExerciseLogDao
 
     companion object {
         @Volatile
@@ -55,7 +73,8 @@ abstract class AppDatabase: RoomDatabase() {
                 scope.launch(Dispatchers.IO) {
                     populateDatabase(
                         database.exerciseDao(),
-                        database.workoutExerciseDao()
+                        database.workoutExerciseDao(),
+                        database.exerciseLogDao()
                     )
                 }
             }
@@ -63,8 +82,10 @@ abstract class AppDatabase: RoomDatabase() {
 
         fun populateDatabase(
             exerciseDao: ExerciseDao,
-            workoutExerciseDao: WorkoutExerciseDao
+            workoutExerciseDao: WorkoutExerciseDao,
+            exerciseLogDao: ExerciseLogDao
         ) {
+            exerciseLogDao.deleteAll()
             workoutExerciseDao.deleteAll()
             exerciseDao.deleteAll()
 
@@ -106,7 +127,7 @@ abstract class AppDatabase: RoomDatabase() {
                 0,
                 0,
                 0,
-                hashMapOf("sets" to 2, "reps" to 2),
+                hashMapOf("sets" to 2, "reps" to 2, "rest" to 30),
                 LoggingType.WEIGHTS
             )
 
@@ -115,7 +136,7 @@ abstract class AppDatabase: RoomDatabase() {
                 0,
                 1,
                 1,
-                hashMapOf("sets" to 1, "reps" to 2),
+                hashMapOf("sets" to 1, "reps" to 2, "rest" to 60),
                 LoggingType.WEIGHTS
             )
 
@@ -124,7 +145,7 @@ abstract class AppDatabase: RoomDatabase() {
                 0,
                 2,
                 2,
-                hashMapOf("sets" to 1, "reps" to 2),
+                hashMapOf("sets" to 1, "reps" to 2, "rest" to 60),
                 LoggingType.WEIGHTS
             )
 
