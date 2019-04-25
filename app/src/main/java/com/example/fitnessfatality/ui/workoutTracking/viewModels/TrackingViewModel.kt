@@ -1,6 +1,7 @@
 package com.example.fitnessfatality.ui.workoutTracking.viewModels
 
 import android.app.Application
+import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fitnessfatality.data.database.AppDatabase
@@ -16,8 +17,10 @@ import java.time.LocalDateTime
 class TrackingViewModel(application: Application) : BaseViewModel(application) {
     val uiData = MutableLiveData<UI>()
     val workoutExercises: LiveData<List<WorkoutExercisePojo>>
+
     var currentExerciseIndex: MutableLiveData<Int> = MutableLiveData()
     var currentSetIndex = MutableLiveData<Int>()
+
     val currentLog: Map<String, String>
 
     private val workoutExerciseRepository: WorkoutExerciseRepository
@@ -35,10 +38,19 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         currentLog = mapOf("repsNo" to "0", "liftedWeight" to "0.0")
     }
 
+    fun initialiseUi() {
+        val data: WorkoutExercisePojo = workoutExercises.value!![currentExerciseIndex.value!!]
+        uiData.value = UI(
+            exerciseName = data.exercise!!.name,
+            setsInformation = "${currentSetIndex.value!!} / ${data.workoutExercise!!.loggingTarget["sets"]}",
+            restTimer = data.workoutExercise!!.loggingTarget["rest"]!!
+        )
+    }
+
     fun onNextHandler() {
         val isLastExercise: Boolean = workoutExercises.value!!.size <= currentExerciseIndex.value!!
         if (isLastExercise) {
-            disableControls()
+            enableControls(false)
             return
         }
 
@@ -49,9 +61,9 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         startRestTimer()
     }
 
-    private fun disableControls() {
+    private fun enableControls(isEnabled: Boolean) {
         val ui = uiData.value!!
-        ui.isNextEnabled = false
+        ui.isNextEnabled = isEnabled
         uiData.value = ui
     }
 
@@ -77,33 +89,37 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
 
     private fun incrementIndexesToNextLog(data: WorkoutExercisePojo) {
         val isLastSet: Boolean = data.workoutExercise!!.loggingTarget["sets"]!! <= currentSetIndex.value!!
-        if (!isLastSet) {
-            currentSetIndex.value = currentSetIndex.value!! + 1
-        } else {
+        if (isLastSet) {
             currentSetIndex.value = STARTING_SET
+        } else {
+            currentSetIndex.value = currentSetIndex.value!!.plus(1)
         }
-        currentExerciseIndex.value = currentExerciseIndex.value!! + 1
+
+        currentExerciseIndex.value = currentExerciseIndex.value!!.plus(1)
     }
 
     private fun updateUiData(data: WorkoutExercisePojo) {
         uiData.value = UI(
             exerciseName = data.exercise!!.name,
-            setsInformation = "${currentSetIndex.value!!} / ${data.workoutExercise!!.loggingTarget["sets"]}"
+            setsInformation = "${currentSetIndex.value!!} / ${data.workoutExercise!!.loggingTarget["sets"]}",
+            restTimer = data.workoutExercise!!.loggingTarget["rest"]!!
         )
     }
 
     private fun startRestTimer() {
-        //TODO: Disable controls
-        //TODO: Start timer,
-        //TODO: Enable controls
-    }
+        enableControls(false)
+        val timer = object: CountDownTimer(30000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val data = uiData.value!!
+                data.restTimer--
+                uiData.value = data
+            }
 
-    fun initialise() {
-        val data: WorkoutExercisePojo = workoutExercises.value!![currentExerciseIndex.value!!]
-        uiData.value = UI(
-            exerciseName = data.exercise!!.name,
-            setsInformation = "${currentSetIndex.value!!} / ${data.workoutExercise!!.loggingTarget["sets"]}"
-        )
+            override fun onFinish() {
+                enableControls(true)
+            }
+        }
+        timer.start()
     }
 
     fun getLogs(): LiveData<List<ExerciseLog>> {
@@ -113,7 +129,8 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     class UI(
         var exerciseName: String = "",
         var setsInformation: String = "",
-        var isNextEnabled: Boolean = true
+        var isNextEnabled: Boolean = true,
+        var restTimer: Int = 0
     )
 
     companion object {

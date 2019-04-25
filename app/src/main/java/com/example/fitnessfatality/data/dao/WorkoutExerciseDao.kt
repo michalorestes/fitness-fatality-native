@@ -23,6 +23,9 @@ interface WorkoutExerciseDao {
             "INNER JOIN exercise e ON we.exercise_id = e.id")
     fun fetchAll(): LiveData<List<WorkoutExercisePojo>>
 
+
+
+
     @Query("DELETE FROM workout_exercise")
     fun deleteAll()
 }

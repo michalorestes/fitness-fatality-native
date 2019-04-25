@@ -8,7 +8,7 @@ class WorkoutExerciseRepository(private val dao: WorkoutExerciseDao) {
     val allWorkoutExercises = dao.fetchAll()
 
     @WorkerThread
-    suspend fun insert(workoutExercise: WorkoutExercise) {
+    fun insert(workoutExercise: WorkoutExercise) {
         dao.insert(workoutExercise)
     }
 }

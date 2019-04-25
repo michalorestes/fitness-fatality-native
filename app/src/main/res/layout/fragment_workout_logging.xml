@@ -57,7 +57,7 @@
                     android:inputType="numberDecimal"
                     android:ems="10"
                     android:id="@+id/text_lifted_weight"
-                    android:text="@={viewModel.currentLog.liftedWeight}"
+                    android:text="@={viewModel.currentLog[`liftedWeight`]}"
                     android:hint="0.0"
                     app:layout_constraintStart_toEndOf="@+id/label_lifted_weight" android:layout_marginStart="32dp"
                     app:layout_constraintTop_toTopOf="@+id/label_lifted_weight"
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:text="@={viewModel.currentLog.repsNo}"
+                    android:text="@={viewModel.currentLog[`repsNo`]}"
                     android:id="@+id/text_reps_number" android:hint="0" android:inputType="numberSigned"
                     app:layout_constraintStart_toEndOf="@+id/label_reps_number" android:layout_marginStart="32dp"
                     app:layout_constraintTop_toTopOf="@+id/label_reps_number"
@@ -79,7 +79,7 @@
                 android:layout_height="match_parent">
 
             <TextView
-                    android:text="@{Integer.toString(viewModel.workoutExercises[viewModel.currentExerciseIndex].workoutExercise.loggingTarget[`rest`])}"
+                    android:text="@{Integer.toString(viewModel.uiData.restTimer)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/label_rest_timer"
                     android:layout_gravity="center|center_vertical" android:textSize="30sp"/>
