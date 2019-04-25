@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/constraintLayout">
             <TextView
-                    android:text="@{viewModel.uiData.setsInformation}"
+                    android:text="@{viewModel.currentSetIndex + ` / ` + viewModel.currentExerciseTotalSetsNo}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/label_current_set_number" app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                     android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/label_exercise_name"/>
             <TextView
-                    android:text="@{viewModel.uiData.exerciseName}"
+                    android:text="@{viewModel.currentExerciseName}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/label_exercise_name" app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
                 android:layout_height="match_parent">
 
             <TextView
-                    android:text="@{Integer.toString(viewModel.uiData.restTimer)}"
+                    android:text="@{Integer.toString(viewModel.restTimer)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/label_rest_timer"
                     android:layout_gravity="center|center_vertical" android:textSize="30sp"/>
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content" android:layout_weight="1"/>
                 <Button
                         android:text="Next"
-                        android:enabled="@{viewModel.uiData.isNextEnabled}"
+                        android:enabled="@{viewModel.isNextEnabled}"
                         android:onClick="@{handler::onNext}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btn_next" android:layout_weight="1"/>

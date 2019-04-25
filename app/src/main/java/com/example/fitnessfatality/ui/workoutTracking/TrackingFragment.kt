@@ -23,7 +23,7 @@ class TrackingFragment : Fragment() {
         trackingViewModel = ViewModelProviders.of(this).get(TrackingViewModel::class.java)
         trackingViewModel.workoutExercises.observe(this, Observer {
             if (!it.isNullOrEmpty()) {
-                trackingViewModel.initialiseUi()
+                trackingViewModel.updateUiData()
             }
         })
 
