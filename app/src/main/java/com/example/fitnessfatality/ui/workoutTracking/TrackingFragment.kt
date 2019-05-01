@@ -59,6 +59,6 @@ class TrackingFragment : Fragment() {
     }
 
     fun onNext(view: View) {
-        trackingViewModel.onNextHandler()
+        trackingViewModel.onNextHandler(view)
     }
 }

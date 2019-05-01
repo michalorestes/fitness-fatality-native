@@ -2,8 +2,11 @@ package com.example.fitnessfatality.ui.workoutTracking.viewModels
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.findNavController
+import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.logging.ExerciseLog
 import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
@@ -21,7 +24,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     val currentExerciseName = MutableLiveData<String>()
     val restTimer = MutableLiveData<Int>()
     val currentLog: Map<String, String>
-    val currentExerciseTotalSetsNo: MutableLiveData<Int> = MutableLiveData<Int>()
+    val currentExerciseTotalSetsNo = MutableLiveData<Int>()
 
     private val currentExerciseIndex: MutableLiveData<Int> = MutableLiveData()
     val currentSetIndex = MutableLiveData<Int>()
@@ -40,12 +43,13 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         currentLog = mapOf("repsNo" to "0", "liftedWeight" to "0.0")
     }
 
-    fun onNextHandler() {
+    fun onNextHandler(view: View) {
         //TODO: This function should identify when there is one exercise left and update the "Next" btn to
         //TODO: display "COMPLETE WORKOUT"
         val isLastExercise: Boolean = (workoutExercises.value!!.size - 1) <= currentExerciseIndex.value!!
         if (isLastExercise) {
             enableControls(false)
+            view.findNavController().navigate(R.id.action_workoutLoggingFragment_to_trackingEndFragment)
             return
         }
 
@@ -94,6 +98,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         isNextEnabled.value = true
     }
 
+    //TODO: Timer can be encapsulated in its own Compound view
     private fun startRestTimer() {
         enableControls(false)
         val timer = object: CountDownTimer(1000, 1000) {

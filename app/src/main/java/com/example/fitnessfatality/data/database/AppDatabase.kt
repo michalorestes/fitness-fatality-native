@@ -145,7 +145,7 @@ abstract class AppDatabase: RoomDatabase() {
                 0,
                 2,
                 2,
-                hashMapOf("sets" to 1, "reps" to 2, "rest" to 60),
+                hashMapOf("sets" to 1, "reps" to 2, "rest" to 50),
                 LoggingType.WEIGHTS
             )
 

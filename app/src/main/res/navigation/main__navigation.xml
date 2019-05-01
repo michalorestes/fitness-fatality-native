@@ -11,5 +11,12 @@
     </fragment>
     <fragment android:id="@+id/workoutLoggingFragment"
               android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment"
-              android:label="Workout Logging"/>
+              android:label="Workout Logging">
+        <action android:id="@+id/action_workoutLoggingFragment_to_trackingEndFragment"
+                app:destination="@id/trackingEndFragment" app:popUpToInclusive="false"
+                app:popUpTo="@+id/myWorkoutsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/trackingEndFragment"
+              android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingEndFragment"
+              android:label="TrackingEndFragment"/>
 </navigation>
