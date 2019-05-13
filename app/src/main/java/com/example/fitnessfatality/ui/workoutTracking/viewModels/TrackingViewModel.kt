@@ -9,7 +9,9 @@ import androidx.navigation.findNavController
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.logging.ExerciseLog
+import com.example.fitnessfatality.data.models.logging.LoggingType
 import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
+import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.repository.ExerciseLogRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
 import com.example.fitnessfatality.ui.base.BaseViewModel
@@ -25,6 +27,8 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     val restTimer = MutableLiveData<Int>()
     val currentLog: Map<String, String>
     val currentExerciseTotalSetsNo = MutableLiveData<Int>()
+    val currentDuration = MutableLiveData<Int>()
+    val currentLoggingType = MutableLiveData<LoggingType>()
 
     private val currentExerciseIndex: MutableLiveData<Int> = MutableLiveData()
     val currentSetIndex = MutableLiveData<Int>()
@@ -40,6 +44,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
 
         currentExerciseIndex.value = 0
         currentSetIndex.value = STARTING_SET
+        currentDuration.value = 0
         currentLog = mapOf("repsNo" to "0", "liftedWeight" to "0.0")
     }
 
@@ -93,9 +98,19 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     fun updateUiData() {
         val data: WorkoutExercisePojo = workoutExercises.value!![currentExerciseIndex.value!!]
         currentExerciseName.value = data.exercise!!.name
-        currentExerciseTotalSetsNo.value = data.workoutExercise!!.loggingTarget["sets"]!!
-        restTimer.value = data.workoutExercise!!.loggingTarget["rest"]!!
-        isNextEnabled.value = true
+        updateLoggingType(data.workoutExercise!!)
+        enableControls(true)
+    }
+
+    private fun updateLoggingType(workoutExercise: WorkoutExercise) {
+        currentLoggingType.value = workoutExercise.selectedLoggingType
+        if (workoutExercise.selectedLoggingType == LoggingType.WEIGHTS) {
+            currentExerciseTotalSetsNo.value = workoutExercise.loggingTarget["sets"]
+        } else if (workoutExercise.selectedLoggingType == LoggingType.DURATION) {
+            currentDuration.value = workoutExercise.loggingTarget["duration"]
+        }
+
+        restTimer.value = workoutExercise.loggingTarget["rest"]!!
     }
 
     //TODO: Timer can be encapsulated in its own Compound view

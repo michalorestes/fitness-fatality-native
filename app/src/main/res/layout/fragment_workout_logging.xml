@@ -9,6 +9,7 @@
         <import type="java.util.List"/>
         <import type="java.lang.Integer" />
         <import type="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment" />
+        <import type="com.example.fitnessfatality.data.models.logging.LoggingType" />
         <variable name="viewModel" type="TrackingViewModel" />
         <variable name="handler" type="TrackingFragment" />
         <variable name="logs" type="androidx.lifecycle.MutableLiveData&lt;String>" />
@@ -64,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
+                    android:enabled="@{viewModel.currentLoggingType == LoggingType.WEIGHTS}"
                     android:id="@+id/text_lifted_weight"
                     android:text="@={viewModel.currentLog[`liftedWeight`]}"
                     android:hint="0.0"
@@ -74,6 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:enabled="@{viewModel.currentLoggingType == LoggingType.WEIGHTS}"
                     android:text="@={viewModel.currentLog[`repsNo`]}"
                     android:id="@+id/text_reps_number" android:hint="0" android:inputType="numberSigned"
                     app:layout_constraintStart_toEndOf="@+id/label_reps_number" android:layout_marginStart="32dp"
@@ -83,12 +86,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:text="@={viewModel.currentLog[`repsNo`]}"
-                    android:id="@+id/text_duration" android:hint="0" android:inputType="numberSigned"
+                    android:text=""
+                    android:id="@+id/text_duration"
+                    android:hint="@{Integer.toString(viewModel.currentDuration)}"
+                    android:inputType="numberSigned"
                     app:layout_constraintStart_toEndOf="@+id/label_duration" android:layout_marginStart="32dp"
                     app:layout_constraintTop_toTopOf="@+id/label_duration"
                     app:layout_constraintBottom_toBottomOf="@+id/label_duration"
-                    android:enabled="false"/>
+                    android:enabled="@{viewModel.currentLoggingType == LoggingType.DURATION}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
                 android:orientation="vertical"

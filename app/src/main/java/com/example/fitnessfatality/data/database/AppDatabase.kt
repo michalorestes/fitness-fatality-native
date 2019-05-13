@@ -122,6 +122,17 @@ abstract class AppDatabase: RoomDatabase() {
 
             exerciseDao.insert(exercise3)
 
+            val exercise4 = Exercise(
+                3,
+                "Trademil Running",
+                ExerciseType.CARDIO,
+                MuscleGroup.HAMSTRINGS,
+                listOf(MuscleGroup.ABS),
+                false
+            )
+
+            exerciseDao.insert(exercise4)
+
             val workoutExercise = WorkoutExercise(
                 0,
                 0,
@@ -141,7 +152,7 @@ abstract class AppDatabase: RoomDatabase() {
             )
 
             val workoutExercise3 = WorkoutExercise(
-                2,
+                3,
                 0,
                 2,
                 2,
@@ -149,9 +160,19 @@ abstract class AppDatabase: RoomDatabase() {
                 LoggingType.WEIGHTS
             )
 
+            val workoutExercise4 = WorkoutExercise(
+                2,
+                0,
+                3,
+                3,
+                hashMapOf("duration" to 30, "sets" to 1, "rest" to 90),
+                LoggingType.DURATION
+            )
+
             workoutExerciseDao.insert(workoutExercise)
             workoutExerciseDao.insert(workoutExercise2)
             workoutExerciseDao.insert(workoutExercise3)
+            workoutExerciseDao.insert(workoutExercise4)
         }
     }
 }
