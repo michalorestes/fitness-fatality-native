@@ -37,8 +37,12 @@ class MyWorkoutsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        button.setOnClickListener {
+        btn_click_me.setOnClickListener {
             it.findNavController().navigate(R.id.workoutLoggingFragment)
+        }
+
+        btn_tester.setOnClickListener {
+            it.findNavController().navigate(R.id.action_myWorkoutsFragment_to_animationTesterFragment)
         }
 
     }

@@ -8,6 +8,8 @@
               android:label="My Workouts" tools:layout="@layout/fragment_my_workouts">
         <action android:id="@+id/action_myWorkoutsFragment_to_workoutLoggingFragment"
                 app:destination="@id/workoutLoggingFragment"/>
+        <action android:id="@+id/action_myWorkoutsFragment_to_animationTesterFragment"
+                app:destination="@id/animationTesterFragment"/>
     </fragment>
     <fragment android:id="@+id/workoutLoggingFragment"
               android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment"
@@ -19,4 +21,7 @@
     <fragment android:id="@+id/trackingEndFragment"
               android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingEndFragment"
               android:label="TrackingEndFragment"/>
+    <fragment android:id="@+id/animationTesterFragment"
+              android:name="com.example.fitnessfatality.ui.AnimationTesterFragment"
+              android:label="AnimationTesterFragment"/>
 </navigation>
