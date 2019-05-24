@@ -8,12 +8,14 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fitnessfatality.data.dao.ExerciseDao
 import com.example.fitnessfatality.data.dao.ExerciseLogDao
+import com.example.fitnessfatality.data.dao.WorkoutDao
 import com.example.fitnessfatality.data.dao.WorkoutExerciseDao
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
 import com.example.fitnessfatality.data.models.logging.ExerciseLog
 import com.example.fitnessfatality.data.models.logging.LoggingType
 import com.example.fitnessfatality.data.models.workout.MuscleGroup
+import com.example.fitnessfatality.data.models.workout.Workout
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LocalDateTypeConverter
@@ -27,9 +29,10 @@ import kotlinx.coroutines.launch
     entities = [
         Exercise::class,
         WorkoutExercise::class,
-        ExerciseLog::class
+        ExerciseLog::class,
+        Workout::class
     ],
-    version = 15,
+    version = 16,
     exportSchema = false
 )
 @TypeConverters(
@@ -42,6 +45,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun workoutExerciseDao(): WorkoutExerciseDao
     abstract fun exerciseLogDao(): ExerciseLogDao
+    abstract fun workoutDao(): WorkoutDao
 
     companion object {
         @Volatile

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main_linear_container"
+        android:id="@+id/main_linear_container"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="com.example.fitnessfatality.ui.workoutTracking.viewModels.TrackingViewModel"/>
         <import type="java.util.List"/>
-        <import type="java.lang.Integer" />
         <import type="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment" />
         <import type="com.example.fitnessfatality.data.models.logging.LoggingType" />
         <variable name="viewModel" type="TrackingViewModel" />

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              tools:context=".ui.myWorkouts.createNewWorkout.CreateNewWorkoutFragment"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:layout_margin="10dp">
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="wrap_content"
+            android:hint="Workout Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/txt_workout_name"/>
+        <Button
+                android:text="Save Workout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/btn_save_workout" android:layout_weight="1"
+                android:layout_marginTop="10dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

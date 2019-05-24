@@ -30,35 +30,6 @@ class AnimationTesterFragment: Fragment() {
         shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         btn_click_me.setOnClickListener {
-            moveAnimation()
-        }
-    }
-
-    private fun animate() {
-        var newAlpha = 0f
-        if (!isImageVisible) {
-            newAlpha = 1f
-        }
-
-        image.apply {
-            animate()
-                .alpha(newAlpha)
-                .setDuration(shortAnimationDuration.toLong())
-                .setListener(null)
-        }
-
-        isImageVisible = !isImageVisible
-    }
-
-    private fun moveAnimation() {
-        val path = Path().apply {
-            arcTo(0f, 0f, 0f, 0f, 270f, -180f, true)
-        }
-        val pathInterpolator = PathInterpolator(path)
-        Log.d("TAG->>", path.toString())
-        val animation = ObjectAnimator.ofFloat(view, "translationX", 100f).apply {
-            interpolator = pathInterpolator
-            start()
         }
     }
 }
