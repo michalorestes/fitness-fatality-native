@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.ui.OnActivityInteractionInterface
+import com.example.fitnessfatality.ui.myWorkouts.adapters.OnWorkoutListItemClickListener
 import com.example.fitnessfatality.ui.myWorkouts.adapters.WorkoutsListAdapter
 import com.example.fitnessfatality.ui.myWorkouts.viewModels.WorkoutViewModel
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
-class MyWorkoutsFragment : Fragment() {
-
+class MyWorkoutsFragment : Fragment(),
+    OnWorkoutListItemClickListener {
     private lateinit var workoutViewModel: WorkoutViewModel
     private lateinit var onActivityInterractionInterface: OnActivityInteractionInterface
     private lateinit var recyclerViewAdapter: WorkoutsListAdapter
@@ -50,7 +51,7 @@ class MyWorkoutsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerViewAdapter = WorkoutsListAdapter()
+        recyclerViewAdapter = WorkoutsListAdapter(this)
         val linearLayoutManager = LinearLayoutManager(context)
         (workouts_list as RecyclerView).apply {
             setHasFixedSize(true)
@@ -72,5 +73,9 @@ class MyWorkoutsFragment : Fragment() {
                 recyclerViewAdapter.updateDataSet(it)
             }
         })
+    }
+
+    override fun onWorkoutSelected(view: View) {
+        Log.d("MyWorkoutsFragment-->", "List item clicked")
     }
 }
