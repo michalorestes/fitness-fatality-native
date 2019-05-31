@@ -2,17 +2,20 @@ package com.example.fitnessfatality.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.fitnessfatality.R
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
-    override var action: () -> Unit = {}
+    override var floatingActionButtonAction: () -> Unit = {}
 
-    lateinit var floatingActionButton: FloatingActionButton
+    private lateinit var floatingActionButton: FloatingActionButton
+    private lateinit var bottomAppBar: BottomAppBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,18 +25,32 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
             R.id.workout_nav_host_fragment
         )
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(bottom_app_bar)
         toolbar.setupWithNavController(navController)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         floatingActionButton = fab
+        bottomAppBar = bottom_app_bar
     }
 
     override fun onStart() {
         super.onStart()
         fab.setOnClickListener {
-            action()
+            floatingActionButtonAction()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.navigation, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+        }
+
+        return true
     }
 
     override fun onBackPressed() {
@@ -41,6 +58,10 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
     }
 
     override fun setFabAction(floatingActionButtonAction: () -> Unit) {
-        action = floatingActionButtonAction
+        this.floatingActionButtonAction = floatingActionButtonAction
+    }
+
+    override fun setBottomToolBarMenu() {
+        bottomAppBar.replaceMenu(R.menu.workout_details_bottom_app_bar_menu)
     }
 }

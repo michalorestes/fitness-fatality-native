@@ -1,6 +1,7 @@
 package com.example.fitnessfatality.ui
 
 interface OnActivityInteractionInterface {
-    var action: () -> Unit
+    var floatingActionButtonAction: () -> Unit
     fun setFabAction(floatingActionButtonAction:() -> Unit)
+    fun setBottomToolBarMenu()
 }

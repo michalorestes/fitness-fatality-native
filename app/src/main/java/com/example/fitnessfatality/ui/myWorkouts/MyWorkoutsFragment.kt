@@ -63,8 +63,8 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        onActivityInterractionInterface.setFabAction {
-            Navigation
+        onActivityInterractionInterface.floatingActionButtonAction = {
+           Navigation
                 .findNavController(activity as Activity, R.id.workout_nav_host_fragment)
                 .navigate(R.id.action_myWorkoutsFragment_to_createNewWorkoutFragment)
         }
