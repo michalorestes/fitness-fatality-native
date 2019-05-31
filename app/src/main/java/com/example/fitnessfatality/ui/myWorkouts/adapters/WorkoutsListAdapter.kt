@@ -12,14 +12,15 @@ import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
 class WorkoutsListAdapter(
     private val workoutsListListener: OnWorkoutListItemClickListener
 ): RecyclerView.Adapter<WorkoutsListAdapter.ViewHolder>(){
-    var dataSet: List<Workout> = listOf()
+    private var dataSet: List<Workout> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemContainer = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_view_workout_list, parent, false) as ConstraintLayout
 
         itemContainer.setOnClickListener {
-            this.workoutsListListener.onWorkoutSelected(it)
+            val workout: Workout = it.tag as Workout
+            this.workoutsListListener.onWorkoutSelected(it, workout)
         }
         return ViewHolder(itemContainer)
     }

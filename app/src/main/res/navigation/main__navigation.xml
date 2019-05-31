@@ -8,10 +8,10 @@
               android:label="My Workouts" tools:layout="@layout/fragment_my_workouts">
         <action android:id="@+id/action_myWorkoutsFragment_to_workoutLoggingFragment"
                 app:destination="@id/workoutLoggingFragment"/>
-        <action android:id="@+id/action_myWorkoutsFragment_to_animationTesterFragment"
-                app:destination="@id/animationTesterFragment"/>
         <action android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
                 app:destination="@id/createNewWorkoutFragment"/>
+        <action android:id="@+id/viewWorkoutDetails"
+                app:destination="@id/workoutDetailsFragment"/>
     </fragment>
     <fragment android:id="@+id/workoutLoggingFragment"
               android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment"
@@ -23,10 +23,12 @@
     <fragment android:id="@+id/trackingEndFragment"
               android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingEndFragment"
               android:label="TrackingEndFragment"/>
-    <fragment android:id="@+id/animationTesterFragment"
-              android:name="com.example.fitnessfatality.ui.AnimationTesterFragment"
-              android:label="AnimationTesterFragment"/>
     <fragment android:id="@+id/createNewWorkoutFragment"
               android:name="com.example.fitnessfatality.ui.myWorkouts.createNewWorkout.CreateNewWorkoutFragment"
               android:label="Create Workout"/>
+    <fragment android:id="@+id/workoutDetailsFragment"
+              android:name="com.example.fitnessfatality.ui.workoutDetails.WorkoutDetailsFragment"
+              android:label="WorkoutDetailsFragment">
+        <argument android:name="workoutId" app:argType="integer"/>
+    </fragment>
 </navigation>
