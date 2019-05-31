@@ -61,7 +61,15 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
         this.floatingActionButtonAction = floatingActionButtonAction
     }
 
-    override fun setBottomToolBarMenu() {
+    override fun setSecondaryBottomAppBarMenu() {
+        bottomAppBar.navigationIcon = null
+        bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
         bottomAppBar.replaceMenu(R.menu.workout_details_bottom_app_bar_menu)
+    }
+
+    override fun setPrimaryBottomAppBarMenu() {
+        bottomAppBar.navigationIcon = getDrawable(R.drawable.ic_menu_white_24dp)
+        bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+        bottomAppBar.replaceMenu(R.menu.navigation)
     }
 }

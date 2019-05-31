@@ -63,6 +63,7 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
+        onActivityInterractionInterface.setPrimaryBottomAppBarMenu()
         onActivityInterractionInterface.floatingActionButtonAction = {
            Navigation
                 .findNavController(activity as Activity, R.id.workout_nav_host_fragment)

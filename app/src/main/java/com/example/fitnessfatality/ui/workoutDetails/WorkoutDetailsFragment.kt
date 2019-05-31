@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.ui.OnActivityInteractionInterface
-import kotlinx.android.synthetic.main.fragment_workout_details.*
 
 class WorkoutDetailsFragment: Fragment() {
 
@@ -40,9 +39,6 @@ class WorkoutDetailsFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-        button.setOnClickListener {
-            onActivityInteractionInterface.setBottomToolBarMenu()
-        }
-
+        onActivityInteractionInterface.setSecondaryBottomAppBarMenu()
     }
 }
