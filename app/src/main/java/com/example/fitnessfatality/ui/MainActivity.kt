@@ -2,6 +2,7 @@ package com.example.fitnessfatality.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.Navigation
@@ -48,6 +49,11 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
+            R.id.nav_exercise_database -> {
+                Navigation
+                    .findNavController(this, R.id.workout_nav_host_fragment)
+                    .navigate(R.id.actionToExerciseDatabase)
+            }
         }
 
         return true

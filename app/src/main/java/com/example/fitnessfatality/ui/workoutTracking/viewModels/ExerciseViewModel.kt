@@ -20,7 +20,7 @@ class ExerciseViewModel(application: Application) : AndroidViewModel(application
     init {
         val dao = AppDatabase.getDatabase(application, scope).exerciseDao()
         repository = ExerciseRepository(dao)
-        allExercises = repository.allExercises
+        allExercises = repository.selectAllExercises()
     }
 
     fun insert(exercise: Exercise) = scope.launch(Dispatchers.IO) {

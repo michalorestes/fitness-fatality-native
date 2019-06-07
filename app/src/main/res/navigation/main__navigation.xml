@@ -30,5 +30,10 @@
               android:name="com.example.fitnessfatality.ui.workoutDetails.WorkoutDetailsFragment"
               android:label="WorkoutDetailsFragment">
         <argument android:name="workoutId" app:argType="integer"/>
+        <action android:id="@+id/actionToExerciseDatabase"
+                app:destination="@id/exerciseDatabaseFragment"/>
     </fragment>
+    <fragment android:id="@+id/exerciseDatabaseFragment"
+              android:name="com.example.fitnessfatality.ui.exerciseDatabase.ExerciseDatabaseFragment"
+              android:label="fragment_exercise_database" tools:layout="@layout/fragment_exercise_database"/>
 </navigation>
