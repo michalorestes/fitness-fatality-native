@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.exerciseDatabase
+package com.example.fitnessfatality.ui.exerciseDatabase.viewModels
 
 import android.app.Application
 import androidx.lifecycle.LiveData

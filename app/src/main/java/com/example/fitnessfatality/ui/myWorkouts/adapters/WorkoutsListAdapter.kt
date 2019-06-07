@@ -37,7 +37,7 @@ class WorkoutsListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemData = dataSet[position]
         holder.listItemView.tag = itemData
-        holder.listItemView.lb_title.text = dataSet[position].name
+        holder.listItemView.lb_title.text = itemData.name
     }
 
     class ViewHolder(val listItemView: View): RecyclerView.ViewHolder(listItemView)
