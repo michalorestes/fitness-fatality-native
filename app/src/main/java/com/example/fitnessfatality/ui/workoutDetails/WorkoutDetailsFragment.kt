@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.ui.OnActivityInteractionInterface
@@ -32,13 +34,18 @@ class WorkoutDetailsFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_workout_details, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("WorkoutDetails-->", args.workoutId.toString())
-    }
-
     override fun onStart() {
         super.onStart()
         onActivityInteractionInterface.setSecondaryBottomAppBarMenu()
+        onActivityInteractionInterface.optionsItemMenuAction = {
+            when (it!!.itemId) {
+                R.id.nav_exercise_database -> {
+                    val action = WorkoutDetailsFragmentDirections.actionToExerciseDatabase(args.workoutId)
+                    Navigation
+                        .findNavController(activity!!, R.id.workout_nav_host_fragment)
+                        .navigate(action)
+                }
+            }
+        }
     }
 }

@@ -9,6 +9,8 @@ import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.repository.ExerciseRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
 import com.example.fitnessfatality.ui.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
     private val exerciseRepository: ExerciseRepository
@@ -24,7 +26,7 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
     }
 
-    fun addExerciseToWorktout(exercise: Exercise, workoutId: Int) {
+    fun addExerciseToWorkout(exercise: Exercise, workoutId: Int) = scope.launch(Dispatchers.IO) {
         val workoutExercise = WorkoutExercise(
             workoutId = workoutId,
             exerciseId = exercise.id,

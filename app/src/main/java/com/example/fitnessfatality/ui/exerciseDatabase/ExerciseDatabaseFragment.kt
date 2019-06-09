@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
@@ -18,11 +19,10 @@ import com.example.fitnessfatality.ui.exerciseDatabase.viewModels.ExercisesViewM
 import kotlinx.android.synthetic.main.fragment_exercise_database.*
 
 class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
-    lateinit var exercisesViewModel: ExercisesViewModel
-    lateinit var exercisesListAdapter: ExercisesListAdapter
 
-    //TODO: Pass workout ID from workout details to this fragment and store it in a variable
-    var selectedWorkoutId: Int = 0
+    private val args: ExerciseDatabaseFragmentArgs by navArgs()
+    private lateinit var exercisesViewModel: ExercisesViewModel
+    private lateinit var exercisesListAdapter: ExercisesListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,13 +49,14 @@ class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
 
     override fun onStart() {
         super.onStart()
+        Log.d("ExerciseDatabase-->", args.workoutId.toString())
         exercisesViewModel.exercises.observe(this, Observer {
             exercisesListAdapter.updateDataSet(it)
         })
     }
 
     override fun onAddExerciseToWorkout(exercise: Exercise) {
-        exercisesViewModel.addExerciseToWorktout(exercise, selectedWorkoutId)
-        Log.d("Exercise Database-->", "Added exercise: " + exercise.name + " to workout $selectedWorkoutId")
+        exercisesViewModel.addExerciseToWorkout(exercise, args.workoutId)
+        Log.d("Exercise Database-->", "Added exercise: " + exercise.name + " to workout ${args.workoutId}")
     }
 }

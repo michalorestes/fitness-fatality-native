@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
     override var floatingActionButtonAction: () -> Unit = {}
+    override var optionsItemMenuAction: (item: MenuItem?) -> Unit = {}
 
     private lateinit var floatingActionButton: FloatingActionButton
     private lateinit var bottomAppBar: BottomAppBar
@@ -22,7 +23,8 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navController = Navigation.findNavController(this,
+        val navController = Navigation.findNavController(
+            this,
             R.id.workout_nav_host_fragment
         )
 
@@ -48,20 +50,10 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.nav_exercise_database -> {
-                Navigation
-                    .findNavController(this, R.id.workout_nav_host_fragment)
-                    .navigate(R.id.actionToExerciseDatabase)
-            }
-        }
+        optionsItemMenuAction(item)
 
         return true
     }
-
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//    }
 
     override fun setFabAction(floatingActionButtonAction: () -> Unit) {
         this.floatingActionButtonAction = floatingActionButtonAction
