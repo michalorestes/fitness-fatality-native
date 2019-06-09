@@ -69,7 +69,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         val log = ExerciseLog(
             date = LocalDateTime.now(),
             exerciseId = workoutExercisePojo.exercise!!.id,
-            workoutExerciseId = workoutExercisePojo.workoutExercise!!.id,
+            workoutExerciseId = workoutExercisePojo.workoutExercise!!.id!!,
             workoutId = 0, //TODO: Replace with real workout ID once accessible
             type = workoutExercisePojo.workoutExercise!!.selectedLoggingType,
             value = mapOf(

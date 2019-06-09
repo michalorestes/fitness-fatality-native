@@ -17,12 +17,12 @@ import com.example.fitnessfatality.data.models.logging.LoggingType
 data class WorkoutExercise(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int? = null,
     val workoutId: Int,
     @ColumnInfo(name = "exercise_id")
     val exerciseId: Int,
-    val sequenceOrder: Int,
-    val loggingTarget: HashMap<String, Int>,
+    val sequenceOrder: Int = 0,
+    val loggingTarget: HashMap<String, Int> = hashMapOf(),
     val selectedLoggingType: LoggingType
 ) {
     override fun toString(): String {

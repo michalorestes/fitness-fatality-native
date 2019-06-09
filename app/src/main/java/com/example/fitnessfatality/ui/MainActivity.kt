@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
         return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//    }
 
     override fun setFabAction(floatingActionButtonAction: () -> Unit) {
         this.floatingActionButtonAction = floatingActionButtonAction
