@@ -34,7 +34,7 @@
                 app:destination="@id/exerciseDatabaseFragment"/>
     </fragment>
     <fragment android:id="@+id/exerciseDatabaseFragment"
-              android:name="com.example.fitnessfatality.ui.exerciseDatabase.ExerciseDatabaseFragment"
+              android:name="com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
               android:label="fragment_exercise_database" tools:layout="@layout/fragment_exercise_database">
         <argument android:name="workoutId" app:argType="integer"/>
     </fragment>

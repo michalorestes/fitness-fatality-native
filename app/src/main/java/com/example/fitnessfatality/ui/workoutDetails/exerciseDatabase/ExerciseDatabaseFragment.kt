@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.exerciseDatabase
+package com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase
 
 import android.os.Bundle
 import android.util.Log
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.exercise.Exercise
-import com.example.fitnessfatality.ui.exerciseDatabase.adapters.ExercisesListAdapter
-import com.example.fitnessfatality.ui.exerciseDatabase.adapters.OnExerciseListListener
-import com.example.fitnessfatality.ui.exerciseDatabase.viewModels.ExercisesViewModel
+import com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.adapters.ExercisesListAdapter
+import com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.adapters.OnExerciseListListener
+import com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.viewModels.ExercisesViewModel
 import kotlinx.android.synthetic.main.fragment_exercise_database.*
 
 class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
@@ -26,7 +26,7 @@ class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exercisesViewModel = ViewModelProviders.of(this).get(ExercisesViewModel::class.java)
+        exercisesViewModel = ViewModelProviders.of(activity!!).get(ExercisesViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -57,6 +57,5 @@ class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
 
     override fun onAddExerciseToWorkout(exercise: Exercise) {
         exercisesViewModel.addExerciseToWorkout(exercise, args.workoutId)
-        Log.d("Exercise Database-->", "Added exercise: " + exercise.name + " to workout ${args.workoutId}")
     }
 }

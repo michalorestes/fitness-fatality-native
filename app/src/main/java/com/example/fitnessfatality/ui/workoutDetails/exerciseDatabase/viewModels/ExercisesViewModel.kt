@@ -1,10 +1,11 @@
-package com.example.fitnessfatality.ui.exerciseDatabase.viewModels
+package com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.viewModels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.logging.LoggingType
+import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.repository.ExerciseRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
@@ -21,9 +22,8 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
     init {
         val db = AppDatabase.getDatabase(applicatin, scope)
         exerciseRepository = ExerciseRepository(db.exerciseDao())
-        exercises = exerciseRepository.selectAllExercises()
-
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
+        exercises = exerciseRepository.selectAllExercises()
     }
 
     fun addExerciseToWorkout(exercise: Exercise, workoutId: Int) = scope.launch(Dispatchers.IO) {
@@ -34,5 +34,9 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
         )
 
         workoutExerciseRepository.insert(workoutExercise)
+    }
+
+    fun findWorkoutExercisesByWorkoutId(workoutId: Int): LiveData<List<WorkoutExercisePojo>> {
+        return workoutExerciseRepository.findWorkoutExercisesByWorkoutId(workoutId)
     }
 }

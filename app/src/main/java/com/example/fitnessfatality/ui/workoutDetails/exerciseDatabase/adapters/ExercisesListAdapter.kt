@@ -1,8 +1,9 @@
-package com.example.fitnessfatality.ui.exerciseDatabase.adapters
+package com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
@@ -19,8 +20,10 @@ class ExercisesListAdapter(
         val itemContainer = LayoutInflater.from(parent.context)
             .inflate(R.layout.recycler_view_exercises_list, parent, false) as  ConstraintLayout
 
-        itemContainer.setOnClickListener {
-            val exercise: Exercise = it.tag as Exercise
+        val addToWorkoutBtn = itemContainer.findViewById<ImageButton>(R.id.btn_add_to_workout)
+
+        addToWorkoutBtn.setOnClickListener {
+            val exercise: Exercise = itemContainer.tag as Exercise
             this.onExerciseListListener.onAddExerciseToWorkout(exercise)
         }
 
@@ -38,7 +41,7 @@ class ExercisesListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemData = dataSet[position]
-        holder.itemView.tag = dataSet[position]
+        holder.itemView.tag = itemData
         holder.itemView.lbl_exercise_name.text = itemData.name
     }
 

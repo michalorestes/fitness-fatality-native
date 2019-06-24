@@ -4,10 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.ui.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.workoutDetails.adapters.WorkoutExercisesListAdapter
+import com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.viewModels.ExercisesViewModel
 import kotlinx.android.synthetic.main.fragment_workout_details.*
 
 class WorkoutDetailsFragment: Fragment() {
@@ -22,7 +24,7 @@ class WorkoutDetailsFragment: Fragment() {
     private val args: WorkoutDetailsFragmentArgs by navArgs()
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
     private lateinit var recyclerViewAdapter: WorkoutExercisesListAdapter
-
+    private lateinit var exercisesViewModel: ExercisesViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -36,6 +38,7 @@ class WorkoutDetailsFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        exercisesViewModel = ViewModelProviders.of(activity!!).get(ExercisesViewModel::class.java)
 
         return inflater.inflate(R.layout.fragment_workout_details, container, false)
     }
@@ -66,5 +69,11 @@ class WorkoutDetailsFragment: Fragment() {
                 }
             }
         }
+
+        exercisesViewModel.findWorkoutExercisesByWorkoutId(args.workoutId).observe(this, Observer {
+            if (it != null) {
+                recyclerViewAdapter.updateDataSet(it)
+            }
+        })
     }
 }

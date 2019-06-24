@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.exerciseDatabase.adapters
+package com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.adapters
 
 import com.example.fitnessfatality.data.models.exercise.Exercise
 
