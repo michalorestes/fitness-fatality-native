@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.logging.LoggingType
-import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.repository.ExerciseRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
@@ -34,9 +33,5 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
         )
 
         workoutExerciseRepository.insert(workoutExercise)
-    }
-
-    fun findWorkoutExercisesByWorkoutId(workoutId: Int): LiveData<List<WorkoutExercisePojo>> {
-        return workoutExerciseRepository.findWorkoutExercisesByWorkoutId(workoutId)
     }
 }
