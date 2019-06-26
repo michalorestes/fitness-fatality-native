@@ -29,7 +29,8 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
         val workoutExercise = WorkoutExercise(
             workoutId = workoutId,
             exerciseId = exercise.id,
-            selectedLoggingType = LoggingType.WEIGHTS
+            selectedLoggingType = LoggingType.WEIGHTS,
+            loggingTarget = hashMapOf("sets" to 2, "rest" to 90) //TODO: This is some dummy data
         )
 
         workoutExerciseRepository.insert(workoutExercise)

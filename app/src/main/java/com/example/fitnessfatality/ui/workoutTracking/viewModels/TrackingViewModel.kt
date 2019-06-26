@@ -20,7 +20,8 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 class TrackingViewModel(application: Application) : BaseViewModel(application) {
-    val workoutExercises: LiveData<List<WorkoutExercisePojo>>
+
+    var workoutExercises: LiveData<List<WorkoutExercisePojo>>
 
     val isNextEnabled = MutableLiveData<Boolean>()
     val currentExerciseName = MutableLiveData<String>()
@@ -39,13 +40,17 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     init {
         val db = AppDatabase.getDatabase(application, scope)
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
-        workoutExercises = workoutExerciseRepository.allWorkoutExercises
         exerciseLogRepository = ExerciseLogRepository(db.exerciseLogDao())
-
+        workoutExercises = MutableLiveData()
         currentExerciseIndex.value = 0
         currentSetIndex.value = STARTING_SET
         currentDuration.value = 0
         currentLog = mapOf("repsNo" to "0", "liftedWeight" to "0.0")
+    }
+
+    //TODO: This should be done with a ViewModel factory but let's leave it like this for now!!!!!
+    fun loadWorkoutExercises(workoutId: Int) {
+        workoutExercises = workoutExerciseRepository.findWorkoutExercisesByWorkoutId(workoutId)
     }
 
     fun onNextHandler(view: View) {
@@ -116,7 +121,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     //TODO: Timer can be encapsulated in its own Compound view
     private fun startRestTimer() {
         enableControls(false)
-        val timer = object: CountDownTimer(1000, 1000) {
+        val timer = object : CountDownTimer(1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 restTimer.value = restTimer.value!! - 1
             }
@@ -134,6 +139,10 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
 
     fun getLogs(): LiveData<List<ExerciseLog>> {
         return exerciseLogRepository.allLogs
+    }
+
+    fun getWorkoutWorkoutExercises(): LiveData<List<WorkoutExercisePojo>> {
+        return workoutExercises
     }
 
     companion object {

@@ -69,7 +69,16 @@ class WorkoutDetailsFragment: Fragment() {
             }
         }
 
-        workoutDetailsViewModel.findWorkoutExercisesByWorkoutId(args.workoutId).observe(this, Observer {
+        onActivityInteractionInterface.floatingActionButtonAction = {
+            val action = WorkoutDetailsFragmentDirections.actionToTrackWorkout(args.workoutId)
+            Navigation
+                .findNavController(activity!!, R.id.workout_nav_host_fragment)
+                .navigate(action)
+        }
+
+        workoutDetailsViewModel
+            .findWorkoutExercisesByWorkoutId(args.workoutId)
+            .observe(this, Observer {
             if (it != null) {
                 recyclerViewAdapter.updateDataSet(it)
             }
