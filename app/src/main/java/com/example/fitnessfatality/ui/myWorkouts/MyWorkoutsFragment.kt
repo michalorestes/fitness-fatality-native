@@ -52,7 +52,7 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerViewAdapter = WorkoutsListAdapter(this)
+        recyclerViewAdapter = WorkoutsListAdapter(this, resources)
         val linearLayoutManager = LinearLayoutManager(context)
         (workouts_list as RecyclerView).apply {
             setHasFixedSize(true)

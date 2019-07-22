@@ -1,5 +1,6 @@
 package com.example.fitnessfatality.ui.myWorkouts.adapters
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,8 @@ import com.example.fitnessfatality.data.models.workout.Workout
 import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
 
 class WorkoutsListAdapter(
-    private val workoutsListListener: OnWorkoutListItemClickListener
+    private val workoutsListListener: OnWorkoutListItemClickListener,
+    private val resources: Resources
 ): RecyclerView.Adapter<WorkoutsListAdapter.ViewHolder>(){
     private var dataSet: List<Workout> = listOf()
 
@@ -38,6 +40,7 @@ class WorkoutsListAdapter(
         val itemData = dataSet[position]
         holder.listItemView.tag = itemData
         holder.listItemView.lb_title.text = itemData.name
+        holder.listItemView.img_workout_icon.setImageDrawable(resources.getDrawable(itemData.workoutIcon))
     }
 
     class ViewHolder(val listItemView: View): RecyclerView.ViewHolder(listItemView)

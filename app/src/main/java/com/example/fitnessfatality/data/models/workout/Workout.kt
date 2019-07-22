@@ -9,5 +9,6 @@ data class Workout(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int? = null,
-    val name: String
+    val name: String,
+    val workoutIcon: Int
 )

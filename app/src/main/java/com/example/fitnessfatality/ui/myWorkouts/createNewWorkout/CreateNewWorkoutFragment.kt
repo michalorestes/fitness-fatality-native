@@ -26,9 +26,21 @@ class CreateNewWorkoutFragment : Fragment() {
         btn_save_workout.setOnClickListener {
             workoutViewModel.insertWorkout(
                 Workout(
-                    name = txt_workout_name.text.toString()
+                    name = txt_workout_name.text.toString(),
+                    workoutIcon = getWorkoutIcon()
                 )
             )
         }
+    }
+
+    private fun getWorkoutIcon(): Int
+    {
+        if (radio_group.checkedRadioButtonId == radio_image_a.id) {
+            return R.drawable.inverval_workout_icon
+        } else if (radio_group.checkedRadioButtonId == radio_image_b.id) {
+            return R.drawable.cardio_workout_icon
+        }
+
+        return 0
     }
 }
