@@ -10,6 +10,7 @@
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="floatingActionButtonStyle">@style/AppTheme.FloatingActionButton</item>
         <item name="materialButtonStyle">@style/AppTheme.Button</item>
+        <item name="tabStyle">@style/AppTheme.Tabs</item>
     </style>
 
     <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
@@ -17,6 +18,9 @@
     </style>
     <style name="AppTheme.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/colorPrimary</item>
+    </style>
+    <style name="AppTheme.Tabs" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabBackground">@color/backgroundColor</item>
     </style>
 </resources>
 

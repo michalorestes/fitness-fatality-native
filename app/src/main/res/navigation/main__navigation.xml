@@ -2,15 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main__navigation"
-            app:startDestination="@id/myWorkoutsFragment">
+            app:startDestination="@id/mainTabsFragment">
 
-    <fragment android:id="@+id/myWorkoutsFragment" android:name="com.example.fitnessfatality.ui.myWorkouts.MyWorkoutsFragment"
-              android:label="My Workouts" tools:layout="@layout/fragment_my_workouts">
-        <action android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
-                app:destination="@id/createNewWorkoutFragment"/>
-        <action android:id="@+id/viewWorkoutDetails"
-                app:destination="@id/workoutDetailsFragment"/>
-    </fragment>
     <fragment android:id="@+id/workoutLoggingFragment"
               android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment"
               android:label="Workout Logging">
@@ -38,5 +31,13 @@
               android:name="com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
               android:label="fragment_exercise_database" tools:layout="@layout/fragment_exercise_database">
         <argument android:name="workoutId" app:argType="integer"/>
+    </fragment>
+    <fragment android:id="@+id/mainTabsFragment"
+              android:name="com.example.fitnessfatality.ui.myWorkouts.MainTabsFragment"
+              android:label="MainTabsFragment">
+        <action android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
+                app:destination="@id/createNewWorkoutFragment"/>
+        <action android:id="@+id/viewWorkoutDetails"
+                app:destination="@id/workoutDetailsFragment"/>
     </fragment>
 </navigation>

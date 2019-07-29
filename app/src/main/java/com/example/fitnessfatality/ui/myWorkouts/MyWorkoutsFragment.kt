@@ -3,13 +3,13 @@ package com.example.fitnessfatality.ui.myWorkouts
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,14 +24,14 @@ import kotlinx.android.synthetic.main.fragment_my_workouts.*
 class MyWorkoutsFragment : Fragment(),
     OnWorkoutListItemClickListener {
     private lateinit var workoutViewModel: WorkoutViewModel
-    private lateinit var onActivityInterractionInterface: OnActivityInteractionInterface
     private lateinit var recyclerViewAdapter: WorkoutsListAdapter
+    private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if(context is OnActivityInteractionInterface) {
-            onActivityInterractionInterface = context
+            onActivityInteractionInterface = context
         } else {
             throw Exception("MyWorkoutsFragments requires OnActivityInteractionInterface")
         }
@@ -47,6 +47,8 @@ class MyWorkoutsFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("MyWorkouts->", "onCreateView")
+
         return inflater.inflate(R.layout.fragment_my_workouts, container, false)
     }
 
@@ -63,13 +65,7 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        onActivityInterractionInterface.setPrimaryBottomAppBarMenu()
-        onActivityInterractionInterface.floatingActionButtonAction = {
-           Navigation
-                .findNavController(activity as Activity, R.id.workout_nav_host_fragment)
-                .navigate(R.id.action_myWorkoutsFragment_to_createNewWorkoutFragment)
-        }
-
+        Log.d("MyWorkouts->", "onStart")
         this.workoutViewModel.allWorkouts.observe(this, Observer {
             if (it != null) {
                 recyclerViewAdapter.updateDataSet(it)
@@ -78,7 +74,7 @@ class MyWorkoutsFragment : Fragment(),
     }
 
     override fun onWorkoutSelected(view: View, workout: Workout) {
-        val action = MyWorkoutsFragmentDirections.viewWorkoutDetails(workout.id!!)
+        val action = MainTabsFragmentDirections.viewWorkoutDetails(workout.id!!)
         view.findNavController().navigate(action)
     }
 }
