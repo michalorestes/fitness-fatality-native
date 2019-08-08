@@ -1,13 +1,13 @@
-package com.example.fitnessfatality.ui
+package com.example.fitnessfatality.ui.mainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.example.fitnessfatality.R
+import com.example.fitnessfatality.ui.mainActivity.bottomAppBarNavigation.BottomAppBarNavigation
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
 
     private lateinit var floatingActionButton: FloatingActionButton
     private lateinit var bottomAppBar: BottomAppBar
+
+    private lateinit var bottomAppBarNavigation: BottomAppBarNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,9 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
         setSupportActionBar(bottom_app_bar)
         toolbar.setupWithNavController(navController)
 
+
+
+        bottomAppBarNavigation = BottomAppBarNavigation(coordinatorLayout, navController)
         floatingActionButton = fab
         bottomAppBar = bottom_app_bar
     }
@@ -54,6 +59,8 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
 
         return true
     }
+
+
 
     override fun setFabAction(floatingActionButtonAction: () -> Unit) {
         this.floatingActionButtonAction = floatingActionButtonAction

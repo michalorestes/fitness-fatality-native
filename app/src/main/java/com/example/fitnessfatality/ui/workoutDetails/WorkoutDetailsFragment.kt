@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.ui.OnActivityInteractionInterface
+import com.example.fitnessfatality.ui.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.workoutDetails.adapters.WorkoutExercisesListAdapter
 import com.example.fitnessfatality.ui.workoutDetails.viewModels.WorkoutDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_workout_details.*

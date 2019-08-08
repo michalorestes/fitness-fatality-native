@@ -1,6 +1,5 @@
 package com.example.fitnessfatality.ui.myWorkouts
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.workout.Workout
-import com.example.fitnessfatality.ui.OnActivityInteractionInterface
+import com.example.fitnessfatality.ui.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.myWorkouts.adapters.OnWorkoutListItemClickListener
 import com.example.fitnessfatality.ui.myWorkouts.adapters.WorkoutsListAdapter
 import com.example.fitnessfatality.ui.myWorkouts.viewModels.WorkoutViewModel

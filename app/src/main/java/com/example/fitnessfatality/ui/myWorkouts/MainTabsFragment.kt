@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.ui.OnActivityInteractionInterface
+import com.example.fitnessfatality.ui.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.myWorkouts.adapters.MainTabsAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_main_tabs.view.*

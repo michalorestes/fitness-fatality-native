@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui
+package com.example.fitnessfatality.ui.mainActivity
 
 import android.view.MenuItem
 
