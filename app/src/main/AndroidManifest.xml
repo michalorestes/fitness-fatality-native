@@ -13,7 +13,7 @@
 
 
         <activity
-                android:name=".ui.MainActivity"
+                android:name="com.example.fitnessfatality.ui.screens.mainActivity.MainActivity"
                 android:launchMode="singleTop"
                 android:label="@string/title_activity_main">
             <intent-filter>

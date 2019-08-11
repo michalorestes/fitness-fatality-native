@@ -5,9 +5,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.example.fitnessfatality.ui.workoutTracking.viewModels.TrackingViewModel"/>
+        <import type="com.example.fitnessfatality.ui.screens.workoutTracking.viewModels.TrackingViewModel"/>
         <import type="java.util.List"/>
-        <import type="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment" />
+        <import type="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingFragment" />
         <import type="com.example.fitnessfatality.data.models.logging.LoggingType" />
         <variable name="viewModel" type="TrackingViewModel" />
         <variable name="handler" type="TrackingFragment" />

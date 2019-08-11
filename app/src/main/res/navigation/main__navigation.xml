@@ -5,7 +5,7 @@
             app:startDestination="@id/mainTabsFragment">
 
     <fragment android:id="@+id/workoutLoggingFragment"
-              android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingFragment"
+              android:name="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingFragment"
               android:label="Workout Logging">
         <action android:id="@+id/action_workoutLoggingFragment_to_trackingEndFragment"
                 app:destination="@id/trackingEndFragment" app:popUpToInclusive="false"
@@ -13,13 +13,13 @@
         <argument android:name="workoutId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/trackingEndFragment"
-              android:name="com.example.fitnessfatality.ui.workoutTracking.TrackingEndFragment"
+              android:name="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingEndFragment"
               android:label="TrackingEndFragment"/>
     <fragment android:id="@+id/createNewWorkoutFragment"
-              android:name="com.example.fitnessfatality.ui.myWorkouts.createNewWorkout.CreateNewWorkoutFragment"
+              android:name="com.example.fitnessfatality.ui.screens.myWorkouts.createNewWorkout.CreateNewWorkoutFragment"
               android:label="Create Workout"/>
     <fragment android:id="@+id/workoutDetailsFragment"
-              android:name="com.example.fitnessfatality.ui.workoutDetails.WorkoutDetailsFragment"
+              android:name="com.example.fitnessfatality.ui.screens.workoutDetails.WorkoutDetailsFragment"
               android:label="WorkoutDetailsFragment">
         <argument android:name="workoutId" app:argType="integer"/>
         <action android:id="@+id/actionToExerciseDatabase"
@@ -28,12 +28,12 @@
                 app:destination="@id/workoutLoggingFragment"/>
     </fragment>
     <fragment android:id="@+id/exerciseDatabaseFragment"
-              android:name="com.example.fitnessfatality.ui.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
+              android:name="com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
               android:label="fragment_exercise_database" tools:layout="@layout/fragment_exercise_database">
         <argument android:name="workoutId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/mainTabsFragment"
-              android:name="com.example.fitnessfatality.ui.myWorkouts.MainTabsFragment"
+              android:name="com.example.fitnessfatality.ui.screens.myWorkouts.MainTabsFragment"
               android:label="MainTabsFragment">
         <action android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
                 app:destination="@id/createNewWorkoutFragment"/>
