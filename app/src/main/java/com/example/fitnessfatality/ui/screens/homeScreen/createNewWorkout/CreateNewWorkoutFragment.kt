@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.myWorkouts.createNewWorkout
+package com.example.fitnessfatality.ui.screens.homeScreen.createNewWorkout
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.workout.Workout
-import com.example.fitnessfatality.ui.screens.myWorkouts.viewModels.WorkoutViewModel
+import com.example.fitnessfatality.ui.screens.homeScreen.viewModels.WorkoutViewModel
 import kotlinx.android.synthetic.main.fragment_create_new_workout.*
 
 class CreateNewWorkoutFragment : Fragment() {

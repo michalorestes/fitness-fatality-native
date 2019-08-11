@@ -16,7 +16,7 @@
               android:name="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingEndFragment"
               android:label="TrackingEndFragment"/>
     <fragment android:id="@+id/createNewWorkoutFragment"
-              android:name="com.example.fitnessfatality.ui.screens.myWorkouts.createNewWorkout.CreateNewWorkoutFragment"
+              android:name="com.example.fitnessfatality.ui.screens.homeScreen.createNewWorkout.CreateNewWorkoutFragment"
               android:label="Create Workout"/>
     <fragment android:id="@+id/workoutDetailsFragment"
               android:name="com.example.fitnessfatality.ui.screens.workoutDetails.WorkoutDetailsFragment"
@@ -33,7 +33,7 @@
         <argument android:name="workoutId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/mainTabsFragment"
-              android:name="com.example.fitnessfatality.ui.screens.myWorkouts.MainTabsFragment"
+              android:name="com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragment"
               android:label="MainTabsFragment">
         <action android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
                 app:destination="@id/createNewWorkoutFragment"/>

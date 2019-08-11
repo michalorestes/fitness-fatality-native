@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.myWorkouts
+package com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts
 
 import android.content.Context
 import android.os.Bundle
@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.workout.Workout
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
-import com.example.fitnessfatality.ui.screens.myWorkouts.adapters.OnWorkoutListItemClickListener
-import com.example.fitnessfatality.ui.screens.myWorkouts.adapters.WorkoutsListAdapter
-import com.example.fitnessfatality.ui.screens.myWorkouts.viewModels.WorkoutViewModel
+import com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragmentDirections
+import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
+import com.example.fitnessfatality.ui.screens.homeScreen.adapters.WorkoutsListAdapter
+import com.example.fitnessfatality.ui.screens.homeScreen.viewModels.WorkoutViewModel
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
 class MyWorkoutsFragment : Fragment(),
@@ -73,7 +74,10 @@ class MyWorkoutsFragment : Fragment(),
     }
 
     override fun onWorkoutSelected(view: View, workout: Workout) {
-        val action = MainTabsFragmentDirections.viewWorkoutDetails(workout.id!!)
+        val action =
+            MainTabsFragmentDirections.viewWorkoutDetails(
+                workout.id!!
+            )
         view.findNavController().navigate(action)
     }
 }

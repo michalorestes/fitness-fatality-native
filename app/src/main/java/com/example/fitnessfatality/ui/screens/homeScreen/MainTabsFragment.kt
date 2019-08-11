@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.myWorkouts
+package com.example.fitnessfatality.ui.screens.homeScreen
 
 import android.app.Activity
 import android.content.Context
@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
-import com.example.fitnessfatality.ui.screens.myWorkouts.adapters.MainTabsAdapter
+import com.example.fitnessfatality.ui.screens.homeScreen.adapters.MainTabsAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_main_tabs.view.*
 

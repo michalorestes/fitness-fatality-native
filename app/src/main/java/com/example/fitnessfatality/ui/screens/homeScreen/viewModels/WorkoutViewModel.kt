@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.myWorkouts.viewModels
+package com.example.fitnessfatality.ui.screens.homeScreen.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

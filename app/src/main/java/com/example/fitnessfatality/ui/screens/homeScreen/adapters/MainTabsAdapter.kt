@@ -1,11 +1,11 @@
-package com.example.fitnessfatality.ui.screens.myWorkouts.adapters
+package com.example.fitnessfatality.ui.screens.homeScreen.adapters
 
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.fitnessfatality.ui.screens.dashboard.DashboardFragment
-import com.example.fitnessfatality.ui.screens.myWorkouts.MyWorkoutsFragment
+import com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts.MyWorkoutsFragment
 
 class MainTabsAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     private val myWorkoutsFragment = MyWorkoutsFragment()

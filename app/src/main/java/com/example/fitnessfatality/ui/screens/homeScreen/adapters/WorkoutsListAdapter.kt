@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.myWorkouts.adapters
+package com.example.fitnessfatality.ui.screens.homeScreen.adapters
 
 import android.content.res.Resources
 import android.view.LayoutInflater
