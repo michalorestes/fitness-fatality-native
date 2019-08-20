@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
             android:id="@+id/navigation_my_workouts"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_mode_edit_white_24dp"
             android:title="@string/Workouts"
-            app:showAsAction="always"/>
-
-    <item
-            android:id="@+id/nav_exercise_database"
-            android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/my_profile"
-            app:showAsAction="always"/>
-
-    <item
-            android:id="@+id/navigation_my_settings"
-            android:icon="@drawable/ic_notifications_black_24dp"
-            android:title="@string/settings"
-            app:showAsAction="always"/>
-
+            app:showAsAction="always" />
 </menu>

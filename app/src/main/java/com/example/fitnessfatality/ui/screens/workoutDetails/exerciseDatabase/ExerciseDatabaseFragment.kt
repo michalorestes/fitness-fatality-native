@@ -1,5 +1,6 @@
 package com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,16 +14,30 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.exercise.Exercise
+import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
+import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.adapters.ExercisesListAdapter
 import com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.adapters.OnExerciseListListener
 import com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.viewModels.ExercisesViewModel
 import kotlinx.android.synthetic.main.fragment_exercise_database.*
+import java.lang.Exception
 
 class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
 
     private val args: ExerciseDatabaseFragmentArgs by navArgs()
     private lateinit var exercisesViewModel: ExercisesViewModel
     private lateinit var exercisesListAdapter: ExercisesListAdapter
+
+    private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnActivityInteractionInterface) {
+            onActivityInteractionInterface = context
+        } else {
+            throw Exception("Context must be instance of OnActivityInteractionInterface")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +64,7 @@ class ExerciseDatabaseFragment : Fragment(), OnExerciseListListener {
 
     override fun onStart() {
         super.onStart()
-        Log.d("ExerciseDatabase-->", args.workoutId.toString())
+        onActivityInteractionInterface.setBottomAppBarAdapter(BottomAppBarAdapter(isGone = true))
         exercisesViewModel.exercises.observe(this, Observer {
             exercisesListAdapter.updateDataSet(it)
         })

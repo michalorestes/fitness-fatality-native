@@ -1,11 +1,7 @@
 package com.example.fitnessfatality.ui.screens.mainActivity
 
-import android.view.MenuItem
+import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
 
 interface OnActivityInteractionInterface {
-    var floatingActionButtonAction: () -> Unit
-    var optionsItemMenuAction: (item: MenuItem?) -> Unit
-    fun setFabAction(floatingActionButtonAction:() -> Unit)
-    fun setSecondaryBottomAppBarMenu()
-    fun setPrimaryBottomAppBarMenu()
+    fun setBottomAppBarAdapter(adapter: BottomAppBarAdapter)
 }

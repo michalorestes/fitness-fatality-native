@@ -2,7 +2,6 @@ package com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +38,6 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         workoutViewModel = ViewModelProviders.of(activity!!).get(WorkoutViewModel::class.java)
     }
 
@@ -47,8 +45,6 @@ class MyWorkoutsFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("MyWorkouts->", "onCreateView")
-
         return inflater.inflate(R.layout.fragment_my_workouts, container, false)
     }
 
@@ -65,7 +61,6 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        Log.d("MyWorkouts->", "onStart")
         this.workoutViewModel.allWorkouts.observe(this, Observer {
             if (it != null) {
                 recyclerViewAdapter.updateDataSet(it)

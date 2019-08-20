@@ -41,7 +41,8 @@
         <RadioButton
                 android:text="Image A"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/radio_image_a" android:layout_weight="1"/>
+                android:layout_height="wrap_content" android:id="@+id/radio_image_a" android:layout_weight="1"
+                android:checked="true"/>
         <RadioButton
                 android:text="Image B"
                 android:layout_width="wrap_content"

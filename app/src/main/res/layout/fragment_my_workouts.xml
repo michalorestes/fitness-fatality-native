@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.screens.homeScreen.myWorkouts.MyWorkoutsFragment"
-        android:id="@+id/frameLayout">
+        tools:context=".ui.screens.homeScreen.myWorkouts.MyWorkoutsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/workouts_list"
-            android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="96dp"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false"
+            android:paddingBottom="86dp"
+            android:scrollbars="vertical" />
 </FrameLayout>
