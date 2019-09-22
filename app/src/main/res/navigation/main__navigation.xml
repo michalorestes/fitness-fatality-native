@@ -20,24 +20,32 @@
               android:label="Create Workout"/>
     <fragment android:id="@+id/workoutDetailsFragment"
               android:name="com.example.fitnessfatality.ui.screens.workoutDetails.WorkoutDetailsFragment"
-              android:label="WorkoutDetailsFragment">
+              android:label="{workoutName}">
         <argument android:name="workoutId" app:argType="integer"/>
+        <argument android:name="workoutName" app:argType="string"/>
         <action android:id="@+id/actionToExerciseDatabase"
                 app:destination="@id/exerciseDatabaseFragment"/>
         <action android:id="@+id/actionToTrackWorkout"
                 app:destination="@id/workoutLoggingFragment"/>
     </fragment>
-    <fragment android:id="@+id/exerciseDatabaseFragment"
-              android:name="com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
-              android:label="fragment_exercise_database" tools:layout="@layout/fragment_exercise_database">
-        <argument android:name="workoutId" app:argType="integer"/>
+    <fragment
+            android:id="@+id/exerciseDatabaseFragment"
+            android:name="com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
+            android:label="Exercise Database"
+            tools:layout="@layout/fragment_exercise_database">
+        <argument
+                android:name="workoutId"
+                app:argType="integer" />
     </fragment>
-    <fragment android:id="@+id/mainTabsFragment"
-              android:name="com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragment"
-              android:label="MainTabsFragment">
-        <action android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
-                app:destination="@id/createNewWorkoutFragment"/>
-        <action android:id="@+id/viewWorkoutDetails"
-                app:destination="@id/workoutDetailsFragment"/>
+    <fragment
+            android:id="@+id/mainTabsFragment"
+            android:name="com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragment"
+            android:label="Fitness Fatality">
+        <action
+                android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
+                app:destination="@id/createNewWorkoutFragment" />
+        <action
+                android:id="@+id/viewWorkoutDetails"
+                app:destination="@id/workoutDetailsFragment" />
     </fragment>
 </navigation>

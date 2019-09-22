@@ -71,7 +71,8 @@ class MyWorkoutsFragment : Fragment(),
     override fun onWorkoutSelected(view: View, workout: Workout) {
         val action =
             MainTabsFragmentDirections.viewWorkoutDetails(
-                workout.id!!
+                workout.id!!,
+                workout.name
             )
         view.findNavController().navigate(action)
     }
