@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.exercise.Exercise
-import kotlinx.android.synthetic.main.recycler_view_exercises_list.view.*
+import kotlinx.android.synthetic.main.recycler_view_exercise_database_list.view.*
 
 class ExercisesListAdapter(
     private val onExerciseListListener: OnExerciseListListener
@@ -18,7 +18,7 @@ class ExercisesListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemContainer = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_exercises_list, parent, false) as  ConstraintLayout
+            .inflate(R.layout.recycler_view_exercise_database_list, parent, false) as  ConstraintLayout
 
         val addToWorkoutBtn = itemContainer.findViewById<ImageButton>(R.id.btn_add_to_workout)
 
@@ -43,7 +43,17 @@ class ExercisesListAdapter(
         val itemData = dataSet[position]
         holder.itemView.tag = itemData
         holder.itemView.lbl_exercise_name.text = itemData.name
+
+        //TODO: Perhabs there is a better way of storing muscle groups in entity so this loop wouldn't be necessary?
+        var muscleGroups: String = itemData.primaryMuscleGroup.muscleName.capitalize()
+        itemData.secondaryMuscleGroups.forEach {
+            muscleGroups += ", " +it.muscleName.capitalize()
+        }
+
+        holder.itemView.lbl_muscle_groups.text = muscleGroups
     }
+
+
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 }
