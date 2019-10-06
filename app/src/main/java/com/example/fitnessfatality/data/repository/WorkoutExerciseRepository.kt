@@ -17,4 +17,8 @@ class WorkoutExerciseRepository(private val dao: WorkoutExerciseDao) {
     fun findWorkoutExercisesByWorkoutId(workoutId: Int): LiveData<List<WorkoutExercisePojo>> {
         return dao.findByWorkoutId(workoutId)
     }
+
+    fun update(workoutExercise: WorkoutExercise) {
+        dao.update(workoutExercise)
+    }
 }

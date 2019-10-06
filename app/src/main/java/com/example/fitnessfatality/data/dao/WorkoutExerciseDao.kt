@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 
@@ -38,4 +39,6 @@ interface WorkoutExerciseDao {
             "WHERE we.workoutId = :workoutId")
     fun findByWorkoutId(workoutId: Int): LiveData<List<WorkoutExercisePojo>>
 
+    @Update
+    fun update(workoutExercise: WorkoutExercise)
 }

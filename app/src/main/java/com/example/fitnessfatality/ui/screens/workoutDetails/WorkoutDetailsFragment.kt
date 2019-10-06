@@ -14,14 +14,16 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
+import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarActionListenerInterface
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
+import com.example.fitnessfatality.ui.screens.workoutDetails.adapters.OnWorkoutExerciseClickListener
 import com.example.fitnessfatality.ui.screens.workoutDetails.adapters.WorkoutExercisesListAdapter
 import com.example.fitnessfatality.ui.screens.workoutDetails.viewModels.WorkoutDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_workout_details.*
 
-class WorkoutDetailsFragment : Fragment(), BottomAppBarActionListenerInterface {
+class WorkoutDetailsFragment : Fragment(), BottomAppBarActionListenerInterface, OnWorkoutExerciseClickListener {
 
     private val args: WorkoutDetailsFragmentArgs by navArgs()
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
@@ -53,7 +55,7 @@ class WorkoutDetailsFragment : Fragment(), BottomAppBarActionListenerInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerViewAdapter = WorkoutExercisesListAdapter()
+        recyclerViewAdapter = WorkoutExercisesListAdapter(this)
         val myLayoutManager = LinearLayoutManager(context)
         (workout_exercises_list as RecyclerView).apply {
             setHasFixedSize(true)
@@ -98,8 +100,16 @@ class WorkoutDetailsFragment : Fragment(), BottomAppBarActionListenerInterface {
                     .findNavController(activity!!, R.id.workout_nav_host_fragment)
                     .navigate(action)
             }
+            R.id.nav_exercise_edit -> {
+
+            }
         }
 
         return true
+    }
+
+    override fun onWorkoutExerciseInfoClick(workoutExercise: WorkoutExercisePojo) {
+        val dialog = WorkoutExerciseInfoDialog(workoutExercise, workoutDetailsViewModel)
+        dialog.show(fragmentManager!!, "my_dialog")
     }
 }

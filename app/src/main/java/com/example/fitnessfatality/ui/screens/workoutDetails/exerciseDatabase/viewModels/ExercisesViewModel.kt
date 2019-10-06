@@ -30,7 +30,7 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
             workoutId = workoutId,
             exerciseId = exercise.id,
             selectedLoggingType = LoggingType.WEIGHTS,
-            loggingTarget = hashMapOf("sets" to 2, "rest" to 90) //TODO: This is some dummy data
+            loggingTarget = hashMapOf("sets" to 2, "rest" to 90, "reps" to 4) //TODO: This is some dummy data
         )
 
         workoutExerciseRepository.insert(workoutExercise)
