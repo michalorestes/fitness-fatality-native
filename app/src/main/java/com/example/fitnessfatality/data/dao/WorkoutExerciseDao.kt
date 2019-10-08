@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Delete
 import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 
@@ -41,4 +42,7 @@ interface WorkoutExerciseDao {
 
     @Update
     fun update(workoutExercise: WorkoutExercise)
+
+    @Delete
+    fun delete(workoutExercise: WorkoutExercise)
 }

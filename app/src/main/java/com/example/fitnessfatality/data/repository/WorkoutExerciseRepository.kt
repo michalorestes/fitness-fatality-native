@@ -21,4 +21,8 @@ class WorkoutExerciseRepository(private val dao: WorkoutExerciseDao) {
     fun update(workoutExercise: WorkoutExercise) {
         dao.update(workoutExercise)
     }
+
+    fun delete(workoutExercise: WorkoutExercise) {
+        dao.delete(workoutExercise)
+    }
 }

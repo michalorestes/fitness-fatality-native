@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 class WorkoutDetailsViewModel(applicatin: Application): BaseViewModel(applicatin) {
     private val workoutExerciseRepository: WorkoutExerciseRepository
 
+    var isRecyclerViewInEditMode: Boolean = false
+
     init {
         val db = AppDatabase.getDatabase(applicatin, scope)
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
@@ -24,5 +26,9 @@ class WorkoutDetailsViewModel(applicatin: Application): BaseViewModel(applicatin
 
     fun update(workoutExercise: WorkoutExercise) = scope.launch(Dispatchers.IO) {
         workoutExerciseRepository.update(workoutExercise)
+    }
+
+    fun delete(workoutExercise: WorkoutExercise) = scope.launch(Dispatchers.IO) {
+        workoutExerciseRepository.delete(workoutExercise)
     }
 }
