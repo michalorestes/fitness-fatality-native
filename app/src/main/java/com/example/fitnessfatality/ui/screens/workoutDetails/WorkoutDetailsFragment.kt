@@ -29,9 +29,9 @@ class WorkoutDetailsFragment : Fragment(), BottomAppBarActionListenerInterface,
     OnWorkoutExerciseClickListener {
 
     private val args: WorkoutDetailsFragmentArgs by navArgs()
-    private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
     private lateinit var recyclerViewAdapter: WorkoutExercisesListAdapter
     private lateinit var workoutDetailsViewModel: WorkoutDetailsViewModel
+    private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

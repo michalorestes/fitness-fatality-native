@@ -1,136 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main_linear_container"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="com.example.fitnessfatality.ui.screens.workoutTracking.viewModels.TrackingViewModel"/>
-        <import type="java.util.List"/>
-        <import type="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingFragment" />
-        <import type="com.example.fitnessfatality.data.models.logging.LoggingType" />
-        <variable name="viewModel" type="TrackingViewModel" />
-        <variable name="handler" type="TrackingFragment" />
-        <variable name="logs" type="androidx.lifecycle.MutableLiveData&lt;String>" />
+        <variable name="trackingViewModel" type="TrackingViewModel" />
     </data>
 
-    <LinearLayout
-            android:orientation="vertical" android:layout_height="match_parent" android:layout_width="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{trackingViewModel.currentExercise.exercise.name}"
+                android:textAlignment="center"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Exercise Name" />
+
+        <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/constraintLayout">
-            <TextView
-                    android:text="@{viewModel.currentSetIndex + ` / ` + viewModel.currentExerciseTotalSetsNo}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_current_set_number" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/label_exercise_name"/>
-            <TextView
-                    android:text="@{viewModel.currentExerciseName}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_exercise_name" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="32dp"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
-            <TextView
-                    android:text="Lifeted Weight:"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_lifted_weight" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="32dp" android:layout_marginTop="32dp"
-                    app:layout_constraintTop_toBottomOf="@+id/label_current_set_number"/>
-            <TextView
-                    android:text="Reps No."
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_reps_number" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="32dp" android:layout_marginTop="32dp"
-                    app:layout_constraintTop_toBottomOf="@+id/text_lifted_weight"/>
-            <TextView
-                    android:text="Duration"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_duration" app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/text_reps_number"
-                    android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"/>
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:ems="10"
-                    android:enabled="@{viewModel.currentLoggingType == LoggingType.WEIGHTS}"
-                    android:id="@+id/text_lifted_weight"
-                    android:text="@={viewModel.currentLog[`liftedWeight`]}"
-                    android:hint="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/label_lifted_weight" android:layout_marginStart="32dp"
-                    app:layout_constraintTop_toTopOf="@+id/label_lifted_weight"
-                    app:layout_constraintBottom_toBottomOf="@+id/label_lifted_weight"/>
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:enabled="@{viewModel.currentLoggingType == LoggingType.WEIGHTS}"
-                    android:text="@={viewModel.currentLog[`repsNo`]}"
-                    android:id="@+id/text_reps_number" android:hint="0" android:inputType="numberSigned"
-                    app:layout_constraintStart_toEndOf="@+id/label_reps_number" android:layout_marginStart="32dp"
-                    app:layout_constraintTop_toTopOf="@+id/label_reps_number"
-                    app:layout_constraintBottom_toBottomOf="@+id/label_reps_number"/>
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:text=""
-                    android:id="@+id/text_duration"
-                    android:hint="@{Integer.toString(viewModel.currentDuration)}"
-                    android:inputType="numberSigned"
-                    app:layout_constraintStart_toEndOf="@+id/label_duration" android:layout_marginStart="32dp"
-                    app:layout_constraintTop_toTopOf="@+id/label_duration"
-                    app:layout_constraintBottom_toBottomOf="@+id/label_duration"
-                    android:enabled="@{viewModel.currentLoggingType == LoggingType.DURATION}"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
 
             <TextView
-                    android:text="@{Integer.toString(viewModel.restTimer)}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/label_rest_timer"
-                    android:layout_gravity="center|center_vertical" android:textSize="30sp"/>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:padding="8dp">
-                <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:layout_weight="1"/>
-                <Button
-                        android:text="Next"
-                        android:enabled="@{viewModel.isNextEnabled}"
-                        android:onClick="@{handler::onNext}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/btn_next" android:layout_weight="1"/>
-            </LinearLayout>
-            <ScrollView
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingBottom="80dp">
-                <TextView
-                        android:text="@{logs}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/label_logs"/>
-            </ScrollView>
+                    android:layout_weight="0.3"
+                    android:text="Set"
+                    android:textAlignment="center" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reps"
+                    android:textAlignment="center" />
+
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weight (kg)"
+                    android:textAlignment="center" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Status"
+                    android:textAlignment="center" />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/txt_rest_timer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <LinearLayout
+                    android:id="@+id/sets_entry_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+
+        <TextView
+                android:id="@+id/txt_rest_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@{Integer.toString(trackingViewModel.currentRestTime)}"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="s rest"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_rest_timer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/txt_rest_timer"
+                app:layout_constraintTop_toTopOf="@+id/txt_rest_timer" />
+
+        <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp">
+
+            <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <Button
+                    android:enabled="@{trackingViewModel.controlsEnabled}"
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="@{(v) -> trackingViewModel.onNextClick(v)}"
+                    android:text="Next" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

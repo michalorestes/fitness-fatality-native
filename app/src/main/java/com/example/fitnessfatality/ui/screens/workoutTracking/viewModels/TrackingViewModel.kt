@@ -5,147 +5,117 @@ import android.os.CountDownTimer
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.findNavController
-import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.database.AppDatabase
-import com.example.fitnessfatality.data.models.logging.ExerciseLog
-import com.example.fitnessfatality.data.models.logging.LoggingType
 import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
-import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.repository.ExerciseLogRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
 import com.example.fitnessfatality.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
+import kotlinx.coroutines.withContext
 
 class TrackingViewModel(application: Application) : BaseViewModel(application) {
+    var currentExercise: MutableLiveData<WorkoutExercisePojo> = MutableLiveData()
+    var currentSet = MutableLiveData(0)
+    var currentRestTime = MutableLiveData(0)
+    val controlsEnabled = MutableLiveData(true)
+    val isEndOfSession = MutableLiveData<Boolean>(false)
 
-    var workoutExercises: LiveData<List<WorkoutExercisePojo>>
-
-    val isNextEnabled = MutableLiveData<Boolean>()
-    val currentExerciseName = MutableLiveData<String>()
-    val restTimer = MutableLiveData<Int>()
-    val currentLog: Map<String, String>
-    val currentExerciseTotalSetsNo = MutableLiveData<Int>()
-    val currentDuration = MutableLiveData<Int>()
-    val currentLoggingType = MutableLiveData<LoggingType>()
-
-    private val currentExerciseIndex: MutableLiveData<Int> = MutableLiveData()
-    val currentSetIndex = MutableLiveData<Int>()
-
+    private var workoutExercises: LiveData<List<WorkoutExercisePojo>>
     private val workoutExerciseRepository: WorkoutExerciseRepository
     private val exerciseLogRepository: ExerciseLogRepository
+    private var exerciseIndex = 0
 
     init {
         val db = AppDatabase.getDatabase(application, scope)
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
         exerciseLogRepository = ExerciseLogRepository(db.exerciseLogDao())
         workoutExercises = MutableLiveData()
-        currentExerciseIndex.value = 0
-        currentSetIndex.value = STARTING_SET
-        currentDuration.value = 0
-        currentLog = mapOf("repsNo" to "0", "liftedWeight" to "0.0")
     }
 
-    //TODO: This should be done with a ViewModel factory but let's leave it like this for now!!!!!
-    fun loadWorkoutExercises(workoutId: Int) {
-        workoutExercises = workoutExerciseRepository.findWorkoutExercisesByWorkoutId(workoutId)
-    }
-
-    fun onNextHandler(view: View) {
-        //TODO: This function should identify when there is one exercise left and update the "Next" btn to
-        //TODO: display "COMPLETE WORKOUT"
-        val isLastExercise: Boolean = (workoutExercises.value!!.size - 1) <= currentExerciseIndex.value!!
-        if (isLastExercise) {
-            enableControls(false)
-            view.findNavController().navigate(R.id.action_workoutLoggingFragment_to_trackingEndFragment)
-            return
-        }
-
-        saveLogData()
-        incrementIndexesToNextLog()
-        updateUiData()
-        startRestTimer()
-    }
-
-    private fun saveLogData() {
-        val workoutExercisePojo: WorkoutExercisePojo = workoutExercises.value!![currentExerciseIndex.value!!]
-        val log = ExerciseLog(
-            date = LocalDateTime.now(),
-            exerciseId = workoutExercisePojo.exercise!!.id,
-            workoutExerciseId = workoutExercisePojo.workoutExercise!!.id!!,
-            workoutId = 0, //TODO: Replace with real workout ID once accessible
-            type = workoutExercisePojo.workoutExercise!!.selectedLoggingType,
-            value = mapOf(
-                "setIndex" to currentSetIndex.value!!.toString(),
-                "reps" to (currentLog["repsNo"] ?: error("0")),
-                "liftedWeight" to (currentLog["liftedWeight"] ?: error("0.0"))
+    suspend fun loadWorkoutExercises(workoutId: Int) = GlobalScope.launch(Dispatchers.Main) {
+        workoutExercises = withContext(Dispatchers.Default) {
+            MutableLiveData(
+                workoutExerciseRepository.findWorkoutExercisesByWorkoutIdBlocking(workoutId)
             )
-        )
-
-        scope.launch(Dispatchers.IO) {
-            exerciseLogRepository.insert(log)
         }
+
+        if (workoutExercises.value!!.isNotEmpty()) {
+            currentExercise.value = workoutExercises.value!![exerciseIndex]
+        }
+    }
+
+    fun onNextClick(view: View) {
+
+        if (!isEndOfSession()) {
+            incrementIndexesToNextLog()
+            startRestTimer()
+        } else {
+            endSession()
+        }
+    }
+
+    private fun isEndOfSession(): Boolean {
+        val currentExerciseNumberOfSets = currentExercise
+            .value!!
+            .workoutExercise!!
+            .loggingTarget["sets"]!!
+            .toInt()
+
+        val isLastExercise = (workoutExercises.value!!.size - 1) == exerciseIndex
+        val isLastSet = (currentExerciseNumberOfSets - 1) == currentSet.value!!
+
+        return isLastExercise && isLastSet
     }
 
     private fun incrementIndexesToNextLog() {
-        val data: WorkoutExercisePojo = workoutExercises.value!![currentExerciseIndex.value!!]
-        val isLastSet: Boolean = data.workoutExercise!!.loggingTarget["sets"]!! <= currentSetIndex.value!!
-        if (isLastSet) {
-            currentSetIndex.value = STARTING_SET
-            currentExerciseIndex.value = currentExerciseIndex.value!!.plus(1)
-        } else {
-            currentSetIndex.value = currentSetIndex.value!!.plus(1)
+        val currentExerciseNumberOfSets = currentExercise
+            .value!!
+            .workoutExercise!!
+            .loggingTarget["sets"]!!
+            .toInt()
+        if(currentSet.value!! < (currentExerciseNumberOfSets.minus(1)))  {
+            currentSet.value = currentSet.value!!.plus(1)
+        } else if (exerciseIndex < (workoutExercises.value!!.size.minus(1))) {
+            currentSet.value = 0
+            exerciseIndex++
+            currentExercise.value = workoutExercises.value!![exerciseIndex]
         }
     }
 
-    fun updateUiData() {
-        val data: WorkoutExercisePojo = workoutExercises.value!![currentExerciseIndex.value!!]
-        currentExerciseName.value = data.exercise!!.name
-        updateLoggingType(data.workoutExercise!!)
-        enableControls(true)
-    }
-
-    private fun updateLoggingType(workoutExercise: WorkoutExercise) {
-        currentLoggingType.value = workoutExercise.selectedLoggingType
-        if (workoutExercise.selectedLoggingType == LoggingType.WEIGHTS) {
-            currentExerciseTotalSetsNo.value = workoutExercise.loggingTarget["sets"]
-        } else if (workoutExercise.selectedLoggingType == LoggingType.DURATION) {
-            currentDuration.value = workoutExercise.loggingTarget["duration"]
-        }
-
-        restTimer.value = workoutExercise.loggingTarget["rest"]!!
-    }
-
-    //TODO: Timer can be encapsulated in its own Compound view
     private fun startRestTimer() {
         enableControls(false)
-        val timer = object : CountDownTimer(1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                restTimer.value = restTimer.value!! - 1
-            }
+//        TODO: Disabled real timer for debugging
+//        val restTimeSeconds = currentExercise
+//            .value!!
+//            .workoutExercise!!
+//            .loggingTarget["rest"]!!
+//            .toInt()
 
+        val restTimeSeconds = 2
+        currentRestTime.value = restTimeSeconds
+
+        val timer = object: CountDownTimer((restTimeSeconds * 1000).toLong(), 1000) {
             override fun onFinish() {
                 enableControls(true)
             }
+
+            override fun onTick(p0: Long) {
+                currentRestTime.value = currentRestTime.value!!.minus(1)
+            }
         }
+
         timer.start()
     }
 
     private fun enableControls(isEnabled: Boolean) {
-        isNextEnabled.value = isEnabled
+        //TODO: Disable & enable remaining controls
+        controlsEnabled.value = isEnabled
     }
 
-    fun getLogs(): LiveData<List<ExerciseLog>> {
-        return exerciseLogRepository.allLogs
-    }
-
-    fun getWorkoutWorkoutExercises(): LiveData<List<WorkoutExercisePojo>> {
-        return workoutExercises
-    }
-
-    companion object {
-        const val STARTING_SET: Int = 1
+    private fun endSession() {
+        isEndOfSession.value = true
+        enableControls(false)
     }
 }

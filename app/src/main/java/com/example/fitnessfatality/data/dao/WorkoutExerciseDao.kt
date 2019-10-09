@@ -40,6 +40,18 @@ interface WorkoutExerciseDao {
             "WHERE we.workoutId = :workoutId")
     fun findByWorkoutId(workoutId: Int): LiveData<List<WorkoutExercisePojo>>
 
+    @Query("SELECT we.*, " +
+            "e.id as _id," +
+            "e.name as _name, " +
+            "e.exerciseType as _exerciseType ," +
+            "e.primaryMuscleGroup as _primaryMuscleGroup, " +
+            "e.secondaryMuscleGroups as _secondaryMuscleGroups, " +
+            "e.isCustom as _isCustom " +
+            "FROM workout_exercise we " +
+            "INNER JOIN exercise e ON we.exercise_id = e.id " +
+            "WHERE we.workoutId = :workoutId")
+    fun findByWorkoutIdBlocking(workoutId: Int): List<WorkoutExercisePojo>
+
     @Update
     fun update(workoutExercise: WorkoutExercise)
 

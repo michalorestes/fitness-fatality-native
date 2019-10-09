@@ -18,6 +18,10 @@ class WorkoutExerciseRepository(private val dao: WorkoutExerciseDao) {
         return dao.findByWorkoutId(workoutId)
     }
 
+    fun findWorkoutExercisesByWorkoutIdBlocking(workoutId: Int): List<WorkoutExercisePojo> {
+        return dao.findByWorkoutIdBlocking(workoutId)
+    }
+
     fun update(workoutExercise: WorkoutExercise) {
         dao.update(workoutExercise)
     }
