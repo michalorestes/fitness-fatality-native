@@ -16,7 +16,7 @@ import com.example.fitnessfatality.data.models.workout.Workout
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragmentDirections
 import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
-import com.example.fitnessfatality.ui.screens.homeScreen.adapters.WorkoutsListAdapter
+import com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts.adapters.WorkoutsListAdapter
 import com.example.fitnessfatality.ui.screens.homeScreen.viewModels.WorkoutViewModel
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
@@ -50,7 +50,11 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerViewAdapter = WorkoutsListAdapter(this, resources)
+        recyclerViewAdapter =
+            WorkoutsListAdapter(
+                this,
+                resources
+            )
         val linearLayoutManager = LinearLayoutManager(context)
         (workouts_list as RecyclerView).apply {
             setHasFixedSize(true)
@@ -74,6 +78,14 @@ class MyWorkoutsFragment : Fragment(),
                 workout.id!!,
                 workout.name
             )
+
+        view.findNavController().navigate(action)
+    }
+
+    override fun onWorkoutSessionSelected(view: View, workout: Workout) {
+        val action = MainTabsFragmentDirections.
+            actionMainTabsFragmentToWorkoutLoggingFragment(workout.id!!)
+
         view.findNavController().navigate(action)
     }
 }

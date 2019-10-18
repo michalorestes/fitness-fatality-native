@@ -5,4 +5,5 @@ import com.example.fitnessfatality.data.models.workout.Workout
 
 interface OnWorkoutListItemClickListener {
     fun onWorkoutSelected(view: View, workout: Workout)
+    fun onWorkoutSessionSelected(view: View, workout: Workout)
 }

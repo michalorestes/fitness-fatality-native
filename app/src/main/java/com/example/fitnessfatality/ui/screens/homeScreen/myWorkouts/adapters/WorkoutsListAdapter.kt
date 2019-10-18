@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.homeScreen.adapters
+package com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts.adapters
 
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.workout.Workout
+import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
 import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
 
 class WorkoutsListAdapter(
@@ -17,13 +18,25 @@ class WorkoutsListAdapter(
     private var dataSet: List<Workout> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemContainer = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_workout_list, parent, false) as ConstraintLayout
+        val itemContainer = LayoutInflater
+            .from(parent.context)
+            .inflate(
+                R.layout.recycler_view_workout_list,
+                parent,
+                false
+            ) as ConstraintLayout
+
 
         itemContainer.setOnClickListener {
-            val workout: Workout = it.tag as Workout
-            this.workoutsListListener.onWorkoutSelected(it, workout)
+            val workout: Workout = itemContainer.tag as Workout
+            workoutsListListener.onWorkoutSelected(it, workout)
         }
+
+        itemContainer.chip_start_workout.setOnClickListener {
+            val workout: Workout = itemContainer.tag as Workout
+            workoutsListListener.onWorkoutSessionSelected(it, workout)
+        }
+
         return ViewHolder(itemContainer)
     }
 
