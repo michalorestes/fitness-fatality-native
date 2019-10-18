@@ -23,10 +23,20 @@
               android:label="{workoutName}">
         <argument android:name="workoutId" app:argType="integer"/>
         <argument android:name="workoutName" app:argType="string"/>
-        <action android:id="@+id/actionToExerciseDatabase"
-                app:destination="@id/exerciseDatabaseFragment"/>
-        <action android:id="@+id/actionToTrackWorkout"
-                app:destination="@id/workoutLoggingFragment"/>
+        <action
+                android:id="@+id/actionToExerciseDatabase"
+                app:destination="@id/exerciseDatabaseFragment"
+                app:enterAnim="@anim/fragment_close_enter"
+                app:exitAnim="@anim/fragment_close_exit"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+                android:id="@+id/actionToTrackWorkout"
+                app:destination="@id/workoutLoggingFragment"
+                app:enterAnim="@anim/fragment_close_enter"
+                app:exitAnim="@anim/fragment_close_exit"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
             android:id="@+id/exerciseDatabaseFragment"
@@ -43,9 +53,17 @@
             android:label="Fitness Fatality">
         <action
                 android:id="@+id/action_myWorkoutsFragment_to_createNewWorkoutFragment"
-                app:destination="@id/createNewWorkoutFragment" />
+                app:destination="@id/createNewWorkoutFragment"
+                app:enterAnim="@anim/fragment_close_enter"
+                app:exitAnim="@anim/fragment_close_exit"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit" />
         <action
                 android:id="@+id/viewWorkoutDetails"
-                app:destination="@id/workoutDetailsFragment" />
+                app:destination="@id/workoutDetailsFragment"
+                app:enterAnim="@anim/fragment_close_enter"
+                app:exitAnim="@anim/fragment_close_exit"
+                app:popEnterAnim="@anim/fragment_close_enter"
+                app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 </navigation>
