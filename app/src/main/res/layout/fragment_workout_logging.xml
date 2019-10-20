@@ -102,20 +102,33 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.card.MaterialCardView
-                app:cardElevation="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:background="@drawable/shadow"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical"
+                app:background="@drawable/shadow"
                 app:behavior_peekHeight="100dp"
                 app:cardCornerRadius="8dp"
+                app:cardElevation="10dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
+                    <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />
 
                     <TextView
                             android:id="@+id/txt_rest_timer"
@@ -123,9 +136,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:text="@{trackingViewModel.currentRestTime.toString()}"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/btn_next"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="@+id/btn_next" />
 
                     <TextView
                             android:id="@+id/textView5"
@@ -138,15 +151,14 @@
 
                     <Button
                             android:id="@+id/btn_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
                             android:enabled="@{trackingViewModel.controlsEnabled}"
                             android:onClick="@{(v) -> trackingViewModel.onNextClick(v)}"
                             android:text="Next"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="8dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
