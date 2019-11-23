@@ -3,7 +3,6 @@ package com.example.fitnessfatality.ui.screens.homeScreen
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View

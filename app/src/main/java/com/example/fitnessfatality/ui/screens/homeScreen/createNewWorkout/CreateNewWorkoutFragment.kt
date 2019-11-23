@@ -28,7 +28,11 @@ class CreateNewWorkoutFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         workoutViewModel = ViewModelProviders.of(activity!!).get(WorkoutViewModel::class.java)
 
@@ -37,9 +41,11 @@ class CreateNewWorkoutFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        onActivityInteractionInterface.setBottomAppBarAdapter(BottomAppBarAdapter(
-            isGone = true
-        ))
+        onActivityInteractionInterface.setBottomAppBarAdapter(
+            BottomAppBarAdapter(
+                isGone = true
+            )
+        )
         btn_save_workout.setOnClickListener {
             workoutViewModel.insertWorkout(
                 Workout(
@@ -50,8 +56,7 @@ class CreateNewWorkoutFragment : Fragment() {
         }
     }
 
-    private fun getWorkoutIcon(): Int
-    {
+    private fun getWorkoutIcon(): Int {
         if (radio_group.checkedRadioButtonId == radio_image_a.id) {
             return R.drawable.inverval_workout_icon
         } else if (radio_group.checkedRadioButtonId == radio_image_b.id) {

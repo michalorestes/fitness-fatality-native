@@ -10,44 +10,57 @@ import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
 import com.example.fitnessfatality.data.repository.ExerciseLogRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
 import com.example.fitnessfatality.ui.base.BaseViewModel
+import com.example.fitnessfatality.ui.screens.workoutTracking.interfaces.ViewPagerPage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TrackingViewModel(application: Application) : BaseViewModel(application) {
-    var currentExercise: MutableLiveData<WorkoutExercisePojo> = MutableLiveData()
-    var currentSet = MutableLiveData(0)
+    interface ViewPagerProvider {
+        fun getCurrentPage(): ViewPagerPage
+        fun displayNextPage()
+        fun setAdapterData(workoutExercises: List<WorkoutExercisePojo>)
+    }
+
     var currentRestTime = MutableLiveData(0)
     val controlsEnabled = MutableLiveData(true)
-    val isEndOfSession = MutableLiveData<Boolean>(false)
+
+    private var currentExercise: MutableLiveData<WorkoutExercisePojo> = MutableLiveData()
+    private var currentSet = MutableLiveData(1)
+    private var exerciseIndex = 0
+    private val isEndOfSession = MutableLiveData<Boolean>(false)
 
     private var workoutExercises: LiveData<List<WorkoutExercisePojo>>
     private val workoutExerciseRepository: WorkoutExerciseRepository
     private val exerciseLogRepository: ExerciseLogRepository
-    private var exerciseIndex = 0
+    private var viewPagerProvider: ViewPagerProvider? = null
 
     init {
         val db = AppDatabase.getDatabase(application, scope)
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
         exerciseLogRepository = ExerciseLogRepository(db.exerciseLogDao())
         workoutExercises = MutableLiveData()
+        //todo: Disable controller by default
     }
 
-    suspend fun loadWorkoutExercises(workoutId: Int) = GlobalScope.launch(Dispatchers.Main) {
-        workoutExercises = withContext(Dispatchers.Default) {
-            MutableLiveData(
-                workoutExerciseRepository.findWorkoutExercisesByWorkoutIdBlocking(workoutId)
-            )
-        }
+    suspend fun loadWorkoutExercises(workoutId: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
+            workoutExercises = withContext(Dispatchers.Default) {
+                MutableLiveData(
+                    workoutExerciseRepository.findWorkoutExercisesByWorkoutIdBlocking(workoutId)
+                )
+            }
 
-        if (workoutExercises.value!!.isNotEmpty()) {
-            currentExercise.value = workoutExercises.value!![exerciseIndex]
+            if (workoutExercises.value!!.isNotEmpty()) {
+                currentExercise.value = workoutExercises.value!![exerciseIndex]
+                viewPagerProvider!!.setAdapterData(workoutExercises.value!!)
+                //TODO: Enable controls once data is loaded
+            }
         }
     }
 
     fun onNextClick(view: View) {
-
         if (!isEndOfSession()) {
             incrementIndexesToNextLog()
             startRestTimer()
@@ -64,24 +77,43 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
             .toInt()
 
         val isLastExercise = (workoutExercises.value!!.size - 1) == exerciseIndex
-        val isLastSet = (currentExerciseNumberOfSets - 1) == currentSet.value!!
+        val isLastSet = (currentExerciseNumberOfSets) == currentSet.value!!
 
         return isLastExercise && isLastSet
     }
 
     private fun incrementIndexesToNextLog() {
-        val currentExerciseNumberOfSets = currentExercise
+
+        if (isLastSetInExercise()) {
+            incrementCurrentSetIndex()
+        } else if (isNextExerciseAvailable()) {
+            proceedToNextExercise()
+        }
+    }
+
+    private fun isLastSetInExercise(): Boolean {
+        val setsTarget = currentExercise
             .value!!
             .workoutExercise!!
             .loggingTarget["sets"]!!
             .toInt()
-        if(currentSet.value!! < (currentExerciseNumberOfSets.minus(1)))  {
-            currentSet.value = currentSet.value!!.plus(1)
-        } else if (exerciseIndex < (workoutExercises.value!!.size.minus(1))) {
-            currentSet.value = 0
-            exerciseIndex++
-            currentExercise.value = workoutExercises.value!![exerciseIndex]
-        }
+
+        return currentSet.value!! < setsTarget
+    }
+
+    private fun incrementCurrentSetIndex() {
+        currentSet.value = currentSet.value!!.plus(1)
+    }
+
+    private fun isNextExerciseAvailable(): Boolean {
+        return exerciseIndex < (workoutExercises.value!!.size.minus(1))
+    }
+
+    private fun proceedToNextExercise() {
+        exerciseIndex++
+        currentExercise.value = workoutExercises.value!![exerciseIndex]
+        currentSet.value = 1
+        viewPagerProvider!!.displayNextPage()
     }
 
     private fun startRestTimer() {
@@ -93,10 +125,13 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
 //            .loggingTarget["rest"]!!
 //            .toInt()
 
-        val restTimeSeconds = 2
+        val restTimeSeconds = 1
         currentRestTime.value = restTimeSeconds
 
-        val timer = object: CountDownTimer((restTimeSeconds * 1000).toLong(), 1000) {
+        val timer = object : CountDownTimer(
+            (restTimeSeconds * 1000).toLong(),
+            1000
+        ) {
             override fun onFinish() {
                 enableControls(true)
             }
@@ -117,5 +152,17 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     private fun endSession() {
         isEndOfSession.value = true
         enableControls(false)
+    }
+
+    fun setViewPagerProvider(viewPagerProvider: ViewPagerProvider) {
+        this.viewPagerProvider = viewPagerProvider
+    }
+
+    fun getCurrentSet(): MutableLiveData<Int> {
+        return currentSet
+    }
+
+    fun getCurrentExerciseIndex(): Int {
+        return exerciseIndex
     }
 }
