@@ -25,14 +25,6 @@
         android:maxLength="2"
         android:textAlignment="center" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_weight="0.2"
-        android:text="X"
-        android:textAlignment="center" />
-
     <EditText
         android:id="@+id/edit_text_weight_lifed"
         style="@style/AppTheme.plainEditText"
