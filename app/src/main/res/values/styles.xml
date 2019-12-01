@@ -23,5 +23,9 @@
     <style name="AppTheme.Tabs" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabBackground">@color/backgroundColor</item>
     </style>
+
+    <style name="AppTheme.plainEditText" parent="Widget.Design.TextInputLayout">
+        <item name="android:backgroundTint">#00000000</item>
+    </style>
 </resources>
 

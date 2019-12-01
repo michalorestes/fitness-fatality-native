@@ -26,8 +26,6 @@ class SingleExerciseLogFragment(
 ) : Fragment(), ViewPagerPage {
 
     private lateinit var trackingViewModel: TrackingViewModel
-    //TODO: CurrentSetIndex should be stored in a ViewModel
-    private var currentSetIndex: MutableLiveData<Int> = MutableLiveData(1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
