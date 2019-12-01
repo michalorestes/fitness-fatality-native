@@ -13,4 +13,7 @@ interface WorkoutDao {
 
     @Query("SELECT * FROM workout")
     fun selectAll(): LiveData<List<Workout>>
+
+    @Query("DELETE FROM workout")
+    fun deleteAll()
 }

@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.dao.ExerciseDao
 import com.example.fitnessfatality.data.dao.ExerciseLogDao
 import com.example.fitnessfatality.data.dao.WorkoutDao
@@ -78,7 +79,8 @@ abstract class AppDatabase: RoomDatabase() {
                     populateDatabase(
                         database.exerciseDao(),
                         database.workoutExerciseDao(),
-                        database.exerciseLogDao()
+                        database.exerciseLogDao(),
+                        database.workoutDao()
                     )
                 }
             }
@@ -87,11 +89,13 @@ abstract class AppDatabase: RoomDatabase() {
         fun populateDatabase(
             exerciseDao: ExerciseDao,
             workoutExerciseDao: WorkoutExerciseDao,
-            exerciseLogDao: ExerciseLogDao
+            exerciseLogDao: ExerciseLogDao,
+            workoutDao: WorkoutDao
         ) {
             exerciseLogDao.deleteAll()
             workoutExerciseDao.deleteAll()
             exerciseDao.deleteAll()
+            workoutDao.deleteAll()
 
             val exercise = Exercise(
                 0,
@@ -151,7 +155,7 @@ abstract class AppDatabase: RoomDatabase() {
                 0,
                 1,
                 1,
-                hashMapOf("sets" to 1, "reps" to 2, "rest" to 60),
+                hashMapOf("sets" to 3, "reps" to 2, "rest" to 60),
                 LoggingType.WEIGHTS
             )
 
@@ -166,7 +170,7 @@ abstract class AppDatabase: RoomDatabase() {
 
             val workoutExercise4 = WorkoutExercise(
                 2,
-                0,
+                1,
                 3,
                 3,
                 hashMapOf("duration" to 30, "sets" to 1, "rest" to 90),
@@ -177,6 +181,15 @@ abstract class AppDatabase: RoomDatabase() {
             workoutExerciseDao.insert(workoutExercise2)
             workoutExerciseDao.insert(workoutExercise3)
             workoutExerciseDao.insert(workoutExercise4)
+
+
+            val workout = Workout(
+                0,
+                "Sample workout routine",
+                R.drawable.inverval_workout_icon
+            )
+
+            workoutDao.insert(workout)
         }
     }
 }
