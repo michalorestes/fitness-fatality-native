@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
@@ -18,7 +17,6 @@ import com.example.fitnessfatality.ui.screens.workoutTracking.viewModels.Trackin
 import kotlinx.android.synthetic.main.dialog_bottomsheet_workout_details.view.lbl_exercise_name
 import kotlinx.android.synthetic.main.fragment_workout_logging_log_entry.view.*
 import kotlinx.android.synthetic.main.view_pager_workout_logging.view.*
-import java.text.FieldPosition
 
 class SingleExerciseLogFragment(
     private val workoutExercise: WorkoutExercisePojo,
