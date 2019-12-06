@@ -1,5 +1,6 @@
 package com.example.fitnessfatality.ui.screens.workoutTracking
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -78,7 +79,7 @@ class SingleExerciseLogFragment(
         clearSetsContainerViews()
         val setsEntryContainer = view!!.sets_entry_container
         for (rep in 1..setsCount) {
-            val container = inflateEntryContainer()
+            val container = inflateEntryContainer(setsEntryContainer)
             container.edit_text_reps_number.hint = numberOfReps.toString()
             container.edit_text_weight_lifed.hint = 0.toString()
             container.txt_sets_count.text = rep.toString()
@@ -86,10 +87,10 @@ class SingleExerciseLogFragment(
         }
     }
 
-    private fun inflateEntryContainer(): LinearLayout {
+    private fun inflateEntryContainer(container: LinearLayout): LinearLayout {
         return layoutInflater.inflate(
             R.layout.fragment_workout_logging_log_entry,
-            null,
+            container,
             false
         ) as LinearLayout
     }
@@ -100,9 +101,11 @@ class SingleExerciseLogFragment(
 
         if (isFirstSetInExercise) {
             setSetHighlightColor(rowToHighlight.minus(1), false)
+            setHighlightBackground(rowToHighlight.minus(1), false)
         }
 
         setSetHighlightColor(rowToHighlight, true)
+        setHighlightBackground(rowToHighlight, true)
     }
 
     private fun setSetHighlightColor(rowIndex: Int, isActive: Boolean) {
@@ -112,5 +115,15 @@ class SingleExerciseLogFragment(
         setsContainer.getChildAt(rowIndex).txt_sets_count.setTextColor(
             ContextCompat.getColor(context!!, highlightColor)
         )
+    }
+
+    private fun setHighlightBackground(rowIndex: Int, isActive: Boolean) {
+        var bgDrawable: Drawable? = null
+        if (isActive) {
+            bgDrawable = ContextCompat.getDrawable(context!!, R.drawable.tracking_log_active_background)
+        }
+
+        val setsContainer = view!!.sets_entry_container
+        setsContainer.getChildAt(rowIndex).background = bgDrawable
     }
 }

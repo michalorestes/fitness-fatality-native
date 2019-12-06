@@ -9,4 +9,5 @@
     <color name="colorBlack">#000000</color>
     <color name="statusBarColor">#FAFAFA</color>
     <color name="backgroundColor">#FAFAFA</color>
+    <color name="workoutTrackingActiveLog">#A1BEE5F9</color>
 </resources>
