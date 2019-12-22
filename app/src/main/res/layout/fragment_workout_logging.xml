@@ -30,12 +30,15 @@
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <LinearLayout
+                android:orientation="vertical"
+                    android:background="@color/backgroundColor"
+                    android:id="@+id/bottom_sheet_layout_container"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    android:layout_height="700dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="100dp">
 
                     <ImageView
                             android:id="@+id/imageView2"
@@ -77,6 +80,21 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:id="@+id/exercises_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>

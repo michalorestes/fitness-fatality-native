@@ -17,10 +17,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TrackingViewModel(application: Application) : BaseViewModel(application) {
-    interface ViewPagerProvider {
+    interface FragmentProvider {
         fun getCurrentPage(): ViewPagerPage
         fun displayNextPage()
         fun setAdapterData(workoutExercises: List<WorkoutExercisePojo>)
+        fun updateBottomSheetUi(workoutExercises: List<WorkoutExercisePojo>)
     }
 
     var currentRestTime = MutableLiveData(0)
@@ -34,7 +35,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     private var workoutExercises: LiveData<List<WorkoutExercisePojo>>
     private val workoutExerciseRepository: WorkoutExerciseRepository
     private val exerciseLogRepository: ExerciseLogRepository
-    private var viewPagerProvider: ViewPagerProvider? = null
+    private var fragmentInteractions: FragmentProvider? = null
 
     init {
         val db = AppDatabase.getDatabase(application, scope)
@@ -54,7 +55,8 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
 
             if (workoutExercises.value!!.isNotEmpty()) {
                 currentExercise.value = workoutExercises.value!![exerciseIndex]
-                viewPagerProvider!!.setAdapterData(workoutExercises.value!!)
+                fragmentInteractions!!.setAdapterData(workoutExercises.value!!)
+                fragmentInteractions!!.updateBottomSheetUi(workoutExercises.value!!)
                 //TODO: Enable controls once data is loaded
             }
         }
@@ -113,7 +115,7 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         exerciseIndex++
         currentExercise.value = workoutExercises.value!![exerciseIndex]
         currentSet.value = 1
-        viewPagerProvider!!.displayNextPage()
+        fragmentInteractions!!.displayNextPage()
     }
 
     private fun startRestTimer() {
@@ -154,8 +156,8 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
         enableControls(false)
     }
 
-    fun setViewPagerProvider(viewPagerProvider: ViewPagerProvider) {
-        this.viewPagerProvider = viewPagerProvider
+    fun setViewPagerProvider(viewPagerProvider: FragmentProvider) {
+        this.fragmentInteractions = viewPagerProvider
     }
 
     fun getCurrentSet(): MutableLiveData<Int> {
