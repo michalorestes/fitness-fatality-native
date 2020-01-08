@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.dao.ExerciseDao
-import com.example.fitnessfatality.data.dao.ExerciseLogDao
+import com.example.fitnessfatality.data.dao.SessionLogDao
 import com.example.fitnessfatality.data.dao.WorkoutDao
 import com.example.fitnessfatality.data.dao.WorkoutExerciseDao
 import com.example.fitnessfatality.data.models.exercise.Exercise
@@ -18,6 +18,7 @@ import com.example.fitnessfatality.data.models.workoutSession.LoggingType
 import com.example.fitnessfatality.data.models.exercise.MuscleGroup
 import com.example.fitnessfatality.data.models.workout.Workout
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
+import com.example.fitnessfatality.data.models.workoutSession.WorkoutSession
 import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LocalDateTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LoggingTypeConverter
@@ -31,9 +32,10 @@ import kotlinx.coroutines.launch
         Exercise::class,
         WorkoutExercise::class,
         SessionLog::class,
+        WorkoutSession::class,
         Workout::class
     ],
-    version = 18,
+    version = 19,
     exportSchema = false
 )
 @TypeConverters(
@@ -45,7 +47,7 @@ import kotlinx.coroutines.launch
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun workoutExerciseDao(): WorkoutExerciseDao
-    abstract fun exerciseLogDao(): ExerciseLogDao
+    abstract fun exerciseLogDao(): SessionLogDao
     abstract fun workoutDao(): WorkoutDao
 
     companion object {
@@ -89,10 +91,10 @@ abstract class AppDatabase: RoomDatabase() {
         fun populateDatabase(
             exerciseDao: ExerciseDao,
             workoutExerciseDao: WorkoutExerciseDao,
-            exerciseLogDao: ExerciseLogDao,
+            sessionLogDao: SessionLogDao,
             workoutDao: WorkoutDao
         ) {
-            exerciseLogDao.deleteAll()
+            sessionLogDao.deleteAll()
             workoutExerciseDao.deleteAll()
             exerciseDao.deleteAll()
             workoutDao.deleteAll()

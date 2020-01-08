@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.example.fitnessfatality.data.models.workoutSession.SessionLog
 
 @Dao
-interface ExerciseLogDao {
+interface SessionLogDao {
     @Insert
     fun insert(sessionLog: SessionLog)
 
