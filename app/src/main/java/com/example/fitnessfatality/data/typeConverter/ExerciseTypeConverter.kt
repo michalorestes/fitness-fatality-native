@@ -2,7 +2,7 @@ package com.example.fitnessfatality.data.typeConverter
 
 import androidx.room.TypeConverter
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
-import com.example.fitnessfatality.data.models.workout.MuscleGroup
+import com.example.fitnessfatality.data.models.exercise.MuscleGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -3,7 +3,6 @@ package com.example.fitnessfatality.data.models.exercise
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.fitnessfatality.data.models.workout.MuscleGroup
 
 @Entity(tableName = "exercise")
 data class Exercise(

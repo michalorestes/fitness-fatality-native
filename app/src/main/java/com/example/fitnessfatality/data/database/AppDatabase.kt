@@ -13,9 +13,9 @@ import com.example.fitnessfatality.data.dao.WorkoutDao
 import com.example.fitnessfatality.data.dao.WorkoutExerciseDao
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
-import com.example.fitnessfatality.data.models.logging.ExerciseLog
-import com.example.fitnessfatality.data.models.logging.LoggingType
-import com.example.fitnessfatality.data.models.workout.MuscleGroup
+import com.example.fitnessfatality.data.models.workoutSession.SessionLog
+import com.example.fitnessfatality.data.models.workoutSession.LoggingType
+import com.example.fitnessfatality.data.models.exercise.MuscleGroup
 import com.example.fitnessfatality.data.models.workout.Workout
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
     entities = [
         Exercise::class,
         WorkoutExercise::class,
-        ExerciseLog::class,
+        SessionLog::class,
         Workout::class
     ],
     version = 18,

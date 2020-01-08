@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.data.models.logging
+package com.example.fitnessfatality.data.models.workoutSession
 
 enum class LoggingType(val loggingType: String) {
     DURATION("duration"),

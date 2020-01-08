@@ -1,7 +1,7 @@
 package com.example.fitnessfatality.data.typeConverter
 
 import androidx.room.TypeConverter
-import com.example.fitnessfatality.data.models.logging.LoggingType
+import com.example.fitnessfatality.data.models.workoutSession.LoggingType
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

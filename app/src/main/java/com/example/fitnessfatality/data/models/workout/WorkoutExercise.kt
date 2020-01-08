@@ -2,7 +2,7 @@ package com.example.fitnessfatality.data.models.workout
 
 import androidx.room.*
 import com.example.fitnessfatality.data.models.exercise.Exercise
-import com.example.fitnessfatality.data.models.logging.LoggingType
+import com.example.fitnessfatality.data.models.workoutSession.LoggingType
 
 @Entity(
     tableName = "workout_exercise",

@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.data.models.workout
+package com.example.fitnessfatality.data.models.exercise
 
 enum class MuscleGroup(val muscleName: String) {
     QUADRICEPS("quadriceps"),

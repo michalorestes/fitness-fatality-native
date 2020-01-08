@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.data.models.logging
+package com.example.fitnessfatality.data.models.workoutSession
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -23,7 +23,7 @@ import java.time.LocalDateTime
         )
     ]
 )
-data class ExerciseLog(
+data class SessionLog(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int? = null,
