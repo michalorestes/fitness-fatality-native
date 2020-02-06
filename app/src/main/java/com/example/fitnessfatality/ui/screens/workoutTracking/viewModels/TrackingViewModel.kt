@@ -2,19 +2,25 @@ package com.example.fitnessfatality.ui.screens.workoutTracking.viewModels
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.pojo.WorkoutExercisePojo
-import com.example.fitnessfatality.data.repository.ExerciseLogRepository
+import com.example.fitnessfatality.data.models.workoutSession.SessionLog
+import com.example.fitnessfatality.data.models.workoutSession.WorkoutSession
+import com.example.fitnessfatality.data.repository.SessionLogRepository
 import com.example.fitnessfatality.data.repository.WorkoutExerciseRepository
+import com.example.fitnessfatality.data.repository.WorkoutSessionRepository
 import com.example.fitnessfatality.ui.base.BaseViewModel
 import com.example.fitnessfatality.ui.screens.workoutTracking.interfaces.ViewPagerPage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 
 class TrackingViewModel(application: Application) : BaseViewModel(application) {
     interface FragmentProvider {
@@ -34,18 +40,31 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
 
     private var workoutExercises: LiveData<List<WorkoutExercisePojo>>
     private val workoutExerciseRepository: WorkoutExerciseRepository
-    private val exerciseLogRepository: ExerciseLogRepository
+    public val sessionLogRepository: SessionLogRepository //TODO: This can't stay public
+    private val workoutSessionRepository: WorkoutSessionRepository
+
     private var fragmentInteractions: FragmentProvider? = null
+
+    private var session: WorkoutSession? = null
+    private val sessionLogs: HashMap<Int, SessionLog> = hashMapOf()
 
     init {
         val db = AppDatabase.getDatabase(application, scope)
         workoutExerciseRepository = WorkoutExerciseRepository(db.workoutExerciseDao())
-        exerciseLogRepository = ExerciseLogRepository(db.exerciseLogDao())
+        sessionLogRepository = SessionLogRepository(db.sessionLogDao())
+        workoutSessionRepository = WorkoutSessionRepository(db.workoutSessionDao())
         workoutExercises = MutableLiveData()
         //todo: Disable controller by default
     }
 
-    suspend fun loadWorkoutExercises(workoutId: Int) {
+    suspend fun initialiseWorkoutSession(workoutId: Int) {
+        session = WorkoutSession(
+            workoutId = workoutId,
+            startDate = LocalDateTime.now()
+        )
+
+        session!!.id = workoutSessionRepository.insert(session!!)
+
         GlobalScope.launch(Dispatchers.Main) {
             workoutExercises = withContext(Dispatchers.Default) {
                 MutableLiveData(
@@ -63,11 +82,44 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun onNextClick(view: View) {
+        storeExerciseLogs()
         if (!isEndOfSession()) {
             incrementIndexesToNextLog()
             startRestTimer()
         } else {
             endSession()
+        }
+    }
+
+    private fun storeExerciseLogs() {
+        val workoutExercise = workoutExercises.value!![exerciseIndex]
+        var sessionLog: SessionLog? = sessionLogs[workoutExercise.workoutExercise!!.id]
+        if (sessionLogs[workoutExercise.workoutExercise!!.id] == null) {
+            sessionLog = SessionLog(
+                sessionId = session!!.id!!,
+                exerciseId = workoutExercise.exercise!!.id,
+                workoutId = session!!.workoutId,
+                workoutExerciseId = workoutExercise.workoutExercise!!.id!!,
+                type = workoutExercise.workoutExercise!!.selectedLoggingType,
+                value = hashMapOf()
+            )
+
+            GlobalScope.launch {
+                sessionLog.id = sessionLogRepository.insert(sessionLog)
+            }
+
+        }
+
+//        sessionLog!!.value[currentSet.value!!] =  hashMapOf(
+//            LocalDateTime.now() to fragmentInteractions!!.getCurrentPage().getCurrentSetLog()
+//        )
+
+        sessionLog!!.value[currentSet.value!!] =  hashMapOf(
+            LocalDateTime.now() to hashMapOf("1" to "2.1")
+        )
+
+        GlobalScope.launch {
+            sessionLogRepository.update(sessionLog)
         }
     }
 
@@ -85,15 +137,14 @@ class TrackingViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun incrementIndexesToNextLog() {
-
-        if (isLastSetInExercise()) {
+        if (isNextSetAvailable()) {
             incrementCurrentSetIndex()
         } else if (isNextExerciseAvailable()) {
             proceedToNextExercise()
         }
     }
 
-    private fun isLastSetInExercise(): Boolean {
+    private fun isNextSetAvailable(): Boolean {
         val setsTarget = currentExercise
             .value!!
             .workoutExercise!!

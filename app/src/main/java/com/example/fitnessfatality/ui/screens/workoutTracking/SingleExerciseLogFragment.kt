@@ -126,4 +126,8 @@ class SingleExerciseLogFragment(
         val setsContainer = view!!.sets_entry_container
         setsContainer.getChildAt(rowIndex).background = bgDrawable
     }
+
+    override fun getCurrentSetLog(): HashMap<String, String> {
+        return hashMapOf()
+    }
 }

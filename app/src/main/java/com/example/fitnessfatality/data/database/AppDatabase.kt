@@ -7,10 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.data.dao.ExerciseDao
-import com.example.fitnessfatality.data.dao.SessionLogDao
-import com.example.fitnessfatality.data.dao.WorkoutDao
-import com.example.fitnessfatality.data.dao.WorkoutExerciseDao
+import com.example.fitnessfatality.data.dao.*
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
 import com.example.fitnessfatality.data.models.workoutSession.SessionLog
@@ -19,10 +16,7 @@ import com.example.fitnessfatality.data.models.exercise.MuscleGroup
 import com.example.fitnessfatality.data.models.workout.Workout
 import com.example.fitnessfatality.data.models.workout.WorkoutExercise
 import com.example.fitnessfatality.data.models.workoutSession.WorkoutSession
-import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
-import com.example.fitnessfatality.data.typeConverter.LocalDateTypeConverter
-import com.example.fitnessfatality.data.typeConverter.LoggingTypeConverter
-import com.example.fitnessfatality.data.typeConverter.MapTypeConverter
+import com.example.fitnessfatality.data.typeConverter.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,19 +29,21 @@ import kotlinx.coroutines.launch
         WorkoutSession::class,
         Workout::class
     ],
-    version = 19,
+    version = 21,
     exportSchema = false
 )
 @TypeConverters(
     ExerciseTypeConverter::class,
     LoggingTypeConverter::class,
     LocalDateTypeConverter::class,
-    MapTypeConverter::class
+    MapTypeConverter::class,
+    SessionLogValueTypeConverter::class
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun workoutExerciseDao(): WorkoutExerciseDao
-    abstract fun exerciseLogDao(): SessionLogDao
+    abstract fun sessionLogDao(): SessionLogDao
+    abstract fun workoutSessionDao(): WorkoutSessionDao
     abstract fun workoutDao(): WorkoutDao
 
     companion object {
@@ -81,8 +77,9 @@ abstract class AppDatabase: RoomDatabase() {
                     populateDatabase(
                         database.exerciseDao(),
                         database.workoutExerciseDao(),
-                        database.exerciseLogDao(),
-                        database.workoutDao()
+                        database.sessionLogDao(),
+                        database.workoutDao(),
+                        database.workoutSessionDao()
                     )
                 }
             }
@@ -92,11 +89,13 @@ abstract class AppDatabase: RoomDatabase() {
             exerciseDao: ExerciseDao,
             workoutExerciseDao: WorkoutExerciseDao,
             sessionLogDao: SessionLogDao,
-            workoutDao: WorkoutDao
+            workoutDao: WorkoutDao,
+            workoutSessionDao: WorkoutSessionDao
         ) {
             sessionLogDao.deleteAll()
             workoutExerciseDao.deleteAll()
             exerciseDao.deleteAll()
+            workoutSessionDao.deleteAll()
             workoutDao.deleteAll()
 
             val exercise = Exercise(

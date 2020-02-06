@@ -20,14 +20,20 @@ import java.time.LocalDateTime
             entity = WorkoutExercise::class,
             parentColumns = ["id"],
             childColumns = ["workout_exercise_id"]
+        ),
+        ForeignKey(
+            entity = WorkoutSession::class,
+            parentColumns = ["id"],
+            childColumns = ["session_id"]
         )
     ]
 )
 data class SessionLog(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int? = null,
-    val date: LocalDateTime,
+    var id: Long? = null,
+    @ColumnInfo(name = "session_id")
+    val sessionId: Long,
     @ColumnInfo(name = "exercise_id")
     val exerciseId: Int,
     @ColumnInfo(name = "workout_id")
@@ -35,5 +41,5 @@ data class SessionLog(
     @ColumnInfo(name = "workout_exercise_id")
     val workoutExerciseId: Int,
     val type: LoggingType,
-    val value: Map<String, String>
+    val value: HashMap<Int, HashMap<LocalDateTime, HashMap<String, String>>>
 )

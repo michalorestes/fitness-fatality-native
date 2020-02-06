@@ -19,11 +19,11 @@ import java.time.LocalDateTime
 )
 data class WorkoutSession(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    var id: Long? = null,
     @ColumnInfo(name = "workout_id")
     val workoutId: Int,
     @ColumnInfo(name = "start_date")
     val startDate: LocalDateTime,
     @ColumnInfo(name = "end_date")
-    val endDate: LocalDateTime
+    val endDate: LocalDateTime? = null
 )
