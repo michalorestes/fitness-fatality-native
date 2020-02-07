@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="com.example.fitnessfatality.ui.screens.workout.workoutSession.WorkoutViewModel" />
+        <variable
+            name="viewModel"
+            type="WorkoutViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:background="@drawable/shadow"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/backgroundColor"
+            android:id="@+id/bottom_sheet_layout_container"
+            android:layout_width="match_parent"
+            android:layout_height="700dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />
+
+
+                <!--                    android:text="@{trackingViewModel.currentRestTime.toString()}"-->
+                <TextView
+                    android:id="@+id/txt_rest_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_next"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/btn_next" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="s rest"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_rest_timer"
+                    app:layout_constraintStart_toEndOf="@+id/txt_rest_timer"
+                    app:layout_constraintTop_toTopOf="@+id/txt_rest_timer" />
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Next"
+                    android:onClick="@{(v) -> viewModel.onNextClick()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:id="@+id/exercises_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

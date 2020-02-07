@@ -5,7 +5,7 @@
             app:startDestination="@id/mainTabsFragment">
 
     <fragment android:id="@+id/workoutLoggingFragment"
-              android:name="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingFragment"
+              android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutFragment"
               android:label="Workout Logging">
         <action android:id="@+id/action_workoutLoggingFragment_to_trackingEndFragment"
                 app:destination="@id/trackingEndFragment" app:popUpToInclusive="false"
@@ -13,13 +13,13 @@
         <argument android:name="workoutId" app:argType="integer"/>
     </fragment>
     <fragment android:id="@+id/trackingEndFragment"
-              android:name="com.example.fitnessfatality.ui.screens.workoutTracking.TrackingEndFragment"
+              android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutEndFragment"
               android:label="TrackingEndFragment"/>
     <fragment android:id="@+id/createNewWorkoutFragment"
               android:name="com.example.fitnessfatality.ui.screens.homeScreen.createNewWorkout.CreateNewWorkoutFragment"
               android:label="Create Workout"/>
     <fragment android:id="@+id/workoutDetailsFragment"
-              android:name="com.example.fitnessfatality.ui.screens.workoutDetails.WorkoutDetailsFragment"
+              android:name="com.example.fitnessfatality.ui.screens.routineDetails.RoutineDetailsFragment"
               android:label="{workoutName}">
         <argument android:name="workoutId" app:argType="integer"/>
         <argument android:name="workoutName" app:argType="string"/>
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
             android:id="@+id/exerciseDatabaseFragment"
-            android:name="com.example.fitnessfatality.ui.screens.workoutDetails.exerciseDatabase.ExerciseDatabaseFragment"
+            android:name="com.example.fitnessfatality.ui.screens.routineDetails.exerciseDatabase.ExerciseDatabaseFragment"
             android:label="Exercise Database"
             tools:layout="@layout/fragment_exercise_database">
         <argument

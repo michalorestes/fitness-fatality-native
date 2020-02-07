@@ -8,16 +8,13 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.dao.ExerciseDao
-import com.example.fitnessfatality.data.dao.ExerciseLogDao
-import com.example.fitnessfatality.data.dao.WorkoutDao
-import com.example.fitnessfatality.data.dao.WorkoutExerciseDao
+import com.example.fitnessfatality.data.dao.RoutineDao
+import com.example.fitnessfatality.data.dao.RoutineExerciseDao
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
-import com.example.fitnessfatality.data.models.workoutSession.SessionLog
-import com.example.fitnessfatality.data.models.workoutSession.LoggingType
 import com.example.fitnessfatality.data.models.exercise.MuscleGroup
-import com.example.fitnessfatality.data.models.workout.Workout
-import com.example.fitnessfatality.data.models.workout.WorkoutExercise
+import com.example.fitnessfatality.data.models.routine.Routine
+import com.example.fitnessfatality.data.models.routine.RoutineExercise
 import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LocalDateTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LoggingTypeConverter
@@ -29,11 +26,10 @@ import kotlinx.coroutines.launch
 @Database(
     entities = [
         Exercise::class,
-        WorkoutExercise::class,
-        SessionLog::class,
-        Workout::class
+        RoutineExercise::class,
+        Routine::class
     ],
-    version = 18,
+    version = 20,
     exportSchema = false
 )
 @TypeConverters(
@@ -44,21 +40,25 @@ import kotlinx.coroutines.launch
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
-    abstract fun workoutExerciseDao(): WorkoutExerciseDao
-    abstract fun exerciseLogDao(): ExerciseLogDao
-    abstract fun workoutDao(): WorkoutDao
+    abstract fun routineExerciseDao(): RoutineExerciseDao
+    abstract fun workoutDao(): RoutineDao
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(context: Context, scope: CoroutineScope): AppDatabase {
+//            context.deleteDatabase("database")
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
             }
             synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java,"database")
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "database"
+                )
                     .addCallback(DatabaseCallback(scope))
                     .fallbackToDestructiveMigration()
                     .build()
@@ -78,8 +78,7 @@ abstract class AppDatabase: RoomDatabase() {
                 scope.launch(Dispatchers.IO) {
                     populateDatabase(
                         database.exerciseDao(),
-                        database.workoutExerciseDao(),
-                        database.exerciseLogDao(),
+                        database.routineExerciseDao(),
                         database.workoutDao()
                     )
                 }
@@ -88,14 +87,12 @@ abstract class AppDatabase: RoomDatabase() {
 
         fun populateDatabase(
             exerciseDao: ExerciseDao,
-            workoutExerciseDao: WorkoutExerciseDao,
-            exerciseLogDao: ExerciseLogDao,
-            workoutDao: WorkoutDao
+            routineExerciseDao: RoutineExerciseDao,
+            workoutDao: RoutineDao
         ) {
-            exerciseLogDao.deleteAll()
-            workoutExerciseDao.deleteAll()
-            exerciseDao.deleteAll()
+            routineExerciseDao.deleteAll()
             workoutDao.deleteAll()
+            exerciseDao.deleteAll()
 
             val exercise = Exercise(
                 0,
@@ -141,49 +138,45 @@ abstract class AppDatabase: RoomDatabase() {
 
             exerciseDao.insert(exercise4)
 
-            val workoutExercise = WorkoutExercise(
+            val workoutExercise = RoutineExercise(
                 0,
                 0,
                 0,
                 0,
-                hashMapOf("sets" to 2, "reps" to 2, "rest" to 30),
-                LoggingType.WEIGHTS
+                hashMapOf("sets" to 2, "reps" to 2, "rest" to 30)
             )
 
-            val workoutExercise2 = WorkoutExercise(
+            val workoutExercise2 = RoutineExercise(
                 1,
                 0,
                 1,
                 1,
-                hashMapOf("sets" to 3, "reps" to 2, "rest" to 60),
-                LoggingType.WEIGHTS
+                hashMapOf("sets" to 3, "reps" to 2, "rest" to 60)
             )
 
-            val workoutExercise3 = WorkoutExercise(
+            val workoutExercise3 = RoutineExercise(
                 3,
                 0,
                 2,
                 2,
-                hashMapOf("sets" to 1, "reps" to 2, "rest" to 50),
-                LoggingType.WEIGHTS
+                hashMapOf("sets" to 1, "reps" to 2, "rest" to 50)
             )
 
-            val workoutExercise4 = WorkoutExercise(
+            val workoutExercise4 = RoutineExercise(
                 2,
                 1,
                 3,
                 3,
-                hashMapOf("duration" to 30, "sets" to 1, "rest" to 90),
-                LoggingType.DURATION
+                hashMapOf("duration" to 30, "sets" to 1, "rest" to 90)
             )
 
-            workoutExerciseDao.insert(workoutExercise)
-            workoutExerciseDao.insert(workoutExercise2)
-            workoutExerciseDao.insert(workoutExercise3)
-            workoutExerciseDao.insert(workoutExercise4)
+            routineExerciseDao.insert(workoutExercise)
+            routineExerciseDao.insert(workoutExercise2)
+            routineExerciseDao.insert(workoutExercise3)
+            routineExerciseDao.insert(workoutExercise4)
 
 
-            val workout = Workout(
+            val workout = Routine(
                 0,
                 "Sample workout routine",
                 R.drawable.inverval_workout_icon

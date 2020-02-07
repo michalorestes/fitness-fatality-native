@@ -1,5 +1,6 @@
 package com.example.fitnessfatality.ui.screens.mainActivity
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
@@ -7,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.CustomBottomAppBar
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
+import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Stetho.initializeWithDefaults(this)
         setContentView(R.layout.activity_main)
 
         val navController = Navigation.findNavController(
@@ -28,5 +31,9 @@ class MainActivity : AppCompatActivity(), OnActivityInteractionInterface {
 
     override fun setBottomAppBarAdapter(adapter: BottomAppBarAdapter) {
         botttomAppBar.setAdapter(adapter)
+    }
+
+    override fun getActivityApplication(): Application {
+        return application
     }
 }

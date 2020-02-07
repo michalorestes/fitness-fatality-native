@@ -1,102 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_linear_container"
+<layout android:id="@+id/main_linear_container"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.example.fitnessfatality.ui.screens.workoutTracking.viewModels.TrackingViewModel"/>
-        <variable name="trackingViewModel" type="TrackingViewModel" />
+        <import type="com.example.fitnessfatality.ui.screens.workout.workoutSession.WorkoutViewModel"/>
+        <variable name="viewModel" type="WorkoutViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <com.example.fitnessfatality.ui.screens.workoutTracking.customViews.TrackingViewPager
+        <com.example.fitnessfatality.ui.screens.workout.customViews.WorkoutViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        </com.example.fitnessfatality.ui.screens.workout.customViews.WorkoutViewPager>
 
-        </com.example.fitnessfatality.ui.screens.workoutTracking.customViews.TrackingViewPager>
-        <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical"
-                app:background="@drawable/shadow"
-                app:behavior_peekHeight="100dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-            <LinearLayout
-                android:orientation="vertical"
-                    android:background="@color/backgroundColor"
-                    android:id="@+id/bottom_sheet_layout_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="700dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp">
-
-                    <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />
-
-                    <TextView
-                            android:id="@+id/txt_rest_timer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@{trackingViewModel.currentRestTime.toString()}"
-                            app:layout_constraintBottom_toBottomOf="@+id/btn_next"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/btn_next" />
-
-                    <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="s rest"
-                            app:layout_constraintBottom_toBottomOf="@+id/txt_rest_timer"
-                            app:layout_constraintStart_toEndOf="@+id/txt_rest_timer"
-                            app:layout_constraintTop_toTopOf="@+id/txt_rest_timer" />
-
-                    <Button
-                            android:id="@+id/btn_next"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:enabled="@{trackingViewModel.controlsEnabled}"
-                            android:onClick="@{(v) -> trackingViewModel.onNextClick(v)}"
-                            android:text="Next"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/divider2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" />
-
-                <LinearLayout
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:orientation="vertical"
-                    android:id="@+id/exercises_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+       <fragment
+           android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutBottomSheetFragment"
+           android:id="@+id/bottom_sheet"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           app:behavior_peekHeight="100dp"
+           app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

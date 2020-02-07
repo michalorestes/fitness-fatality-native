@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.data.models.workout.Workout
+import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
 import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
 
@@ -15,7 +15,7 @@ class WorkoutsListAdapter(
     private val workoutsListListener: OnWorkoutListItemClickListener,
     private val resources: Resources
 ): RecyclerView.Adapter<WorkoutsListAdapter.ViewHolder>(){
-    private var dataSet: List<Workout> = listOf()
+    private var dataSet: List<Routine> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemContainer = LayoutInflater
@@ -28,19 +28,19 @@ class WorkoutsListAdapter(
 
 
         itemContainer.setOnClickListener {
-            val workout: Workout = itemContainer.tag as Workout
-            workoutsListListener.onWorkoutSelected(it, workout)
+            val routine: Routine = itemContainer.tag as Routine
+            workoutsListListener.onWorkoutSelected(it, routine)
         }
 
         itemContainer.chip_start_workout.setOnClickListener {
-            val workout: Workout = itemContainer.tag as Workout
-            workoutsListListener.onWorkoutSessionSelected(it, workout)
+            val routine: Routine = itemContainer.tag as Routine
+            workoutsListListener.onWorkoutSessionSelected(it, routine)
         }
 
         return ViewHolder(itemContainer)
     }
 
-    fun updateDataSet(dataSet: List<Workout>) {
+    fun updateDataSet(dataSet: List<Routine>) {
         this.dataSet = dataSet
         this.notifyDataSetChanged()
     }

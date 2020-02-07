@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.data.models.workout.Workout
+import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
 import com.example.fitnessfatality.ui.screens.homeScreen.viewModels.WorkoutViewModel
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
@@ -48,7 +48,7 @@ class CreateNewWorkoutFragment : Fragment() {
         )
         btn_save_workout.setOnClickListener {
             workoutViewModel.insertWorkout(
-                Workout(
+                Routine(
                     name = txt_workout_name.text.toString(),
                     workoutIcon = getWorkoutIcon()
                 )

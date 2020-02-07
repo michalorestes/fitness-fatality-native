@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.data.models.workout.Workout
+import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragmentDirections
 import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
@@ -72,19 +72,19 @@ class MyWorkoutsFragment : Fragment(),
         })
     }
 
-    override fun onWorkoutSelected(view: View, workout: Workout) {
+    override fun onWorkoutSelected(view: View, routine: Routine) {
         val action =
             MainTabsFragmentDirections.viewWorkoutDetails(
-                workout.id!!,
-                workout.name
+                routine.id!!,
+                routine.name
             )
 
         view.findNavController().navigate(action)
     }
 
-    override fun onWorkoutSessionSelected(view: View, workout: Workout) {
+    override fun onWorkoutSessionSelected(view: View, routine: Routine) {
         val action = MainTabsFragmentDirections.
-            actionMainTabsFragmentToWorkoutLoggingFragment(workout.id!!)
+            actionMainTabsFragmentToWorkoutLoggingFragment(routine.id!!)
 
         view.findNavController().navigate(action)
     }
