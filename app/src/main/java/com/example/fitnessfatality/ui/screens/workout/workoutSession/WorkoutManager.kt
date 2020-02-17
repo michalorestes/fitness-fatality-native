@@ -14,46 +14,17 @@ class WorkoutManager(
 
     fun next() {
         when(true) {
-            isEndOfSession() -> terminateWorkout()
-            !isLastSet() -> moveToNextSet()
-            else -> moveToNextExercise()
+            state.isEndOfSession(exercises.value!!) -> terminateWorkout()
+            !state.isLastSet(exercises.value!!) -> state.incrementSetIndex()
+            else -> state.moveToNextExercise()
         }
     }
 
-    private fun isEndOfSession(): Boolean {
-        val currentExerciseNumberOfSets =
-            exercises.value!![state.getExerciseIndex()]
-                .routineExercise!!.loggingParameters["sets"]!!.toInt()
-
-        val isLastExercise = (exercises.value!!.size - 1) == state.exerciseIndex.value
-        val isLastSetCompleted = currentExerciseNumberOfSets == state.setIndex.value
-
-        return isLastExercise && isLastSetCompleted
-    }
-
     private fun terminateWorkout() {
-        state.resetSetIndex()
-        state.resetExerciseIndex()
+        state.resetState()
         Log.d("+", "End of workout")
     }
 
-    private fun moveToNextSet() {
-        state.incrementSetIndex()
-    }
-
-    private fun moveToNextExercise() {
-        state.incrementExerciseIndex()
-        state.resetSetIndex()
-    }
-
-    private fun isLastSet(): Boolean {
-        val setsTarget =
-            exercises.value!![state.getExerciseIndex()]
-                .routineExercise!!
-                .loggingParameters["sets"]!!.toInt()
-
-        return state.getSetIndex() >= setsTarget
-    }
 
     fun getExercises():  MutableLiveData<List<RoutineExercisePojo>> {
         return exercises
