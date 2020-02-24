@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Routine(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int? = null,
+    val id: Long? = null,
     val name: String,
     val workoutIcon: Int
 )

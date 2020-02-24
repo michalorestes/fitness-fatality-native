@@ -20,7 +20,7 @@ class RoutineDetailsViewModel(applicatin: Application): BaseViewModel(applicatin
         routineExerciseRepository = RoutineExerciseRepository(db.routineExerciseDao())
     }
 
-    fun findWorkoutExercisesByWorkoutId(workoutId: Int): LiveData<List<RoutineExercisePojo>> {
+    fun findWorkoutExercisesByWorkoutId(workoutId: Long): LiveData<List<RoutineExercisePojo>> {
         return routineExerciseRepository.findWorkoutExercisesByWorkoutId(workoutId)
     }
 

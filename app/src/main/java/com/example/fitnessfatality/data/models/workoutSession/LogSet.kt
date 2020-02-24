@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "set",
+    tableName = "log_set",
     foreignKeys = [
         ForeignKey(
             entity = Log::class,
@@ -14,10 +14,11 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class Set(
+data class LogSet(
     @PrimaryKey
-    val id: Long,
-    val logId: Long,
-    val setIndex: Int,
-    val reps: List<Rep>
+    var id: Long? = null,
+    var logId: Long? = null,
+    var setIndex: Int,
+    var numberOfReps: Int?,
+    var weightLifted: Double?
 )

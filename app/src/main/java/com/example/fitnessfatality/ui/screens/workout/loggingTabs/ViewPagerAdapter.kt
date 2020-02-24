@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
+import com.example.fitnessfatality.ui.screens.workout.interfaces.SingleExerciseLogProvider
 
 class ViewPagerAdapter(fm: FragmentManager) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -12,6 +13,18 @@ class ViewPagerAdapter(fm: FragmentManager) :
     private var pages = mutableMapOf<Int, SingleExerciseLogFragment>()
 
     override fun getItem(position: Int): Fragment {
+        if (!pages.containsKey(position)) {
+            pages[position] =
+                SingleExerciseLogFragment(
+                    data[position],
+                    position
+                )
+        }
+
+        return pages[position]!!
+    }
+
+    fun getLogProvider(position: Int): SingleExerciseLogProvider {
         if (!pages.containsKey(position)) {
             pages[position] =
                 SingleExerciseLogFragment(

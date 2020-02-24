@@ -6,42 +6,31 @@ import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
 import com.example.fitnessfatality.data.repository.WorkoutRepository
 import com.example.fitnessfatality.ui.base.BaseViewModel
-import com.example.fitnessfatality.ui.screens.workout.interfaces.UiControler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.fitnessfatality.ui.screens.workout.interfaces.UiController
 
 class WorkoutViewModel(
     application: Application
-): BaseViewModel(application) {
+) : BaseViewModel(application) {
 
     private var workoutManager: WorkoutManager? = null
     private val workoutRepository: WorkoutRepository
 
     init {
         val db = AppDatabase.getDatabase(application, scope)
-        workoutRepository = WorkoutRepository(db.routineExerciseDao())
+        workoutRepository =
+            WorkoutRepository(db.routineExerciseDao(), db.logDao(), db.logSetDao(), db.workoutDao())
     }
 
-    fun initialiseWorkoutManager(routineId: Int, uiController: UiControler) {
+    fun initialiseWorkoutManager(routineId: Long, uiController: UiController) {
         val timer = Timer()
         val state = State()
         workoutManager = WorkoutManager(
             routineId,
             timer,
-            state
+            state,
+            uiController,
+            workoutRepository
         )
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val routines = withContext(Dispatchers.Default) {
-                workoutRepository.fetchRoutineExecises(routineId)
-            }
-
-            workoutManager!!.setExercises(routines)
-
-            uiController.initialiseViewPager(workoutManager!!.getExercises().value!!)
-        }
     }
 
     fun onNextClick() {

@@ -7,14 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fitnessfatality.R
-import com.example.fitnessfatality.data.dao.ExerciseDao
-import com.example.fitnessfatality.data.dao.RoutineDao
-import com.example.fitnessfatality.data.dao.RoutineExerciseDao
+import com.example.fitnessfatality.data.dao.*
 import com.example.fitnessfatality.data.models.exercise.Exercise
 import com.example.fitnessfatality.data.models.exercise.ExerciseType
 import com.example.fitnessfatality.data.models.exercise.MuscleGroup
 import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.data.models.routine.RoutineExercise
+import com.example.fitnessfatality.data.models.workoutSession.Log
+import com.example.fitnessfatality.data.models.workoutSession.LogSet
+import com.example.fitnessfatality.data.models.workoutSession.Workout
 import com.example.fitnessfatality.data.typeConverter.ExerciseTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LocalDateTypeConverter
 import com.example.fitnessfatality.data.typeConverter.LoggingTypeConverter
@@ -27,9 +28,12 @@ import kotlinx.coroutines.launch
     entities = [
         Exercise::class,
         RoutineExercise::class,
-        Routine::class
+        Routine::class,
+        Log::class,
+        Workout::class,
+        LogSet::class
     ],
-    version = 20,
+    version = 25,
     exportSchema = false
 )
 @TypeConverters(
@@ -41,7 +45,10 @@ import kotlinx.coroutines.launch
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun routineExerciseDao(): RoutineExerciseDao
-    abstract fun workoutDao(): RoutineDao
+    abstract fun routineDao(): RoutineDao
+    abstract fun workoutDao(): WorkoutDao
+    abstract fun logDao(): LogDao
+    abstract fun logSetDao(): LogSetDao
 
     companion object {
         @Volatile
@@ -79,7 +86,8 @@ abstract class AppDatabase: RoomDatabase() {
                     populateDatabase(
                         database.exerciseDao(),
                         database.routineExerciseDao(),
-                        database.workoutDao()
+                        database.routineDao(),
+                        database.logDao()
                     )
                 }
             }
@@ -88,10 +96,12 @@ abstract class AppDatabase: RoomDatabase() {
         fun populateDatabase(
             exerciseDao: ExerciseDao,
             routineExerciseDao: RoutineExerciseDao,
-            workoutDao: RoutineDao
+            workoutDao: RoutineDao,
+            logDao: LogDao
         ) {
             routineExerciseDao.deleteAll()
             workoutDao.deleteAll()
+            logDao.deleteAll()
             exerciseDao.deleteAll()
 
             val exercise = Exercise(
@@ -170,8 +180,8 @@ abstract class AppDatabase: RoomDatabase() {
                 hashMapOf("duration" to 30, "sets" to 1, "rest" to 90)
             )
 
-            routineExerciseDao.insert(workoutExercise)
-            routineExerciseDao.insert(workoutExercise2)
+//            routineExerciseDao.insert(workoutExercise)
+//            routineExerciseDao.insert(workoutExercise2)
             routineExerciseDao.insert(workoutExercise3)
             routineExerciseDao.insert(workoutExercise4)
 

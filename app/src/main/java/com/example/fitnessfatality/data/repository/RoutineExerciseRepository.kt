@@ -14,11 +14,11 @@ class RoutineExerciseRepository(private val dao: RoutineExerciseDao) {
         dao.insert(routineExercise)
     }
 
-    fun findWorkoutExercisesByWorkoutId(workoutId: Int): LiveData<List<RoutineExercisePojo>> {
+    fun findWorkoutExercisesByWorkoutId(workoutId: Long): LiveData<List<RoutineExercisePojo>> {
         return dao.findByRoutineId(workoutId)
     }
 
-    fun findWorkoutExercisesByWorkoutIdBlocking(workoutId: Int): List<RoutineExercisePojo> {
+    fun findWorkoutExercisesByWorkoutIdBlocking(workoutId: Long): List<RoutineExercisePojo> {
         return dao.findByWorkoutIdBlocking(workoutId)
     }
 

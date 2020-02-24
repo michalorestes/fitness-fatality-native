@@ -24,7 +24,7 @@ class ExercisesViewModel(applicatin: Application): BaseViewModel(applicatin) {
         exercises = exerciseRepository.selectAllExercises()
     }
 
-    fun addExerciseToWorkout(exercise: Exercise, workoutId: Int) = scope.launch(Dispatchers.IO) {
+    fun addExerciseToWorkout(exercise: Exercise, workoutId: Long) = scope.launch(Dispatchers.IO) {
         val workoutExercise = RoutineExercise(
             routineId = workoutId,
             exerciseId = exercise.id,

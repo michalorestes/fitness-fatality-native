@@ -18,8 +18,8 @@ import java.time.LocalDateTime
 )
 data class Workout(
     @PrimaryKey
-    val id: Long,
-    val routineId: Long,
-    val startTime: LocalDateTime,
-    val endTime: LocalDateTime
+    var id: Long?,
+    var routineId: Long?,
+    var startTime: LocalDateTime?,
+    var endTime: LocalDateTime?
 )

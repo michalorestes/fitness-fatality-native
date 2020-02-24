@@ -2,6 +2,7 @@ package com.example.fitnessfatality.data.models.routine
 
 import androidx.room.*
 import com.example.fitnessfatality.data.models.exercise.Exercise
+import com.example.fitnessfatality.data.models.workoutSession.Log
 import com.example.fitnessfatality.data.models.workoutSession.LoggingType
 
 @Entity(
@@ -17,13 +18,16 @@ import com.example.fitnessfatality.data.models.workoutSession.LoggingType
 data class RoutineExercise(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int? = null,
-    val routineId: Int,
+    val id: Long? = null,
+    val routineId: Long,
     @ColumnInfo(name = "exercise_id")
     val exerciseId: Int,
     val sequenceOrder: Int = 0,
     val loggingParameters: HashMap<String, Int> = hashMapOf()
 ) {
+    @Ignore
+    var exerciseLogs: Log? = null
+
     override fun toString(): String {
         return "$id, $loggingParameters"
     }

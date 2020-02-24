@@ -1,7 +1,10 @@
 package com.example.fitnessfatality.ui.screens.workout.interfaces
 
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
+import com.example.fitnessfatality.data.models.workoutSession.Log
 
-interface UiControler {
+interface UiController {
     fun initialiseViewPager(data: List<RoutineExercisePojo>)
+    fun getSetRepValue(): Log
+    fun navigateToEndOfWorkout()
 }

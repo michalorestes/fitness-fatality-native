@@ -9,18 +9,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
+import com.example.fitnessfatality.data.models.workoutSession.Log
 import com.example.fitnessfatality.databinding.FragmentWorkoutLoggingBinding
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.workout.loggingTabs.ViewPagerAdapter
 import com.example.fitnessfatality.ui.screens.workout.customViews.WorkoutViewPager
-import com.example.fitnessfatality.ui.screens.workout.interfaces.UiControler
+import com.example.fitnessfatality.ui.screens.workout.interfaces.UiController
 import com.example.fitnessfatality.ui.screens.workout.workoutSession.WorkoutViewModel
 
-class WorkoutFragment : Fragment(), UiControler {
+class WorkoutFragment : Fragment(), UiController {
     private val args: WorkoutFragmentArgs by navArgs()
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
     private lateinit var viewPager: WorkoutViewPager
@@ -92,6 +95,16 @@ class WorkoutFragment : Fragment(), UiControler {
 
     override fun initialiseViewPager(data: List<RoutineExercisePojo>) {
         this.viewPagerAdapter.setData(data)
+    }
+
+    override fun getSetRepValue(): Log {
+        return viewPagerAdapter.getLogProvider(viewPager.currentItem).getLogValue()
+    }
+
+    override fun navigateToEndOfWorkout() {
+        Navigation
+            .findNavController(activity!!, R.id.workout_nav_host_fragment)
+            .navigate(R.id.action_workoutLoggingFragment_to_trackingEndFragment)
     }
 
     private fun displayNextPage() {

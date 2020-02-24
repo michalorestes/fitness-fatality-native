@@ -17,9 +17,10 @@ import androidx.room.PrimaryKey
 )
 data class Log(
     @PrimaryKey
-    val id: Long,
-    val workoutId: Long,
-    val routineExerciseId: Long,
+    var id: Long? = null,
+    var workoutId: Long? = null,
+    var routineExerciseId: Long? = null
+) {
     @Ignore
-    val sets: ArrayList<Set>
-)
+    val logSets: ArrayList<LogSet> = arrayListOf()
+}

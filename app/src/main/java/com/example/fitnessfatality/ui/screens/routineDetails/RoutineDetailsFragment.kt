@@ -93,7 +93,8 @@ class RoutineDetailsFragment : Fragment(), BottomAppBarActionListenerInterface,
     override fun onPause() {
         super.onPause()
         routineDetailsViewModel.isRecyclerViewInEditMode = false
-        recyclerViewAdapter.isRecyclerViewInEditMode = routineDetailsViewModel.isRecyclerViewInEditMode
+        recyclerViewAdapter.isRecyclerViewInEditMode =
+            routineDetailsViewModel.isRecyclerViewInEditMode
     }
 
     override fun onFloatingActionButtonPress(view: View) {

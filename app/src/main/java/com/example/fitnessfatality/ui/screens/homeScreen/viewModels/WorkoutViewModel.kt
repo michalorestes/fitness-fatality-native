@@ -21,7 +21,7 @@ class WorkoutViewModel(application: Application): AndroidViewModel(application) 
     private val scope = CoroutineScope(coroutineContext)
 
     init {
-        val dao = AppDatabase.getDatabase(application, scope).workoutDao()
+        val dao = AppDatabase.getDatabase(application, scope).routineDao()
         routinesRepository = RoutinesRepository(dao)
         allWorkouts = routinesRepository.allWorkouts
     }

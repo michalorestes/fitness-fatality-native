@@ -38,7 +38,7 @@ interface RoutineExerciseDao {
             "FROM routine_exercise we " +
             "INNER JOIN exercise e ON we.exercise_id = e.id " +
             "WHERE we.routineId = :routineId")
-    fun findByRoutineId(routineId: Int): LiveData<List<RoutineExercisePojo>>
+    fun findByRoutineId(routineId: Long): LiveData<List<RoutineExercisePojo>>
 
     @Query("SELECT we.*, " +
             "e.id as _id," +
@@ -50,7 +50,7 @@ interface RoutineExerciseDao {
             "FROM routine_exercise we " +
             "INNER JOIN exercise e ON we.exercise_id = e.id " +
             "WHERE we.routineId = :routineId")
-    fun findByWorkoutIdBlocking(routineId: Int): List<RoutineExercisePojo>
+    fun findByWorkoutIdBlocking(routineId: Long): List<RoutineExercisePojo>
 
     @Update
     fun update(routineExercise: RoutineExercise)

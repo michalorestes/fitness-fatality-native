@@ -7,10 +7,12 @@
     <fragment android:id="@+id/workoutLoggingFragment"
               android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutFragment"
               android:label="Workout Logging">
-        <action android:id="@+id/action_workoutLoggingFragment_to_trackingEndFragment"
-                app:destination="@id/trackingEndFragment" app:popUpToInclusive="false"
-                app:popUpTo="@+id/myWorkoutsFragment"/>
-        <argument android:name="workoutId" app:argType="integer"/>
+        <action
+            android:id="@+id/action_workoutLoggingFragment_to_trackingEndFragment"
+            app:destination="@id/trackingEndFragment"
+            app:popUpTo="@+id/workoutDetailsFragment"
+            app:popUpToInclusive="false" />
+        <argument android:name="workoutId" app:argType="long"/>
     </fragment>
     <fragment android:id="@+id/trackingEndFragment"
               android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutEndFragment"
@@ -21,7 +23,7 @@
     <fragment android:id="@+id/workoutDetailsFragment"
               android:name="com.example.fitnessfatality.ui.screens.routineDetails.RoutineDetailsFragment"
               android:label="{workoutName}">
-        <argument android:name="workoutId" app:argType="integer"/>
+        <argument android:name="workoutId" app:argType="long"/>
         <argument android:name="workoutName" app:argType="string"/>
         <action
                 android:id="@+id/actionToExerciseDatabase"
@@ -45,7 +47,7 @@
             tools:layout="@layout/fragment_exercise_database">
         <argument
                 android:name="workoutId"
-                app:argType="integer" />
+                app:argType="long" />
     </fragment>
     <fragment
             android:id="@+id/mainTabsFragment"

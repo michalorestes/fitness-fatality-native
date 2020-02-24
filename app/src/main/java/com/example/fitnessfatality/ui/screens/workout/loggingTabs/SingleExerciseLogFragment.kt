@@ -7,12 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEach
+import androidx.core.view.forEachIndexed
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
 import com.example.fitnessfatality.data.models.routine.RoutineExercise
+import com.example.fitnessfatality.data.models.workoutSession.Log
+import com.example.fitnessfatality.data.models.workoutSession.LogSet
+import com.example.fitnessfatality.ui.screens.workout.interfaces.SingleExerciseLogProvider
 import com.example.fitnessfatality.ui.screens.workout.workoutSession.WorkoutViewModel
 import kotlinx.android.synthetic.main.dialog_bottomsheet_workout_details.view.lbl_exercise_name
 import kotlinx.android.synthetic.main.fragment_workout_logging_log_entry.view.*
@@ -21,7 +27,7 @@ import kotlinx.android.synthetic.main.view_pager_workout_logging.view.*
 class SingleExerciseLogFragment(
     private val routineExercise: RoutineExercisePojo,
     private val position: Int
-) : Fragment() {
+) : Fragment(), SingleExerciseLogProvider {
 
     private lateinit var workoutViewModel: WorkoutViewModel
 
@@ -119,10 +125,33 @@ class SingleExerciseLogFragment(
     private fun setHighlightBackground(rowIndex: Int, isActive: Boolean) {
         var bgDrawable: Drawable? = null
         if (isActive) {
-            bgDrawable = ContextCompat.getDrawable(context!!, R.drawable.tracking_log_active_background)
+            bgDrawable =
+                ContextCompat.getDrawable(context!!, R.drawable.tracking_log_active_background)
         }
 
         val setsContainer = view!!.sets_entry_container
         setsContainer.getChildAt(rowIndex).background = bgDrawable
+    }
+
+    override fun getLogValue(): Log {
+        val currentSetContainerView = view!!.sets_entry_container
+        val sets = arrayListOf<LogSet>()
+
+        currentSetContainerView.forEachIndexed { index, view ->
+            val repsNumber = view.edit_text_reps_number.text.toString().toInt()
+            val weightLifted = view.edit_text_weight_lifed.text.toString().toDouble()
+
+            val set = LogSet(
+                setIndex = index.plus(1),
+                numberOfReps = repsNumber,
+                weightLifted = weightLifted
+            )
+            sets.add(set)
+        }
+
+        val log = Log()
+        log.logSets.addAll(sets)
+
+        return log
     }
 }
