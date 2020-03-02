@@ -87,7 +87,9 @@ abstract class AppDatabase: RoomDatabase() {
                         database.exerciseDao(),
                         database.routineExerciseDao(),
                         database.routineDao(),
-                        database.logDao()
+                        database.logDao(),
+                        database.logSetDao(),
+                        database.workoutDao()
                     )
                 }
             }
@@ -96,12 +98,16 @@ abstract class AppDatabase: RoomDatabase() {
         fun populateDatabase(
             exerciseDao: ExerciseDao,
             routineExerciseDao: RoutineExerciseDao,
-            workoutDao: RoutineDao,
-            logDao: LogDao
+            routineDao: RoutineDao,
+            logDao: LogDao,
+            logSetDao: LogSetDao,
+            workoutDao: WorkoutDao
         ) {
+            logSetDao.deleteAll()
+            logDao.deleteAll()
             routineExerciseDao.deleteAll()
             workoutDao.deleteAll()
-            logDao.deleteAll()
+            routineDao.deleteAll()
             exerciseDao.deleteAll()
 
             val exercise = Exercise(
@@ -186,13 +192,13 @@ abstract class AppDatabase: RoomDatabase() {
             routineExerciseDao.insert(workoutExercise4)
 
 
-            val workout = Routine(
+            val routine = Routine(
                 0,
                 "Sample workout routine",
                 R.drawable.inverval_workout_icon
             )
 
-            workoutDao.insert(workout)
+            routineDao.insert(routine)
         }
     }
 }
