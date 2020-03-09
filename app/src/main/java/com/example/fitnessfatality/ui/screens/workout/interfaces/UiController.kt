@@ -5,6 +5,6 @@ import com.example.fitnessfatality.data.models.workoutSession.Log
 
 interface UiController {
     fun initialiseViewPager(data: List<RoutineExercisePojo>)
-    fun getSetRepValue(): Log
+    fun getExerciseLog(): Log
     fun navigateToEndOfWorkout()
 }

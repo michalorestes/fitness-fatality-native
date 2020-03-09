@@ -18,7 +18,7 @@ data class LogSet(
     @PrimaryKey
     var id: Long? = null,
     var logId: Long? = null,
-    var setIndex: Int,
+    var setIndex: Int?,
     var numberOfReps: Int?,
     var weightLifted: Double?
 )

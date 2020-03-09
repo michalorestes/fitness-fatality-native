@@ -21,7 +21,7 @@ data class RoutineExercise(
     val id: Long? = null,
     val routineId: Long,
     @ColumnInfo(name = "exercise_id")
-    val exerciseId: Int,
+    val exerciseId: Long,
     val sequenceOrder: Int = 0,
     val loggingParameters: HashMap<String, Int> = hashMapOf()
 ) {

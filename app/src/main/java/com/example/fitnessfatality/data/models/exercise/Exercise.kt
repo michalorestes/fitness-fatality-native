@@ -8,10 +8,14 @@ import androidx.room.PrimaryKey
 data class Exercise(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Long,
     val name: String,
     val exerciseType: ExerciseType,
     val primaryMuscleGroup: MuscleGroup,
     val secondaryMuscleGroups: List<MuscleGroup>,
     val isCustom: Boolean
-)
+) {
+    override fun toString(): String {
+        return name
+    }
+}

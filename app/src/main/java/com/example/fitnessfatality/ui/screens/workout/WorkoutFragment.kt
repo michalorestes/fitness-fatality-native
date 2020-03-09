@@ -97,7 +97,7 @@ class WorkoutFragment : Fragment(), UiController {
         this.viewPagerAdapter.setData(data)
     }
 
-    override fun getSetRepValue(): Log {
+    override fun getExerciseLog(): Log {
         return viewPagerAdapter.getLogProvider(viewPager.currentItem).getLogValue()
     }
 

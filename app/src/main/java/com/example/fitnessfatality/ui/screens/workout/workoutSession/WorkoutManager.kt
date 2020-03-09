@@ -36,8 +36,7 @@ class WorkoutManager(
     fun next() {
         if (state.isLastSet(exercises = exercises.value!!)) {
             val currentExercise = exercises.value!![state.getExerciseIndex()].routineExercise!!
-            currentExercise.exerciseLogs = uiController.getSetRepValue()
-            currentExercise.exerciseLogs!!.routineExerciseId = currentExercise.id
+            currentExercise.exerciseLogs = uiController.getExerciseLog()
         }
 
         when (true) {
@@ -56,7 +55,6 @@ class WorkoutManager(
             Log.d("+++", "Starting to write to DB")
             val workout =
                 Workout(
-                    id = 8,
                     routineId = routineId,
                     startTime = LocalDateTime.now(),
                     endTime = LocalDateTime.now()

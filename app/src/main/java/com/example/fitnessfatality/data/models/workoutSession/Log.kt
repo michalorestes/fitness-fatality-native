@@ -19,7 +19,8 @@ data class Log(
     @PrimaryKey
     var id: Long? = null,
     var workoutId: Long? = null,
-    var routineExerciseId: Long? = null
+    var routineExerciseId: Long? = null,
+    var exerciseId: Long? = null
 ) {
     @Ignore
     val logSets: ArrayList<LogSet> = arrayListOf()

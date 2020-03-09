@@ -151,6 +151,8 @@ class SingleExerciseLogFragment(
 
         val log = Log()
         log.logSets.addAll(sets)
+        log.exerciseId = routineExercise.exercise!!.id
+        log.routineExerciseId = routineExercise.routineExercise!!.id
 
         return log
     }

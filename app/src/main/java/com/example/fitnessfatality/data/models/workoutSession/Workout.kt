@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 )
 data class Workout(
     @PrimaryKey
-    var id: Long?,
+    var id: Long? = null,
     var routineId: Long?,
     var startTime: LocalDateTime?,
     var endTime: LocalDateTime?
