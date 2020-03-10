@@ -27,8 +27,8 @@ class MainTabsAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         when(position) {
-            0 -> return "MY WORKOUTS"
-            1 -> return "DASHBOARD"
+            0 -> return "MY ROUTINES"
+            1 -> return "STATISTICS"
         }
 
         return "N/A"
