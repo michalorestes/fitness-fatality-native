@@ -35,7 +35,7 @@ class WorkoutRepository(
     }
 
     @WorkerThread
-    fun updateWorkout(workout: Workout): Long {
-        return workoutDao.update(workout)
+    fun updateWorkout(workout: Workout) {
+        workoutDao.update(workout)
     }
 }

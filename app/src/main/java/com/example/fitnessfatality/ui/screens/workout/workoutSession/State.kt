@@ -2,10 +2,11 @@ package com.example.fitnessfatality.ui.screens.workout.workoutSession
 
 import androidx.lifecycle.MutableLiveData
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
+import java.lang.Exception
 
 class State {
-    val setIndex = MutableLiveData(1)
-    val exerciseIndex = MutableLiveData(0)
+    var setIndex = MutableLiveData(1)
+    var exerciseIndex = MutableLiveData(0)
 
     fun getSetIndex(): Int {
         return setIndex.value!!
@@ -44,21 +45,25 @@ class State {
     }
 
     private fun resetExerciseIndex(): Int {
-        exerciseIndex.value = 0
+        exerciseIndex = MutableLiveData(0)
 
         return exerciseIndex.value!!
     }
 
     fun isEndOfSession(exercises: List<RoutineExercisePojo>): Boolean {
-        val currentExerciseNumberOfSets =
-            exercises[getExerciseIndex()]
-                .routineExercise!!
-                .loggingParameters["sets"]!!.toInt()
+        return try {
+            val currentExerciseNumberOfSets =
+                exercises[getExerciseIndex()]
+                    .routineExercise!!
+                    .loggingParameters["sets"]!!.toInt()
 
-        val isLastExercise = (exercises.size - 1) == getExerciseIndex()
-        val isLastSetCompleted = currentExerciseNumberOfSets == getSetIndex()
+            val isLastExercise = (exercises.size - 1) < getExerciseIndex()
+            val isLastSetCompleted = currentExerciseNumberOfSets == getSetIndex()
 
-        return isLastExercise && isLastSetCompleted
+            isLastExercise && isLastSetCompleted
+        } catch (exception: Exception) {
+            true
+        }
     }
 
     fun isLastSet(exercises: List<RoutineExercisePojo>): Boolean {

@@ -12,7 +12,7 @@ interface WorkoutDao {
     fun insert(workout: Workout): Long
 
     @Update
-    fun update(workout: Workout): Long
+    fun update(workout: Workout)
 
     @Query("DELETE FROM workout")
     fun deleteAll()

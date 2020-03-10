@@ -38,17 +38,16 @@ class WorkoutManager(
     }
 
     fun next() {
-        if (state.isLastSet(exercises = exercises.value!!)) {
+        if (state.isLastSet(exercises.value!!)) {
             val currentExercise = exercises.value!![state.getExerciseIndex()].routineExercise!!
             currentExercise.exerciseLogs = uiController.getExerciseLog()
+            state.moveToNextExercise()
+        } else {
+            state.incrementSetIndex()
         }
 
-        when (true) {
-            state.isEndOfSession(exercises.value!!) -> terminateWorkout()
-            !state.isLastSet(exercises.value!!) -> state.incrementSetIndex()
-            else -> {
-                state.moveToNextExercise()
-            }
+        if (state.isEndOfSession(exercises.value!!)) {
+            terminateWorkout()
         }
     }
 
