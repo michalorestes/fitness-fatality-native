@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
         Workout::class,
         LogSet::class
     ],
-    version = 27,
+    version = 28,
     exportSchema = false
 )
 @TypeConverters(

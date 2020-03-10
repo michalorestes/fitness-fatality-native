@@ -1,6 +1,7 @@
 package com.example.fitnessfatality.ui.screens.workout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,7 @@ class WorkoutBottomSheetFragment: Fragment() {
     }
 
     private fun updateBottomSheetUi(workoutExercises: List<RoutineExercisePojo>) {
+        Log.d("---->", "Called update bottom sheet UI")
         workoutExercises.forEach {
             val layout = layoutInflater.inflate(
                 R.layout.fragment_logging_bottomsheet_exercise_entry,

@@ -1,6 +1,5 @@
 package com.example.fitnessfatality.ui.screens.workout.workoutSession
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.fitnessfatality.data.models.pojo.RoutineExercisePojo
 import com.example.fitnessfatality.data.models.workoutSession.Workout
@@ -20,15 +19,20 @@ class WorkoutManager(
     private val workoutRepository: WorkoutRepository
 ) {
     private val exercises: MutableLiveData<List<RoutineExercisePojo>> = MutableLiveData(listOf())
+    private val workout: Workout = Workout(routineId = routineId, startTime = LocalDateTime.now())
 
     init {
         GlobalScope.launch(Dispatchers.Main) {
+            val workoutId = withContext(Dispatchers.Default) {
+                workoutRepository.storeWorkout(workout)
+            }
+
             val routines = withContext(Dispatchers.Default) {
                 workoutRepository.fetchRoutineExcises(routineId)
             }
 
             exercises.value = routines
-
+            workout.id = workoutId
             uiController.initialiseViewPager(getExercises().value!!)
         }
     }
@@ -50,21 +54,12 @@ class WorkoutManager(
 
     private fun terminateWorkout() {
         state.resetState()
-        //TODO: Code in global scope should be handled somwhere else. It is a mess at the moment
+        //TODO: Code in global scope should be handled somewhere else. It is a mess at the moment
         GlobalScope.launch(Dispatchers.Default) {
-            Log.d("+++", "Starting to write to DB")
-            val workout =
-                Workout(
-                    routineId = routineId,
-                    startTime = LocalDateTime.now(),
-                    endTime = LocalDateTime.now()
-                )
-            workout.id = workoutRepository.storeWorkout(workout)
-            Log.d("+++", "Saved workout")
+            workout.endTime = LocalDateTime.now()
+            workoutRepository.updateWorkout(workout)
 
             exercises.value!!.forEach { routineExercisePojo ->
-                Log.d("+++", "saving logs")
-
                 val log = routineExercisePojo.routineExercise!!.exerciseLogs!!
                 log.workoutId = workout.id
                 log.id = workoutRepository.storeWorkoutLog(log)
@@ -73,12 +68,8 @@ class WorkoutManager(
                     workoutRepository.storeLogSet(it)
                 }
             }
-
-            Log.d("+++", "Completed saving workout to db :)")
         }
-
         uiController.navigateToEndOfWorkout()
-        Log.d("+", "End of workout")
     }
 
     fun getExercises(): MutableLiveData<List<RoutineExercisePojo>> {

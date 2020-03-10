@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 class LocalDateTypeConverter {
 
     @TypeConverter
-    fun dateToString(date: LocalDateTime): String {
+    fun dateToString(date: LocalDateTime?): String {
         return date.toString()
     }
 

@@ -21,5 +21,5 @@ data class Workout(
     var id: Long? = null,
     var routineId: Long?,
     var startTime: LocalDateTime?,
-    var endTime: LocalDateTime?
+    var endTime: LocalDateTime? = null
 )

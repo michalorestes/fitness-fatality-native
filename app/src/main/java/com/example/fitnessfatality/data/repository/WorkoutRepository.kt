@@ -33,4 +33,9 @@ class WorkoutRepository(
     fun storeWorkout(workout: Workout): Long {
         return workoutDao.insert(workout)
     }
+
+    @WorkerThread
+    fun updateWorkout(workout: Workout): Long {
+        return workoutDao.update(workout)
+    }
 }
