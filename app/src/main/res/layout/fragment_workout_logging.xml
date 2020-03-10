@@ -17,12 +17,18 @@
             android:layout_height="match_parent">
         </com.example.fitnessfatality.ui.screens.workout.customViews.WorkoutViewPager>
 
-       <fragment
-           android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutBottomSheetFragment"
-           android:id="@+id/bottom_sheet"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           app:behavior_peekHeight="100dp"
-           app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:behavior_peekHeight="120dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            <fragment
+                android:layout_marginTop="20dp"
+                android:name="com.example.fitnessfatality.ui.screens.workout.WorkoutBottomSheetFragment"
+                android:id="@+id/bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -94,7 +94,7 @@ class WorkoutBottomSheetFragment : Fragment() {
                     "Set: " + it.setIndex +
                     " Weight: " + it.weightLifted +
                     " Reps: " + it.numberOfReps
-                
+
                 view.addView(logsView)
             }
         }
