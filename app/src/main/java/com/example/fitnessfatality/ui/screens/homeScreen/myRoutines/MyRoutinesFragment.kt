@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts
+package com.example.fitnessfatality.ui.screens.homeScreen.myRoutines
 
 import android.content.Context
 import android.os.Bundle
@@ -16,14 +16,13 @@ import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragmentDirections
 import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
-import com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts.adapters.WorkoutsListAdapter
-import com.example.fitnessfatality.ui.screens.homeScreen.viewModels.WorkoutViewModel
+import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.RoutinesListAdapter
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
-class MyWorkoutsFragment : Fragment(),
+class MyRoutinesFragment : Fragment(),
     OnWorkoutListItemClickListener {
-    private lateinit var workoutViewModel: WorkoutViewModel
-    private lateinit var recyclerViewAdapter: WorkoutsListAdapter
+    private lateinit var routinesViewModel: RoutinesViewModel
+    private lateinit var recyclerViewAdapter: RoutinesListAdapter
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
 
     override fun onAttach(context: Context) {
@@ -38,7 +37,7 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        workoutViewModel = ViewModelProviders.of(activity!!).get(WorkoutViewModel::class.java)
+        routinesViewModel = ViewModelProviders.of(activity!!).get(RoutinesViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -51,7 +50,7 @@ class MyWorkoutsFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerViewAdapter =
-            WorkoutsListAdapter(
+            RoutinesListAdapter(
                 this,
                 resources
             )
@@ -65,7 +64,7 @@ class MyWorkoutsFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        this.workoutViewModel.allWorkouts.observe(this, Observer {
+        this.routinesViewModel.allWorkouts.observe(this, Observer {
             if (it != null) {
                 recyclerViewAdapter.updateDataSet(it)
             }

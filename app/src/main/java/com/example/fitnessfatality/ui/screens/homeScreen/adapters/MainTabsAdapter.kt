@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.fitnessfatality.ui.screens.dashboard.DashboardFragment
-import com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts.MyWorkoutsFragment
+import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.MyRoutinesFragment
 
 class MainTabsAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
-    private val myWorkoutsFragment = MyWorkoutsFragment()
+    private val myWorkoutsFragment = MyRoutinesFragment()
     private val dashboardFragment = DashboardFragment()
 
     override fun getItem(position: Int): Fragment {

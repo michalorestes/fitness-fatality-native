@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
-import com.example.fitnessfatality.ui.screens.homeScreen.viewModels.WorkoutViewModel
+import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.RoutinesViewModel
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import kotlinx.android.synthetic.main.fragment_create_new_workout.*
 
 class CreateNewWorkoutFragment : Fragment() {
-    private lateinit var workoutViewModel: WorkoutViewModel
+    private lateinit var routinesViewModel: RoutinesViewModel
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
 
     override fun onAttach(context: Context) {
@@ -34,7 +34,7 @@ class CreateNewWorkoutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        workoutViewModel = ViewModelProviders.of(activity!!).get(WorkoutViewModel::class.java)
+        routinesViewModel = ViewModelProviders.of(activity!!).get(RoutinesViewModel::class.java)
 
         return inflater.inflate(R.layout.fragment_create_new_workout, container, false)
     }
@@ -47,7 +47,7 @@ class CreateNewWorkoutFragment : Fragment() {
             )
         )
         btn_save_workout.setOnClickListener {
-            workoutViewModel.insertWorkout(
+            routinesViewModel.insertWorkout(
                 Routine(
                     name = txt_workout_name.text.toString(),
                     workoutIcon = getWorkoutIcon()

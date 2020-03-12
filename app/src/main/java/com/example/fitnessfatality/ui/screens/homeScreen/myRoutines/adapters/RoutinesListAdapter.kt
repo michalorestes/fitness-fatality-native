@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.homeScreen.myWorkouts.adapters
+package com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters
 
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -11,10 +11,10 @@ import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
 import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
 
-class WorkoutsListAdapter(
+class RoutinesListAdapter(
     private val workoutsListListener: OnWorkoutListItemClickListener,
     private val resources: Resources
-): RecyclerView.Adapter<WorkoutsListAdapter.ViewHolder>(){
+): RecyclerView.Adapter<RoutinesListAdapter.ViewHolder>(){
     private var dataSet: List<Routine> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

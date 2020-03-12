@@ -1,4 +1,4 @@
-package com.example.fitnessfatality.ui.screens.homeScreen.viewModels
+package com.example.fitnessfatality.ui.screens.homeScreen.myRoutines
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class WorkoutViewModel(application: Application): AndroidViewModel(application) {
+class RoutinesViewModel(application: Application): AndroidViewModel(application) {
     val allWorkouts: LiveData<List<Routine>>
     private val routinesRepository: RoutinesRepository
 
