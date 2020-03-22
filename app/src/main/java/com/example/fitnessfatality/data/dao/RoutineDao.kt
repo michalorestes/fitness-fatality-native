@@ -2,6 +2,7 @@ package com.example.fitnessfatality.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.fitnessfatality.data.models.routine.Routine
@@ -16,4 +17,7 @@ interface RoutineDao {
 
     @Query("DELETE FROM routine")
     fun deleteAll()
+
+    @Delete
+    fun delete(routine: Routine)
 }

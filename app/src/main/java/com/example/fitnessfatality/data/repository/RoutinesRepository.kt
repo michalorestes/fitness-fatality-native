@@ -11,4 +11,8 @@ class RoutinesRepository(private val dao: RoutineDao) {
     suspend fun insert(routine: Routine) {
         dao.insert(routine)
     }
+
+    fun deleteRoutine(routine: Routine) {
+        dao.delete(routine)
+    }
 }

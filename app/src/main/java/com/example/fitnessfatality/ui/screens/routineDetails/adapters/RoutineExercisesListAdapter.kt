@@ -24,11 +24,6 @@ class RoutineExercisesListAdapter(
                 false
             ) as ConstraintLayout
 
-        itemContainer.btn_info.setOnClickListener {
-            val routineExerciseData: RoutineExercisePojo = itemContainer.tag as RoutineExercisePojo
-            this.routineExerciseClickListener.onWorkoutExerciseInfoClick(routineExerciseData)
-        }
-
         return ViewHolder(itemContainer)
     }
 
@@ -59,12 +54,12 @@ class RoutineExercisesListAdapter(
             }
 
             btn_delete.setOnClickListener {
-                Log.d("-->", "Position " + position)
-                Log.d("-->", "ItemDataCount " + dataSet.count())
                 dataSet.remove(itemData)
                 notifyItemRemoved(position)
                 notifyItemRangeChanged(position, 1)
-                routineExerciseClickListener.onWorkoutExerciseDeleteClick(itemData.routineExercise!!)
+                routineExerciseClickListener.onWorkoutExerciseDeleteClick(
+                    itemData.routineExercise!!
+                )
             }
         }
     }

@@ -1,24 +1,19 @@
 package com.example.fitnessfatality.ui.screens.homeScreen.myRoutines
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.fitnessfatality.data.database.AppDatabase
 import com.example.fitnessfatality.data.models.routine.Routine
 import com.example.fitnessfatality.data.repository.RoutinesRepository
-import kotlinx.coroutines.CoroutineScope
+import com.example.fitnessfatality.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-class RoutinesViewModel(application: Application): AndroidViewModel(application) {
+class RoutinesViewModel(application: Application): BaseViewModel(application) {
     val allWorkouts: LiveData<List<Routine>>
+    var isInEditMode = MutableLiveData(false)
     private val routinesRepository: RoutinesRepository
-
-    private var parentJob = Job()
-    private val coroutineContext: CoroutineContext get() = parentJob + Dispatchers.Main
-    private val scope = CoroutineScope(coroutineContext)
 
     init {
         val dao = AppDatabase.getDatabase(application, scope).routineDao()
@@ -28,5 +23,9 @@ class RoutinesViewModel(application: Application): AndroidViewModel(application)
 
     fun insertWorkout(routine: Routine) = scope.launch(Dispatchers.IO) {
         routinesRepository.insert(routine)
+    }
+
+    fun deleteRoutine(routine: Routine) = scope.launch(Dispatchers.IO) {
+        routinesRepository.deleteRoutine(routine)
     }
 }

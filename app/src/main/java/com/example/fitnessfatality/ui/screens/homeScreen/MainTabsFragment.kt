@@ -19,7 +19,7 @@ import com.example.fitnessfatality.ui.screens.homeScreen.adapters.MainTabsAdapte
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_main_tabs.view.*
 
-class MainTabsFragment : Fragment(), BottomAppBarActionListenerInterface {
+class MainTabsFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
@@ -45,34 +45,5 @@ class MainTabsFragment : Fragment(), BottomAppBarActionListenerInterface {
         tabs.setupWithViewPager(viewPager)
 
         return view
-    }
-
-    override fun onStart() {
-        super.onStart()
-        onActivityInteractionInterface.setBottomAppBarAdapter(BottomAppBarAdapter(
-            isPrimaryBottomAppBar = true,
-            navigationMenu = R.menu.navigation,
-            fabDrawableResourceId = R.drawable.ic_add_white_24dp,
-            actionListenerInterface = this
-        ))
-    }
-
-    override fun onFloatingActionButtonPress(view: View) {
-        Navigation
-            .findNavController(activity as Activity, R.id.workout_nav_host_fragment)
-            .navigate(R.id.action_myWorkoutsFragment_to_createNewWorkoutFragment)
-    }
-
-    override fun onOptionsMenu(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId) {
-            android.R.id.home -> Toast.makeText(context, "You clicked the menu button", Toast.LENGTH_SHORT).show()
-            R.id.navigation_my_workouts -> Toast.makeText(context, "You clicked navigation button", Toast.LENGTH_SHORT).show()
-        }
-
-        return true
-    }
-
-    override fun onNavigationClickListener() {
-        Toast.makeText(context, "Clicked menu button", Toast.LENGTH_LONG).show()
     }
 }

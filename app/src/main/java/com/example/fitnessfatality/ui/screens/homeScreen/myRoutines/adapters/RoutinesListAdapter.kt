@@ -8,14 +8,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.routine.Routine
-import com.example.fitnessfatality.ui.screens.homeScreen.adapters.OnWorkoutListItemClickListener
 import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
 
 class RoutinesListAdapter(
     private val workoutsListListener: OnWorkoutListItemClickListener,
-    private val resources: Resources
-): RecyclerView.Adapter<RoutinesListAdapter.ViewHolder>(){
-    private var dataSet: List<Routine> = listOf()
+    private val resources: Resources,
+    var isInEditMode: Boolean
+) : RecyclerView.Adapter<RoutinesListAdapter.ViewHolder>() {
+    private var dataSet: ArrayList<Routine> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemContainer = LayoutInflater
@@ -40,9 +40,11 @@ class RoutinesListAdapter(
         return ViewHolder(itemContainer)
     }
 
-    fun updateDataSet(dataSet: List<Routine>) {
+    fun updateDataSet(dataSet: ArrayList<Routine>) {
         this.dataSet = dataSet
-        this.notifyDataSetChanged()
+        if (!isInEditMode) {
+            this.notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -51,10 +53,28 @@ class RoutinesListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemData = dataSet[position]
-        holder.listItemView.tag = itemData
-        holder.listItemView.lb_title.text = itemData.name
-        holder.listItemView.img_workout_icon.setImageDrawable(resources.getDrawable(itemData.workoutIcon))
+        holder.apply {
+            listItemView.tag = itemData
+            listItemView.lb_title.text = itemData.name
+            listItemView
+                .img_workout_icon
+                .setImageDrawable(resources.getDrawable(itemData.workoutIcon))
+
+            listItemView.chip_start_workout.visibility =
+                if (isInEditMode) View.GONE else View.VISIBLE
+
+            listItemView.btn_delete.visibility =
+                if (isInEditMode) View.VISIBLE else View.GONE
+
+            listItemView.btn_delete.setOnClickListener {
+                workoutsListListener.onRoutineDelete(it, itemData)
+                dataSet.remove(itemData)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, 1)
+
+            }
+        }
     }
 
-    class ViewHolder(val listItemView: View): RecyclerView.ViewHolder(listItemView)
+    class ViewHolder(val listItemView: View) : RecyclerView.ViewHolder(listItemView)
 }
