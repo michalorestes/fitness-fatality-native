@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
@@ -21,15 +22,18 @@ import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBa
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragmentDirections
+import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.ListGestureFragmentInterface
+import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.ListGesturesCallback
 import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.OnWorkoutListItemClickListener
 import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.RoutinesListAdapter
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
 class MyRoutinesFragment : Fragment(),
-    OnWorkoutListItemClickListener, BottomAppBarActionListenerInterface {
+    OnWorkoutListItemClickListener, BottomAppBarActionListenerInterface, ListGestureFragmentInterface {
     private lateinit var routinesViewModel: RoutinesViewModel
     private lateinit var recyclerViewAdapter: RoutinesListAdapter
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
+    private lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,7 +63,8 @@ class MyRoutinesFragment : Fragment(),
             RoutinesListAdapter(
                 this,
                 resources,
-                routinesViewModel.isInEditMode.value!!
+                routinesViewModel.isInEditMode.value!!,
+                this
             )
         val linearLayoutManager = LinearLayoutManager(context)
         (workouts_list as RecyclerView).apply {
@@ -67,6 +72,10 @@ class MyRoutinesFragment : Fragment(),
             layoutManager = linearLayoutManager
             adapter = recyclerViewAdapter
         }
+
+        val itemTouchHelperCallback = ListGesturesCallback(recyclerViewAdapter)
+        itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(workouts_list)
     }
 
     override fun onStart() {
@@ -135,5 +144,9 @@ class MyRoutinesFragment : Fragment(),
     override fun onNavigationClickListener() {
         //android.R.id.home - when using in where case
         Toast.makeText(context, "Clicked menu button hehe", Toast.LENGTH_LONG).show()
+    }
+
+    override fun startDrag(view: RoutinesListAdapter.ViewHolder) {
+        itemTouchHelper.startDrag(view)
     }
 }

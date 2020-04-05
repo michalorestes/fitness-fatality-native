@@ -2,19 +2,23 @@ package com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters
 
 import android.content.res.Resources
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessfatality.R
 import com.example.fitnessfatality.data.models.routine.Routine
 import kotlinx.android.synthetic.main.recycler_view_workout_list.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RoutinesListAdapter(
     private val workoutsListListener: OnWorkoutListItemClickListener,
     private val resources: Resources,
-    var isInEditMode: Boolean
-) : RecyclerView.Adapter<RoutinesListAdapter.ViewHolder>() {
+    var isInEditMode: Boolean,
+    private val fragment: ListGestureFragmentInterface
+) : RecyclerView.Adapter<RoutinesListAdapter.ViewHolder>(), ListGesturesCallbackInterface {
     private var dataSet: ArrayList<Routine> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,7 +28,7 @@ class RoutinesListAdapter(
                 R.layout.recycler_view_workout_list,
                 parent,
                 false
-            ) as ConstraintLayout
+            ) as FrameLayout
 
 
         itemContainer.setOnClickListener {
@@ -32,7 +36,7 @@ class RoutinesListAdapter(
             workoutsListListener.onWorkoutSelected(it, routine)
         }
 
-        itemContainer.chip_start_workout.setOnClickListener {
+        itemContainer.routine_item_constraint_layout.chip_start_workout.setOnClickListener {
             val routine: Routine = itemContainer.tag as Routine
             workoutsListListener.onWorkoutSessionSelected(it, routine)
         }
@@ -66,6 +70,20 @@ class RoutinesListAdapter(
             listItemView.btn_delete.visibility =
                 if (isInEditMode) View.VISIBLE else View.GONE
 
+            listItemView.btn_drag.visibility =
+                if (isInEditMode) View.VISIBLE else View.GONE
+
+            listItemView.img_workout_icon.visibility =
+                if (isInEditMode) View.GONE else View.VISIBLE
+
+            listItemView.btn_drag.setOnTouchListener { v, event ->
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                    fragment.startDrag(holder)
+                }
+
+                return@setOnTouchListener true
+            }
+
             listItemView.btn_delete.setOnClickListener {
                 workoutsListListener.onRoutineDelete(it, itemData)
                 dataSet.remove(itemData)
@@ -77,4 +95,17 @@ class RoutinesListAdapter(
     }
 
     class ViewHolder(val listItemView: View) : RecyclerView.ViewHolder(listItemView)
+
+    override fun onRowMoved(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(dataSet, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(dataSet, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
 }
