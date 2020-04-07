@@ -31,7 +31,7 @@ class RoutinesListAdapter(
             ) as FrameLayout
 
 
-        itemContainer.setOnClickListener {
+        itemContainer.routine_item_constraint_layout.setOnClickListener {
             val routine: Routine = itemContainer.tag as Routine
             workoutsListListener.onWorkoutSelected(it, routine)
         }
