@@ -114,8 +114,6 @@ class RoutineDetailsFragment : Fragment(), BottomAppBarActionListenerInterface,
                     .navigate(action)
             }
             R.id.nav_exercise_edit -> {
-
-                Log.d("-->", "Clicked edit button")
                 routineDetailsViewModel.isRecyclerViewInEditMode =
                     !routineDetailsViewModel.isRecyclerViewInEditMode
 

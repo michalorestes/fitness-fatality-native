@@ -15,4 +15,14 @@ class RoutinesRepository(private val dao: RoutineDao) {
     fun deleteRoutine(routine: Routine) {
         dao.delete(routine)
     }
+
+    @WorkerThread
+    fun getNumberOfRoutines(): Int {
+        return dao.getNumberOfRoutines()
+    }
+
+    @WorkerThread
+    fun batchUpdate(routines: List<Routine>) {
+        dao.updateAll(*routines.toTypedArray())
+    }
 }

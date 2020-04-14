@@ -10,5 +10,6 @@ data class Routine(
     @ColumnInfo(name = "id")
     val id: Long? = null,
     val name: String,
-    val workoutIcon: Int
+    val workoutIcon: Int,
+    var sequenceId: Int = 0
 )

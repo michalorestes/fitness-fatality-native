@@ -7,4 +7,5 @@ interface OnWorkoutListItemClickListener {
     fun onWorkoutSelected(view: View, routine: Routine)
     fun onWorkoutSessionSelected(view: View, routine: Routine)
     fun onRoutineDelete(view: View, routine: Routine)
+    fun startDrag(view: RoutinesListAdapter.ViewHolder)
 }

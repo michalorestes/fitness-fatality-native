@@ -16,10 +16,9 @@ import kotlin.collections.ArrayList
 class RoutinesListAdapter(
     private val workoutsListListener: OnWorkoutListItemClickListener,
     private val resources: Resources,
-    var isInEditMode: Boolean,
-    private val fragment: ListGestureFragmentInterface
+    var isInEditMode: Boolean
 ) : RecyclerView.Adapter<RoutinesListAdapter.ViewHolder>(), ListGesturesCallbackInterface {
-    private var dataSet: ArrayList<Routine> = arrayListOf()
+    var dataSet: ArrayList<Routine> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemContainer = LayoutInflater
@@ -78,7 +77,7 @@ class RoutinesListAdapter(
 
             listItemView.btn_drag.setOnTouchListener { v, event ->
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                    fragment.startDrag(holder)
+                    workoutsListListener.startDrag(holder)
                 }
 
                 return@setOnTouchListener true

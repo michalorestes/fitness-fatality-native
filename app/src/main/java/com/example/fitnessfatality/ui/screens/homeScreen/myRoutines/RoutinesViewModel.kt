@@ -22,10 +22,16 @@ class RoutinesViewModel(application: Application): BaseViewModel(application) {
     }
 
     fun insertWorkout(routine: Routine) = scope.launch(Dispatchers.IO) {
+        val numberOfRoutines = routinesRepository.getNumberOfRoutines()
+        routine.sequenceId = numberOfRoutines.plus(1)
         routinesRepository.insert(routine)
     }
 
     fun deleteRoutine(routine: Routine) = scope.launch(Dispatchers.IO) {
         routinesRepository.deleteRoutine(routine)
+    }
+
+    fun batchUpdateRoutines(routines: List<Routine>) = scope.launch(Dispatchers.IO) {
+        routinesRepository.batchUpdate(routines)
     }
 }

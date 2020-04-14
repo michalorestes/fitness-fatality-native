@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
         Workout::class,
         LogSet::class
     ],
-    version = 28,
+    version = 31,
     exportSchema = false
 )
 @TypeConverters(
@@ -195,34 +195,40 @@ abstract class AppDatabase: RoomDatabase() {
             val routine = Routine(
                 0,
                 "Sample workout routine",
-                R.drawable.inverval_workout_icon
+                R.drawable.inverval_workout_icon,
+                0
             )
 
             routineDao.insert(routine)
             routineDao.insert(Routine(
                 1,
                 "Sample workout routine 2",
-                R.drawable.inverval_workout_icon
+                R.drawable.inverval_workout_icon,
+                2
             ))
             routineDao.insert(Routine(
                 2,
                 "Sample workout routine 3",
-                R.drawable.cardio_workout_icon
+                R.drawable.cardio_workout_icon,
+                3
             ))
             routineDao.insert(Routine(
                 3,
                 "Sample workout routine 4",
-                R.drawable.inverval_workout_icon
+                R.drawable.inverval_workout_icon,
+                4
             ))
             routineDao.insert(Routine(
                 4,
                 "Sample workout routine 5",
-                R.drawable.cardio_workout_icon
+                R.drawable.cardio_workout_icon,
+                5
             ))
             routineDao.insert(Routine(
                 5,
                 "Sample workout routine 6",
-                R.drawable.inverval_workout_icon
+                R.drawable.inverval_workout_icon,
+                6
             ))
         }
     }

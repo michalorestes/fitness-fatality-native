@@ -22,14 +22,13 @@ import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBa
 import com.example.fitnessfatality.ui.customViews.customBottomAppBar.BottomAppBarAdapter
 import com.example.fitnessfatality.ui.screens.mainActivity.OnActivityInteractionInterface
 import com.example.fitnessfatality.ui.screens.homeScreen.MainTabsFragmentDirections
-import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.ListGestureFragmentInterface
 import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.ListGesturesCallback
 import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.OnWorkoutListItemClickListener
 import com.example.fitnessfatality.ui.screens.homeScreen.myRoutines.adapters.RoutinesListAdapter
 import kotlinx.android.synthetic.main.fragment_my_workouts.*
 
 class MyRoutinesFragment : Fragment(),
-    OnWorkoutListItemClickListener, BottomAppBarActionListenerInterface, ListGestureFragmentInterface {
+    OnWorkoutListItemClickListener, BottomAppBarActionListenerInterface {
     private lateinit var routinesViewModel: RoutinesViewModel
     private lateinit var recyclerViewAdapter: RoutinesListAdapter
     private lateinit var onActivityInteractionInterface: OnActivityInteractionInterface
@@ -38,7 +37,7 @@ class MyRoutinesFragment : Fragment(),
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if(context is OnActivityInteractionInterface) {
+        if (context is OnActivityInteractionInterface) {
             onActivityInteractionInterface = context
         } else {
             throw Exception("MyWorkoutsFragments requires OnActivityInteractionInterface")
@@ -63,8 +62,7 @@ class MyRoutinesFragment : Fragment(),
             RoutinesListAdapter(
                 this,
                 resources,
-                routinesViewModel.isInEditMode.value!!,
-                this
+                routinesViewModel.isInEditMode.value!!
             )
         val linearLayoutManager = LinearLayoutManager(context)
         (workouts_list as RecyclerView).apply {
@@ -104,6 +102,12 @@ class MyRoutinesFragment : Fragment(),
         })
     }
 
+    override fun onPause() {
+        super.onPause()
+        recyclerViewAdapter.dataSet.forEachIndexed { index, routine -> routine.sequenceId = index }
+        routinesViewModel.batchUpdateRoutines(recyclerViewAdapter.dataSet)
+    }
+
     override fun onWorkoutSelected(view: View, routine: Routine) {
         val action =
             MainTabsFragmentDirections.viewWorkoutDetails(
@@ -115,8 +119,8 @@ class MyRoutinesFragment : Fragment(),
     }
 
     override fun onWorkoutSessionSelected(view: View, routine: Routine) {
-        val action = MainTabsFragmentDirections.
-            actionMainTabsFragmentToWorkoutLoggingFragment(routine.id!!)
+        val action =
+            MainTabsFragmentDirections.actionMainTabsFragmentToWorkoutLoggingFragment(routine.id!!)
 
         view.findNavController().navigate(action)
     }
